@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2023 at 12:51 AM
+-- Generation Time: Jan 11, 2023 at 02:28 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -50,7 +50,7 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `user_type` varchar(50) NOT NULL,
+  `user_type` int(50) NOT NULL,
   `user_id` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -61,9 +61,18 @@ CREATE TABLE `users` (
   `address` varchar(255) NOT NULL,
   `barangay` varchar(50) NOT NULL,
   `barangay_id` varchar(50) NOT NULL,
+  `image` blob NOT NULL,
   `date_time_created` datetime NOT NULL,
   `date_time_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `user_type`, `user_id`, `username`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `address`, `barangay`, `barangay_id`, `image`, `date_time_created`, `date_time_updated`) VALUES
+(27, 2, 'TA00001', 'amthew', '$2y$10$1KnVjHRgdhYbAik7CUK8RuHdHJRmyV4mVW7mWN4futp.Ig/xs0TGC', 'Ratahydade', 'Dowotuwujo', 'Dowotuwujo', '2003-07-22', 'sasybu', 'Dalitope', 'Mokuwysazi', 0x6c632e706e67, '2023-01-11 09:20:24', '2023-01-11 09:20:24'),
+(32, 2, 'TA00002', 'seqepat', '$2y$10$DH35AFCzc5wNRSirCi/P1O/CKK88m0Tuy0ZBSSLDy23EllRi6HZny', 'Jofax', 'Bezafoq', 'Bezafoq', '1971-12-04', 'matafys', 'Qisaxex', 'Kubuco', 0x3332333632333736325f3534303737383131313331323439375f353131363739303730373431363239353634345f6e2e6a7067, '2023-01-11 09:27:14', '2023-01-11 09:27:14');
 
 -- --------------------------------------------------------
 
@@ -124,7 +133,7 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user_types`
@@ -137,11 +146,16 @@ ALTER TABLE `user_types`
 --
 
 --
+-- Constraints for table `reports`
+--
+ALTER TABLE `reports`
+  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `reports` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
