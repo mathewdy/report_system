@@ -63,6 +63,7 @@ ob_start();
         <br>
         <input type="submit" name="register" value="Register">
 
+
     </form>
 </body>
 </html>
@@ -136,7 +137,7 @@ if(isset($_POST['register'])){
                 //insert
                 $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
                 $run_registration = mysqli_query($conn,$query_registration);
-                move_uploaded_file($_FILES["image"]["tmp_name"], "Images" . $_FILES["image"]["name"]);
+                move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
 
 
                 if($run_registration){
@@ -162,7 +163,7 @@ if(isset($_POST['register'])){
             $id = "TA00001";
             $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
             $run_registration = mysqli_query($conn,$query_registration);
-            move_uploaded_file($_FILES["image"]["tmp_name"], "Images" . $_FILES["image"]["name"]);
+            move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
             if($run_registration){
                 echo "Added";
                 //redirection sa login page
