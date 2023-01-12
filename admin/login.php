@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT username,password,user_type FROM users WHERE username = '$username'";
+    $query = "SELECT username,password,user_type,user_id FROM users WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
 
 
@@ -47,6 +47,7 @@ if (isset($_POST['login'])) {
                 if (password_verify($password, $row['password'])) {
                     //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
                     $_SESSION['username'] = $username;
+                    $_SESSION['user_id'] = $row['user_id'];
                     header("location: index.php");
                     die();
                 }

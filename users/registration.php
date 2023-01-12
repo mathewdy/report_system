@@ -163,7 +163,7 @@ if (isset($_POST['register'])) {
                 exit();
             }
 
-            $id = "ADM00001";
+            $id = "TA00001";
             $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
             $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);

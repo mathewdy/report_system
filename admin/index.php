@@ -4,6 +4,7 @@ date_default_timezone_set('Asia/Manila');
 include('../connection.php');
 include('session.php');
 
+$user_id = $_SESSION['user_id'];
 
 ?>
 
@@ -18,7 +19,38 @@ include('session.php');
 </head>
 
 <body>
-  <a href="add-report.php">Add Report</a>
+  <?php
+
+
+
+  $ciphering = "AES-128-CTR";
+
+  // Use OpenSSl Encryption method
+  $iv_length = openssl_cipher_iv_length($ciphering);
+  $options = 0;
+
+  // Non-NULL Initialization Vector for encryption
+  $encryption_iv = '1234567891011121';
+
+  // Store the encryption key
+  $encryption_key = "TeamAgnat";
+
+  // Use openssl_encrypt() function to encrypt the data
+  $encryption = openssl_encrypt(
+    $user_id,
+    $ciphering,
+    $encryption_key,
+    $options,
+    $encryption_iv
+  );
+
+  $report_link = "add-report.php?uid=" . $encryption;
+  $view_link = "view-report.php?uid=" . $encryption;
+  ?>
+
+
+
+  <a href="<?php echo $report_link ?>">Add Report</a>
   <a href="logout.php">Log Out</a>
 </body>
 
