@@ -1,7 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Manila');
-include('connection.php');
+include('../connection.php');
 ?>
 
 <!DOCTYPE html>
@@ -33,35 +33,28 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-  $query = "SELECT username,password,user_type FROM users WHERE username = '$username'";
-  $result = mysqli_query($conn,$query);
+    $query = "SELECT username,password,user_type FROM users WHERE username = '$username'";
+    $result = mysqli_query($conn, $query);
 
 
-  if(mysqli_num_rows($result) > 0){
-        foreach($result as $row){
+    if (mysqli_num_rows($result) > 0) {
+        foreach ($result as $row) {
 
-            if($row['user_type'] == '1'){
+            if ($row['user_type'] == '2') {
                 echo "<script>alert('User unavailable'); </script>";
-            }else{
+            } else {
 
-              if (password_verify($password, $row['password'])){ 
-                //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                if (password_verify($password, $row['password'])) {
+                    //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
                     $_SESSION['username'] = $username;
-                header("location: index.php");
-                die();
-
-                
-            }   
-             
+                    header("location: index.php");
+                    die();
+                }
             }
-          
         }
-    }else{
+    } else {
         echo "User not found" . $conn->error;
     }
-
-
-
 }
 
 
