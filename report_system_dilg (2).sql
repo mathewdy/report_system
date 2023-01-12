@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2023 at 02:28 AM
+-- Generation Time: Jan 12, 2023 at 04:55 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `report_system_dilg`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notes`
+--
+
+CREATE TABLE `notes` (
+  `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `date_time_created` datetime NOT NULL,
+  `date_time_updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -41,6 +55,27 @@ CREATE TABLE `reports` (
   `date_updated` date NOT NULL,
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sample`
+--
+
+CREATE TABLE `sample` (
+  `id` int(11) NOT NULL,
+  `message` varchar(500) NOT NULL,
+  `image` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sample`
+--
+
+INSERT INTO `sample` (`id`, `message`, `image`) VALUES
+(10, '<p>hahahahahaha gago&nbsp;</p>', 0x7265706f72745f73797374656d2e6a7067),
+(11, '<p>hahahahahaha gago&nbsp;</p>', 0x7265706f72745f73797374656d2e6a7067),
+(12, '<p style=\"text-align: left;\">hahahaha</p>', '');
 
 -- --------------------------------------------------------
 
@@ -98,11 +133,23 @@ INSERT INTO `user_types` (`id`, `user_type`) VALUES
 --
 
 --
+-- Indexes for table `notes`
+--
+ALTER TABLE `notes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`report_id`);
+
+--
+-- Indexes for table `sample`
+--
+ALTER TABLE `sample`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -124,10 +171,22 @@ ALTER TABLE `user_types`
 --
 
 --
+-- AUTO_INCREMENT for table `notes`
+--
+ALTER TABLE `notes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sample`
+--
+ALTER TABLE `sample`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
