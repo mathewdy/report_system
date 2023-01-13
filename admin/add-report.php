@@ -123,7 +123,7 @@ if (isset($_POST['send'])) {
   //file upload 
 
   $targetDir = "pdf/";
-  $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+  $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
 
   $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
   $fileNames = array_filter($_FILES['files']['name']);
