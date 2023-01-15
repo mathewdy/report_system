@@ -76,7 +76,7 @@ if (isset($_GET['uid'])) {
       <textarea id="tiny" name="statement"> </textarea>
     </div>
 
-    <input type="file" name="pdf_file" id="" accept=".pdf">
+    <input type="file" name="files[]" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple>
     <br>
 
 
@@ -120,11 +120,38 @@ if (isset($_POST['send'])) {
   $statement = mysqli_escape_string($conn, $statement);
 
 
-  if (isset($_FILES['pdf_file']['name'])) {
-    $file_name = $_FILES['pdf_file']['name'];
-    $file_tmp = $_FILES['pdf_file']['tmp_name'];
+  //file upload 
 
-    move_uploaded_file($file_tmp, "./pdf/" . $file_name);
+  $targetDir = "pdf/";
+  $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
+
+  $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
+  $fileNames = array_filter($_FILES['files']['name']);
+  if (!empty($fileNames)) {
+    foreach ($_FILES['files']['name'] as $key => $val) {
+      // File upload path 
+      $fileName = basename($_FILES['files']['name'][$key]);
+      $targetFilePath = $targetDir . $fileName;
+
+      // Check whether file type is valid 
+      $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+      if (in_array($fileType, $allowTypes)) {
+        // Upload file to server 
+        if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+          // Image db insert sql 
+          $insertValuesSQL .= $fileName;
+        } else {
+          $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+        }
+      } else {
+        $errorUploadType .= $_FILES['files']['name'][$key] . ' | ';
+      }
+    }
+
+
+
+
+
 
 
     // validation of report id 
@@ -146,7 +173,7 @@ if (isset($_POST['send'])) {
 
         //insert a query
         $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `statement`, `documents`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$file_name','$date','$time','$date','$time')";
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insertValuesSQL','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
@@ -169,8 +196,6 @@ if (isset($_POST['send'])) {
         $conn->error;
       }
     }
-  } else {
-    echo "SYSTEM ERROR";
   }
 }
 

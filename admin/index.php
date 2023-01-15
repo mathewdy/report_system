@@ -45,7 +45,7 @@ $user_id = $_SESSION['user_id'];
   );
 
   $report_link = "add-report.php?uid=" . $encryption;
-  $view_link = "view-report.php?uid=" . $encryption;
+  $view_link = "reports.php?uid=" . $encryption;
   ?>
 
 
