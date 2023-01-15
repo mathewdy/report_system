@@ -22,10 +22,10 @@ ob_start();
     <h1>Registration</h1>
     <form action="" method="POST" enctype="multipart/form-data">
 
-        <h2>Log In Info</h2>a
-        <label for="">Username</label>
+        <h2>Log In Info</h2>
+        <label for="">Email</label>
         <br>
-        <input type="text" name="username">
+        <input type="text" name="email">
         <br>
         <label for="">Password</label>
         <br>
@@ -64,6 +64,7 @@ ob_start();
         <input type="file" name="image" id="">
         <br>
         <input type="submit" name="register" value="Register">
+        <a href="login.php">Log In</a>
 
 
     </form>
@@ -80,7 +81,7 @@ if (isset($_POST['register'])) {
     $date = date('y-m-d');
 
     $user_type = 2;
-    $username = $_POST['username'];
+    $email = $_POST['email'];
 
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -106,11 +107,11 @@ if (isset($_POST['register'])) {
 
     $barangay_id = ucfirst($_POST['barangay_id']);
 
-    $query_validation = "SELECT username FROM users WHERE username = '$username'";
+    $query_validation = "SELECT email FROM users WHERE email = '$email'";
     $run_validation = mysqli_query($conn, $query_validation);
 
     if (mysqli_num_rows($run_validation) > 0) {
-        echo "<script>alert('Username already taken') </script>";
+        echo "<script>alert('Email already taken') </script>";
         exit();
     }
 
@@ -138,7 +139,7 @@ if (isset($_POST['register'])) {
                 $id = "TA" . $get_string;
 
                 //insert
-                $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
+                $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
                 $run_registration = mysqli_query($conn, $query_registration);
                 move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
 
@@ -153,18 +154,18 @@ if (isset($_POST['register'])) {
             }
         } else {
 
-            $username = $_POST['username'];
+            $email = $_POST['email'];
 
-            $query_validation = "SELECT username FROM users WHERE username = '$username'";
+            $query_validation = "SELECT email FROM users WHERE email = '$email'";
             $run_validation = mysqli_query($conn, $query_validation);
 
             if (mysqli_num_rows($run_validation) > 0) {
-                echo "<script>alert('Username already taken') </script>";
+                echo "<script>alert('Email already taken') </script>";
                 exit();
             }
 
             $id = "TA00001";
-            $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
+            $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
             $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
             if ($run_registration) {
