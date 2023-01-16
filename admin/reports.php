@@ -60,8 +60,8 @@ if (isset($_GET['uid'])) {
 
 <body>
 
-    <table class="table table-hover table-light text-center mt-5" id="data">
-        <thead style="font-family:var(--poppins); font: weight 500px;">
+    <table id="data">
+        <thead>
             <tr>
                 <th>No.</th>
                 <th>LRN</th>
@@ -72,13 +72,13 @@ if (isset($_GET['uid'])) {
         <tbody>
             <?php
 
-            $sql = "SELECT * FROM learners_personal_infos ORDER BY id DESC ";
+            $sql = "SELECT * FROM reports ORDER BY id DESC ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
                 $count = 0;
                 foreach ($run as $row) {
-                    $lrn = $row['lrn'];
+                    $report_id = $row['report_id'];
                     // Store the cipher method
                     $ciphering = "AES-128-CTR";
 
@@ -94,26 +94,24 @@ if (isset($_GET['uid'])) {
 
                     // Use openssl_encrypt() function to encrypt the data
                     $encryption = openssl_encrypt(
-                        $lrn,
+                        $report_id,
                         $ciphering,
                         $encryption_key,
                         $options,
                         $encryption_iv
                     );
                     //   $encrypted_data = (($lrn*12345678911*56789)/987654);
-                    $edit_link = "edit-student.php?sid=" . $encryption;
-                    $view_link = "student-profile.php?sid=" . $encryption;
-                    $delete_link = "delete-student.php?sid=" . $encryption;
+                    $view_link = "view-reports.php?rid=" . $encryption;
+                    $delete_link = "delete-reports.php?rid=" . $encryption;
                     $count++;
             ?>
 
                     <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $row['lrn'] ?></td>
-                        <td><?php echo $row['first_name'] . " " . $row['last_name'] ?></td>
+                        <td><?php echo $row['report_id'] ?></td>
+                        <td><?php echo $row['to_user'] ?></td>
                         <td class="d-flex flex-row justify-content-evenly">
-                            <a href="<?php echo $edit_link ?>"><i style="color:#56BBF1; font-size:25px;" class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="<?php echo $delete_link ?>"><i style="color:red; font-size:25px;" class="fa-solid fa-circle-minus"></i></a>
+                            <a href="<?php echo $delete_link ?>">Delete</a>
                         </td>
                     </tr>
 
@@ -127,6 +125,10 @@ if (isset($_GET['uid'])) {
         </tbody>
     </table>
 
+
+    <script src="../src/js/jquery-3.6.1.min.js"></script>
+
+    <script src="../src/js/table.click.js"></script>
 
 </body>
 

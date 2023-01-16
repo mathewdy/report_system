@@ -137,14 +137,30 @@ if (isset($_POST['send'])) {
       $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
       if (in_array($fileType, $allowTypes)) {
         // Upload file to server 
-        if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
-          // Image db insert sql 
-          $insertValuesSQL .= $fileName;
-        } else {
-          $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+        if (is_uploaded_file($_FILES["files"]["tmp_name"][$key])) {
+
+          $mime = mime_content_type($_FILES["files"]["tmp_name"][$key]);
+
+          if ($mime === 'application/pdf') {
+
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_pdf_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } elseif (strpos($mime, 'image/') === 0) {
+
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_images_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } else {
+            echo ("not supported file, please choose pdf or jpg or png");
+          }
         }
-      } else {
-        $errorUploadType .= $_FILES['files']['name'][$key] . ' | ';
       }
     }
 
@@ -172,8 +188,8 @@ if (isset($_POST['send'])) {
         $report_id = "RID" . $get_string;
 
         //insert a query
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `statement`, `documents`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insertValuesSQL','$date','$time','$date','$time')";
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
@@ -186,8 +202,8 @@ if (isset($_POST['send'])) {
 
       $report_id = "RID00001";
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `statement`, `documents`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$file_name','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
@@ -196,6 +212,8 @@ if (isset($_POST['send'])) {
         $conn->error;
       }
     }
+  } else {
+    // with out docuemnts
   }
 }
 
