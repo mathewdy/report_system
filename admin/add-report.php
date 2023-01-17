@@ -101,6 +101,10 @@ if (isset($_GET['uid'])) {
       toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help | save | restoredraft'
     });
   </script>
+
+  <script src="../src/js/multiple.js"></script>
+
+
 </body>
 
 </html>
