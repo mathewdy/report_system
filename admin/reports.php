@@ -64,15 +64,16 @@ if (isset($_GET['uid'])) {
         <thead>
             <tr>
                 <th>No.</th>
-                <th>LRN</th>
-                <th>Full Name</th>
+                <th>Report ID</th>
+                <th>To</th>
+                <th>Subject</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
 
-            $sql = "SELECT * FROM reports ORDER BY id DESC ";
+            $sql = "SELECT * FROM reports ORDER BY id ASC ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
@@ -110,8 +111,9 @@ if (isset($_GET['uid'])) {
                         <td><?php echo $count; ?></td>
                         <td><?php echo $row['report_id'] ?></td>
                         <td><?php echo $row['to_user'] ?></td>
-                        <td class="d-flex flex-row justify-content-evenly">
-                            <a href="<?php echo $delete_link ?>">Delete</a>
+                        <td><?php echo $row['subject'] ?></td>
+                        <td>
+                            <a href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
                         </td>
                     </tr>
 
@@ -126,7 +128,7 @@ if (isset($_GET['uid'])) {
     </table>
 
 
-    <script src="../src/js/jquery-3.6.1.min.js"></script>
+    <script src=" ../src/js/jquery-3.6.1.min.js"></script>
 
     <script src="../src/js/table.click.js"></script>
 
