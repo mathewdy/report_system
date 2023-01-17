@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT username,password,user_type,user_id FROM users WHERE username = '$username'";
+    $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$username'";
     $result = mysqli_query($conn, $query);
 
 

@@ -25,7 +25,7 @@ ob_start();
         <h2>Log In Info</h2>
         <label for="">Username</label>
         <br>
-        <input type="text" name="username">
+        <input type="text" name="email">
         <br>
         <label for="">Password</label>
         <br>
@@ -80,7 +80,7 @@ if (isset($_POST['register'])) {
     $date = date('y-m-d');
 
     $user_type = 1;
-    $username = $_POST['username'];
+    $username = $_POST['email'];
 
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -107,11 +107,11 @@ if (isset($_POST['register'])) {
     $dilg_id = ucfirst($_POST['dilg_id']);
     $barangay_id = 0;
 
-    $query_validation = "SELECT username FROM users WHERE username = '$username'";
+    $query_validation = "SELECT email FROM users WHERE email = '$username'";
     $run_validation = mysqli_query($conn, $query_validation);
 
     if (mysqli_num_rows($run_validation) > 0) {
-        echo "<script>alert('Username already taken') </script>";
+        echo "<script>alert('Email already taken') </script>";
         exit();
     }
 
@@ -138,7 +138,7 @@ if (isset($_POST['register'])) {
 
                 $id = "ADM" . $get_string;
                 //insert
-                $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,dilg_id,image,date_time_created,date_time_updated) 
+                $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,dilg_id,image,date_time_created,date_time_updated) 
                 VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$dilg_id', '$image', '$date $time' , '$date $time')";
                 $run_registration = mysqli_query($conn, $query_registration);
                 move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
@@ -154,19 +154,19 @@ if (isset($_POST['register'])) {
             }
         } else {
 
-            $username = $_POST['username'];
+            $username = $_POST['email'];
 
-            $query_validation = "SELECT username FROM users WHERE username = '$username'";
+            $query_validation = "SELECT email FROM users WHERE email = '$username'";
             $run_validation = mysqli_query($conn, $query_validation);
 
             if (mysqli_num_rows($run_validation) > 0) {
-                echo "<script>alert('Username already taken') </script>";
+                echo "<script>alert('Email already taken') </script>";
                 exit();
             }
 
             $id = "ADM00001";
 
-            $query_registration = "INSERT INTO users (user_type,user_id,username,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
+            $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
             $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
             if ($run_registration) {
