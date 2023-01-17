@@ -4,6 +4,8 @@ date_default_timezone_set('Asia/Manila');
 include('../connection.php');
 include('session.php');
 
+error_reporting(E_ERROR & E_WARNING);
+
 
 $user_id = $_SESSION['user_id'];
 
