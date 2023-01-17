@@ -67,6 +67,7 @@ if (isset($_GET['uid'])) {
                 <th>Report ID</th>
                 <th>To</th>
                 <th>Subject</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -112,6 +113,7 @@ if (isset($_GET['uid'])) {
                         <td><?php echo $row['report_id'] ?></td>
                         <td><?php echo $row['to_user'] ?></td>
                         <td><?php echo $row['subject'] ?></td>
+                        <td><?php echo $row['status'] ?></td>
                         <td>
                             <a href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
                         </td>
