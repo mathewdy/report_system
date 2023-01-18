@@ -10,9 +10,9 @@ if (isset($_GET["query"])) {
 
     // fix the query 
     $query = "
- SELECT country_name FROM apps_countries 
- WHERE country_name LIKE '" . $_GET["query"] . "%' 
- ORDER BY country_name ASC 
+ SELECT brgy FROM barangay 
+ WHERE brgy LIKE '" . $_GET["query"] . "%' 
+ ORDER BY brgy ASC 
  LIMIT 15
  ";
 
@@ -21,14 +21,8 @@ if (isset($_GET["query"])) {
     $statement->execute();
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $data[] = $row["country_name"];
+        $data[] = $row["brgy"];
     }
 }
 
 echo json_encode($data);
-
-?>
-
-
-
-?>
