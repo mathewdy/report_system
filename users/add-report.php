@@ -16,26 +16,35 @@ include('../connection.php');
   <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 </head>
 <body>
+
+  <a href="home.php">Back</a>
+
     <form action="" method="POST" enctype="multipart/form-data">
 
       <!---or ajax search to select na lang ng recipients--> 
       <!---kapag pinindot na yung textbox for recipients mag papalit ng placeholder parang sa gmail--->
 
-      <label for="">To:</label>
-      <input type="email" name="to_user" value="sample@gmail.com" placeholder="Email" required>
+      <label for="">From:</label>
+    <input type="text" name="from">
+    <br>
+    <label for="">To:</label>
+    <input type="text" name="to">
+    <br>
+    <label for="">Subject:</label>
+    <input type="text" name="subject">
+    <div>
+      <textarea id="default" name="statement"> </textarea>
+    </div>
 
-      <label for="">Subject:</label>
-      <input type="text" name="subject" placeholder="Subject" required>
+    <input type="file" name="files[]" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple>
+    <br>
 
-      <textarea id="default" name="message" placeholder="Enter your report"></textarea>
-      <br>
-      <label for="">Image</label>
-      <input type="file" name="images[]" multiple>
-      <br>
-      <label for="">PDF</label>
-      <input type="file" name="PDF">
-      <br>
-      <input type="submit" name="send" value="Send">
+
+    <input type="submit" name="send" value="Send Report">
+    
+
+    <input type="submit" name="draft" value="Save as Draft">
+
     </form>
 
 
@@ -53,7 +62,7 @@ include('../connection.php');
     ],
     toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' + 
     'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-    'forecolor backcolor emoticons',
+    'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
     menu: {
         favs: {title: 'menu', items: 'code visualaid | searchreplace | emoticons'}
     },
@@ -69,187 +78,324 @@ include('../connection.php');
 
 if(isset($_POST['send'])){
 
-
-
-  // NEXT NAMAN YUNG SA PDF NA upload PDF sheeesh
-
-
-  $to_user = $_POST['to_user'];
-  $subject = $_POST['subject'];
-
-  
-  //year month date
-  date_default_timezone_set("Asia/Manila");
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
-  $message = $_POST['message'];
-  $message = mysqli_escape_string($conn,$message);
 
-  $query_report_id = "SELECT report_id FROM reports";
-  $run_report_id = mysqli_query($conn,$query_report_id);
-  $row = mysqli_num_rows($run_report_id);
+  $from = $_POST['from'];
+  $from = mysqli_escape_string($conn, $from);
 
-  if(empty($row)){
-    $report_id = "RID00001";
-  }else{
-    $get_number = str_replace("RID", "", $row);
-    $id_increment = $get_number + 1;
-    $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-    $report_id = "RID" . $get_string;
-  }
+  $to = $_POST['to'];
+  $to = mysqli_escape_string($conn, $to);
+
+  $subject = $_POST['subject'];
+  $subject = mysqli_escape_string($conn, $subject);
+
+  $statement = $_POST['statement'];
+  $statement = mysqli_escape_string($conn, $statement);
+  $status = 1;
 
 
+  //file upload 
 
-  $images = $_FILES['images'];
+  $targetDir = "pdf/";
+  $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
 
-  # Number of images
-    $num_of_imgs = count($images['name']);
+  $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
+  $fileNames = array_filter($_FILES['files']['name']);
+  if (!empty($fileNames)) {
+    foreach ($_FILES['files']['name'] as $key => $val) {
+      // File upload path 
+      $fileName = basename($_FILES['files']['name'][$key]);
+      $targetFilePath = $targetDir . $fileName;
 
-    for ($i=0; $i < $num_of_imgs; $i++) { 
-      
-      # get the image info and store them in var
-      $image_name = $images['name'][$i];
-      $tmp_name   = $images['tmp_name'][$i];
-      $error      = $images['error'][$i];
+      // Check whether file type is valid 
+      $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+      if (in_array($fileType, $allowTypes)) {
+        // Upload file to server 
+        if (is_uploaded_file($_FILES["files"]["tmp_name"][$key])) {
 
-      # if there is not error occurred while uploading
-      if ($error === 0) {
-        
-        # get image extension store it in var
-        $img_ex = pathinfo($image_name, PATHINFO_EXTENSION);
+          $mime = mime_content_type($_FILES["files"]["tmp_name"][$key]);
 
-        
-      $img_ex_lc = strtolower($img_ex);
-            
-      $allowed_exs = array('jpg', 'jpeg', 'png');
+          if ($mime === 'application/pdf') {
 
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_pdf_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } elseif (strpos($mime, 'image/') === 0) {
 
-
-      if (in_array($img_ex_lc, $allowed_exs)) {
-      
-      $new_img_name = uniqid('IMG-', true).'.'.$img_ex_lc;
-        
-        # crating upload path on root directory
-        $img_upload_path = 'report_image_uploads/'.$new_img_name;
-        $pdf = 1;
-
-        $sql_image  = "INSERT INTO reports (user_id,report_id,from_user,to_user,subject,message,pdf_files,image,date_created,time_created,date_updated,time_updated) VALUES ('$user_id', '$report_id','$email', '$to_user','$subject','$message','$pdf','$new_img_name', '$date', '$time', '$date', '$time' )";
-        $run_image = mysqli_query($conn,$sql_image);
-        # move uploaded image to 'uploads' folder
-        move_uploaded_file($tmp_name, $img_upload_path);
-        if($run_image){
-          echo "added to database";
-        }else{
-          echo "<script>alert('$conn->error') </script>";
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_images_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } else {
+            echo ("not supported file, please choose pdf or jpg or png");
+          }
         }
-        
-      }else {
-        # error message
-            echo 	$em = "You can't upload files of this type";
-
-          /*
-          redirect to 'index.php' and 
-          passing the error message
-            */
-
-              // header("Location: index.php?error=$em");
       }
+    }
 
-    
-      }else {
-        # error message
-        echo $em = "Unknown Error Occurred while uploading";
 
-        /*
-        redirect to 'index.php' and 
-        passing the error message
-          */
 
-          // header("Location: index.php?error=$em");
+
+
+
+
+    // validation of report id 
+    //insert report id 
+
+    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    $run_validate_report = mysqli_query($conn, $validate_report);
+
+
+    if (mysqli_num_rows($run_validate_report) > 0) {
+
+      foreach ($run_validate_report as $row) {
+        $report_id = $row['report_id'];
+        $get_number = str_replace("RID", "", $report_id);
+        $id_increment = $get_number + 1;
+        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+        $report_id = "RID" . $get_string;
+
+        //insert a query
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+        $run_insert_report = mysqli_query($conn, $insert_report);
+
+        if ($run_insert_report) {
+          echo "sucess";
+        } else {
+          $conn->error;
+        }
       }
-    }	
+    } else {
+
+      $report_id = "RID00001";
+
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+      $run_insert_report = mysqli_query($conn, $insert_report);
+
+      if ($run_insert_report) {
+        echo "sucess";
+      } else {
+        $conn->error;
+      }
+    }
+  } else {
+
+    $insert_pdf_ValuesSQL = "";
+    $insert_images_ValuesSQL = "";
 
 
+    // with out docuemnts
+    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    $run_validate_report = mysqli_query($conn, $validate_report);
 
-	
+    if (mysqli_num_rows($run_validate_report) > 0) {
+
+      foreach ($run_validate_report as $row) {
+        $report_id = $row['report_id'];
+        $get_number = str_replace("RID", "", $report_id);
+        $id_increment = $get_number + 1;
+        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+        $report_id = "RID" . $get_string;
+
+        //insert a query
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+        $run_insert_report = mysqli_query($conn, $insert_report);
+
+        if ($run_insert_report) {
+          echo "sucess";
+        } else {
+          $conn->error;
+        }
+      }
+    } else {
+
+      $report_id = "RID00001";
+
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+      $run_insert_report = mysqli_query($conn, $insert_report);
+
+      if ($run_insert_report) {
+        echo "sucess";
+      } else {
+        $conn->error;
+      }
+    }
+  }
 }
-  
-
-  
-	// $images = $_FILES['images'];
-  // $num_of_imgs = count($images['name']);
-
-  // for($i = 0; $i< $num_of_imgs; $i++){
-  //   $image_name = $images['name'][$i];
-  //   $tmp_name = $images['tmp_name'][$i];
-  //   $error = $images['error'][$i];
-  // }
-
-  // if($error === 0){
 
 
-  //   //value muna ni pdf
-  //   $pdf = 1;
+if (isset($_POST['draft'])) {
 
-  //   //upload na to
-  //   $img_ex = pathinfo($image_name,PATHINFO_EXTENSION);
-  //   $img_ex_lc = strtolower($img_ex);
-  //   $allowed_extension = array('gif' , 'png' , 'jpeg', 'jpg' , 'PNG' , 'JPEG' , 'JPG' , 'GIF');
-  //   if(in_array($img_ex_lc,$allowed_extension)){
-  //     $new_image_name = uniqid('IMG-', true). '.'.$img_ex_lc;
+  $time = date("h:i:s", time());
+  $date = date('y-m-d');
 
-  //     $image_upload_path = 'report_image_uploads/' . $new_image_name;
 
-  //     //check muna natin kung may laman na yung mga reports or wala
-  //       $query_reports = "SELECT * FROM reports ORDER BY user_id DESC LIMIT 1";
-  //       $run_reports = mysqli_query($conn, $query_reports);
-  //       if(mysqli_num_rows($run_reports) > 0) {
-  //         foreach ($run_reports as $row) {
-  //             $user_id = $row['user_id'];
-  //             $get_number = str_replace("RID", "", $user_id);
-  //             $id_increment = $get_number + 1;
-  //             $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+  $from = $_POST['from'];
+  $from = mysqli_escape_string($conn, $from);
 
-  //             $id = "RID" . $get_string;
-  //             //insert sa database
+  $to = $_POST['to'];
+  $to = mysqli_escape_string($conn, $to);
 
-  //             $query_insert_image = "INSERT INTO reports (user_id,report_id,from_user,to_user,subject,message,pdf_files,image,date_created,time_created,date_updated,time_updated) VALUES ('$user_id', '$id','$email', '$to_user','$subject','$message','$pdf','$new_image_name', '$date', '$time', '$date', '$time' )";
-  //             $run_insert_image = mysqli_query($conn,$query_insert_image);
-  //             move_uploaded_file($tmp_name, $image_upload_path);
+  $subject = $_POST['subject'];
+  $subject = mysqli_escape_string($conn, $subject);
 
-  //             if($run_insert_image){
-  //             echo "inserted sa database";
-  //             }else{
-  //               echo "error" .$conn->error;
-  //             }
+  $statement = $_POST['statement'];
+  $statement = mysqli_escape_string($conn, $statement);
+  $status = 2;
 
-              
-  //         }
-  //       }
 
-    
-  //     }else{
-  //       //restriction
-  //       echo "bawal yung ibang file bobo";
-  //       echo "error while uploading 2";
-  //     }
-  
-  //   }else{
-  //     echo "Error while uploading 1";
-  //     // maya na yung redirection
-  //     echo "ulet";
-  //   }
-          
+  //file upload 
 
-  // $sql = "INSERT INTO sample (message,image) VALUES ('$message','$image')";
-  // $run = mysqli_query($conn,$sql);
-  // move_uploaded_file($_FILES["image"]["tmp_name"], "images/" . $_FILES["image"] ["name"]);
+  $targetDir = "pdf/";
+  $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
 
-  // if($run == TRUE){
-  //   echo "message sent";
-  // }else{
-  //   echo "error" . $conn->error;
-  // }
+  $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
+  $fileNames = array_filter($_FILES['files']['name']);
+  if (!empty($fileNames)) {
+    foreach ($_FILES['files']['name'] as $key => $val) {
+      // File upload path 
+      $fileName = basename($_FILES['files']['name'][$key]);
+      $targetFilePath = $targetDir . $fileName;
+
+      // Check whether file type is valid 
+      $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+      if (in_array($fileType, $allowTypes)) {
+        // Upload file to server 
+        if (is_uploaded_file($_FILES["files"]["tmp_name"][$key])) {
+
+          $mime = mime_content_type($_FILES["files"]["tmp_name"][$key]);
+
+          if ($mime === 'application/pdf') {
+
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_pdf_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } elseif (strpos($mime, 'image/') === 0) {
+
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+              // Image db insert sql 
+              $insert_images_ValuesSQL .= $fileName;
+            } else {
+              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
+          } else {
+            echo ("not supported file, please choose pdf or jpg or png");
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+    // validation of report id 
+    //insert report id 
+
+    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    $run_validate_report = mysqli_query($conn, $validate_report);
+
+
+    if (mysqli_num_rows($run_validate_report) > 0) {
+
+      foreach ($run_validate_report as $row) {
+        $report_id = $row['report_id'];
+        $get_number = str_replace("RID", "", $report_id);
+        $id_increment = $get_number + 1;
+        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+        $report_id = "RID" . $get_string;
+
+        //insert a query
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+        $run_insert_report = mysqli_query($conn, $insert_report);
+
+        if ($run_insert_report) {
+          echo "sucess";
+        } else {
+          $conn->error;
+        }
+      }
+    } else {
+
+      $report_id = "RID00001";
+
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+      $run_insert_report = mysqli_query($conn, $insert_report);
+
+      if ($run_insert_report) {
+        echo "sucess";
+      } else {
+        $conn->error;
+      }
+    }
+  } else {
+    // with out docuemnts
+    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    $run_validate_report = mysqli_query($conn, $validate_report);
+
+
+    $insert_pdf_ValuesSQL = "";
+    $insert_images_ValuesSQL = "";
+
+    if (mysqli_num_rows($run_validate_report) > 0) {
+
+      foreach ($run_validate_report as $row) {
+        $report_id = $row['report_id'];
+        $get_number = str_replace("RID", "", $report_id);
+        $id_increment = $get_number + 1;
+        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+        $report_id = "RID" . $get_string;
+
+        //insert a query
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+        $run_insert_report = mysqli_query($conn, $insert_report);
+
+        if ($run_insert_report) {
+          echo "sucess";
+        } else {
+          $conn->error;
+        }
+      }
+    } else {
+
+      $report_id = "RID00001";
+
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$statement','$insert_pdf_ValuesSQL','$insert_images_ValuesSQL','$status','$date','$time','$date','$time')";
+      $run_insert_report = mysqli_query($conn, $insert_report);
+
+      if ($run_insert_report) {
+        echo "sucess";
+      } else {
+        $conn->error;
+      }
+    }
+  }
+}
+
+
 
 ?>

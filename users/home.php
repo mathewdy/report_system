@@ -21,9 +21,10 @@ echo $_SESSION['user_id'];
     <!--dashboard siguro to haha ewan-->
     <h2>Dashboard</h2>
     <!---dito makikita ung report galing sa DILG-->
-    <a href="">Inbox</a>
+    <a href="view-report.php">Inbox</a>
     <!----gagawa sya dito ng report---->
     <a href="add-report.php">Create Report</a>
+    <a href="drafts.php">View Drafts</a>
     
 </body>
 </html>

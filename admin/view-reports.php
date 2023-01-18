@@ -68,7 +68,6 @@ if (isset($_GET['rid'])) {
     $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
     $run_query_data = mysqli_query($conn, $query_data);
     $rows = mysqli_fetch_array($run_query_data);
-
     ?>
 
     <form action="" method="POST" enctype="multipart/form-data">
@@ -119,17 +118,26 @@ if (isset($_GET['rid'])) {
     </form>
 
     <script>
-        $('textarea#tiny').tinymce({
-            height: 500,
-            menubar: true,
-            plugins: [
-                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
-                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount', 'save', 'autosave'
-            ],
-            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help | save | restoredraft'
-        });
-    </script>
+    tinymce.init({
+    selector: 'textarea#tiny',
+    width: 1000,
+    height: 300,
+    plugins:[
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 
+        'table', 'emoticons', 'template', 'codesample'
+    ],
+    toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' + 
+    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+    'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
+    menu: {
+        favs: {title: 'menu', items: 'code visualaid | searchreplace | emoticons'}
+    },
+    menubar: 'favs file edit view insert format tools table',
+    content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
+  
+  });
+</script>
 </body>
 
 </html>
