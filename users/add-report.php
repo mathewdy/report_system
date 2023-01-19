@@ -28,7 +28,7 @@ include('../connection.php');
     <input type="text" name="from">
     <br>
     <label for="">To:</label>
-    <input type="text" name="to">
+    <input type="text" name="to" id="search_data">
     <br>
     <label for="">Subject:</label>
     <input type="text" name="subject">

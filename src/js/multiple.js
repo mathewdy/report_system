@@ -15,8 +15,6 @@
         }
     });
 
-    $('#search').click(function(){
-        $('#country_name').text($('#search_data').val());
-    });
+    
 
   });
