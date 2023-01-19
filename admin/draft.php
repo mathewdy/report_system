@@ -5,6 +5,8 @@ include('../connection.php');
 include('session.php');
 
 
+
+
 $user_id = $_SESSION['user_id'];
 
 if (isset($_GET['uid'])) {
@@ -36,14 +38,9 @@ if (isset($_GET['uid'])) {
         exit();
     }
 }
-
-
-
-
-
-
-
 ?>
+
+
 
 
 
@@ -55,7 +52,7 @@ if (isset($_GET['uid'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report</title>
+    <title>Drafts</title>
 </head>
 
 <body>
@@ -74,7 +71,7 @@ if (isset($_GET['uid'])) {
         <tbody>
             <?php
 
-            $sql = "SELECT * FROM reports WHERE status = '1' ORDER BY id ASC  ";
+            $sql = "SELECT * FROM reports WHERE status = '2' ORDER BY id ASC  ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
@@ -133,6 +130,10 @@ if (isset($_GET['uid'])) {
     <script src=" ../src/js/jquery-3.6.1.min.js"></script>
 
     <script src="../src/js/table.click.js"></script>
+
+
+
+
 
 </body>
 

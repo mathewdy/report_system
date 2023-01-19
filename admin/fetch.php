@@ -16,9 +16,17 @@ if (isset($_GET["query"])) {
  LIMIT 15
  ";
 
-    $statement = $conn->prepare($query);
+    $run_query = mysqli_query($conn, $query);
 
-    $statement->execute();
+    if (mysqli_num_rows($run_query)) {
+        foreach ($run_query as $row) {
+            $data[] = $row['brgy'];
+        }
+    }
+
+
+
+
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
         $data[] = $row["brgy"];

@@ -46,12 +46,15 @@ $user_id = $_SESSION['user_id'];
 
   $report_link = "add-report.php?uid=" . $encryption;
   $view_link = "reports.php?uid=" . $encryption;
+  $draft_link = "draft.php?uid=" . $encryption;
   ?>
 
 
 
   <a href="<?php echo $report_link ?>">Add Report</a>
   <a href="<?php echo $view_link ?>">View Report</a>
+  <a href="<?php echo $draft_link ?>">Drafts</a>
+
   <a href="logout.php">Log Out</a>
 </body>
 
