@@ -4,6 +4,7 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
+$user_id = $_SESSION['user_id'];
 
 ?>
 
@@ -24,12 +25,13 @@ $email = $_SESSION['email'];
 <br>
     <?php
 
-    $query = "SELECT * FROM reports WHERE status = '2' AND to_user = '$email'";
+    $query = "SELECT * FROM reports WHERE status = '2' AND user_id = '$user_id'";
     $run = mysqli_query($conn,$query);
 
 
     if(mysqli_num_rows($run) >0){
         foreach($run as $row){
+            $report_id = $row['report_id'];
             ?>
                 <label for="">
                     <?php 
@@ -68,7 +70,8 @@ $email = $_SESSION['email'];
                 </label>
                 
                 <!--di pa tapos yung draft  --->
-                <a href="edit-draft.php">Edit Draft</a>
+                <a href="edit-draft.php?status=<?php echo '2'?>&user_id=<?php echo $user_id?>&report_id=<?php echo $report_id?>">Edit Draft</a>
+                <a href="delete-draft.php">Delete</a>
 
 
             <?php
