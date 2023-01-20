@@ -29,9 +29,9 @@ if (isset($_GET['nid'])) {
     //   $decrypted_lrn = ((($decrypt_lrn*987654)/56789)/12345678911);
     // }
 
-    if (empty($_GET['rid'])) {    //lrn verification starts here
-        echo "<script>alert('User id not found');
-        window.location = 'reports.php';</script>";
+    if (empty($_GET['nid'])) {    //lrn verification starts here
+        echo "<script>alert('notes not found');
+        window.location = 'index.php';</script>";
         exit();
     }
 
@@ -40,15 +40,15 @@ if (isset($_GET['nid'])) {
     if (mysqli_num_rows($query_request) == 0) {
         echo "
               <script type = 'text/javascript'>
-              window.location = 'reports.php';
+              window.location = 'index.php';
               </script>";
         exit();
     } else {
-        $delete_reports = "DELETE FROM `` WHERE report_id = '$note_id'";
+        $delete_reports = "DELETE FROM `notes` WHERE id = '$note_id'";
         $run_delete = mysqli_query($conn, $delete_reports);
         if ($run_delete) {
             echo "<script>alert('Sucessfuly Delete');
-        window.location = 'reports.php';</script>";
+        window.location = 'index.php';</script>";
             exit();
         }
     }
