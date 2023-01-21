@@ -5,6 +5,8 @@ ob_start();
 
 $email = $_SESSION['email'];
 
+print_r($email);
+
 ?>
 
 
@@ -23,42 +25,42 @@ $email = $_SESSION['email'];
 
 <body>
 
-<a href="home.php">Back</a>
+    <a href="home.php">Back</a>
     <?php
 
 
     $query_reports = "SELECT * FROM REPORTS WHERE to_user = '$email'";
-    $run_reports = mysqli_query($conn,$query_reports);
+    $run_reports = mysqli_query($conn, $query_reports);
 
     //dapat dito riri, mag mumukhang table parang lang
 
-    if(mysqli_num_rows($run_reports) > 0){
+    if (mysqli_num_rows($run_reports) > 0) {
         $no = 1;
-        foreach($run_reports as $row){
-            ?>
+        foreach ($run_reports as $row) {
+    ?>
 
-                <br>
-                <label for="">No. <?php echo $no?></label>
-                <br>
-                <label for=""><?php echo $row['from_user']?></label>
-                <br>
-                <p><?php echo $row['subject']?></p>
+            <br>
+            <label for="">No. <?php echo $no ?></label>
+            <br>
+            <label for=""><?php echo $row['from_user'] ?></label>
+            <br>
+            <p><?php echo $row['subject'] ?></p>
 
 
-                <a href="full-report.php?to_user=<?php echo $row['to_user']?>">View Entire Report</a>
+            <a href="full-report.php?to_user=<?php echo $row['to_user'] ?>">View Entire Report</a>
 
-                <br>
-                <label for="">
-                    <?php 
-                    echo $date = date("M-d-Y", strtotime($row['date_created'])); 
-                    ?>
-                </label>
-                
+            <br>
+            <label for="">
+                <?php
+                echo $date = date("M-d-Y", strtotime($row['date_created']));
+                ?>
+            </label>
 
-            <?php
+
+    <?php
             $no++;
         }
-    }else{
+    } else {
         echo "No reports";
     }
 
