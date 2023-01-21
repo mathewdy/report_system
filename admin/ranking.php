@@ -22,7 +22,7 @@ include('session.php');
             <tr>
                 <th>No.</th>
                 <th>Barangay</th>
-                <th>Total</th>
+                <th>Total of Reports</th>
             </tr>
         </thead>
         <tbody>
