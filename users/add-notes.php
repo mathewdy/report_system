@@ -28,8 +28,10 @@ $user_id = $_SESSION['user_id'];
 <body>
 <main class="d-flex"> 
   <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; min-height: 100vh;">
-    <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-      <svg class="bi" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+    <a href="#" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-buildings-fill" viewBox="0 0 16 16">
+        <path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V.5ZM2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-1 2v1H2v-1h1Zm1 0h1v1H4v-1Zm9-10v1h-1V3h1ZM8 5h1v1H8V5Zm1 2v1H8V7h1ZM8 9h1v1H8V9Zm2 0h1v1h-1V9Zm-1 2v1H8v-1h1Zm1 0h1v1h-1v-1Zm3-2v1h-1V9h1Zm-1 2h1v1h-1v-1Zm-2-4h1v1h-1V7Zm3 0v1h-1V7h1Zm-2-2v1h-1V5h1Zm1 0h1v1h-1V5Z"/>
+      </svg>
       <span class="visually-hidden">Icon-only</span>
     </a>
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
@@ -86,36 +88,31 @@ $user_id = $_SESSION['user_id'];
     </div>
   </div>
   <div class="container my-5">
-    <form action="" method="POST" enctype="multipart/form-data">
-
-
-
-        <label for="">Content</label>
+    <div class="card shadow pb-3" style="border: none;">      
+      <form action="" method="POST" enctype="multipart/form-data">
         <div>
             <textarea id="tiny" name="content"> </textarea>
         </div>
-
-        <input type="submit" name="add" value="Add">
-
-
-    </form>
-
+        <span class="d-flex justify-content-end mt-4">
+          <input type="submit" class="btn btn-primary py-1 mx-2" name="add" value="Add">
+        </span>
+      </form>
+    </div>
   </div>
 </main>
-    <script>
-        $('textarea#tiny').tinymce({
-            height: 500,
-            menubar: true,
-            plugins: [
-                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
-                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount', 'save', 'autosave'
-            ],
-            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help | save | restoredraft'
-        });
-    </script>
-
-
+  <script>
+      $('textarea#tiny').tinymce({
+          height: 500,
+          menubar: true,
+          resize: false,
+          plugins: [
+              'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+              'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+              'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount', 'save', 'autosave'
+          ],
+          toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help | save | restoredraft'
+      });
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 
