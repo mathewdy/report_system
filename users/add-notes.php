@@ -3,6 +3,7 @@
 ob_start();
 include('../connection.php');
 session_start();
+include('session.php');
 $user_id = $_SESSION['user_id'];
 
 

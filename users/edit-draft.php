@@ -1,9 +1,10 @@
 <?php
-
-include('../connection.php');
 session_start();
+include('../connection.php');
+include('session.php');
 ob_start();
 
+error_reporting(E_ERROR & E_WARNING);
 ?>
 
 <!DOCTYPE html>
@@ -50,21 +51,21 @@ ob_start();
                                                                     echo "";
                                                                 } else {
                                                                     echo $row['from_user'];
-                                                                } ?> " disabled>
+                                                                } ?> ">
         <br>
         <label for="">To:</label>
         <input type="text" name="to" class="switch" value="<?php if (empty($row['to_user'])) {
                                                                 echo "";
                                                             } else {
                                                                 echo $row['to_user'];
-                                                            } ?> " disabled>
+                                                            } ?> ">
         <br>
         <label for="">Subject:</label>
         <input type="text" name="subject" class="switch" value="<?php if (empty($row['subject'])) {
                                                                     echo "";
                                                                 } else {
                                                                     echo $row['subject'];
-                                                                } ?>" disabled>
+                                                                } ?>">
 
 
 
