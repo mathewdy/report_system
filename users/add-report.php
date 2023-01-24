@@ -70,9 +70,22 @@ include('session.php');
     <div class="dropdown border-top">
       <!-- Banda dito ko kailangan yung query ng user image -->
       
-      <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="..." alt="user" width="24" height="24" class="rounded-circle">
-      </a>
+      <?php
+
+        $query_image = "SELECT image FROM users WHERE user_id = '$user_id'";
+        $run_image = mysqli_query($conn,$query_image);
+
+        if(mysqli_num_rows($run_image) > 0) {
+          foreach($run_image as $row_image){
+            ?>
+              <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="<?php echo "Images/" . $row_image['image']?>" alt="user" width="24" height="24" class="rounded-circle">
+              </a>
+
+            <?php
+          }
+        }
+      ?>
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
         <li><a class="dropdown-item" href="#">Profile</a></li>
         <li><hr class="dropdown-divider"></li>
@@ -80,15 +93,27 @@ include('session.php');
       </ul>
     </div>
   </div>
+
+
+  
+
 <div class="container my-5">
   <div class="card shadow pb-5" style="border:none;">
+      <?php
+
+        $query_email = "SELECT email FROM users WHERE user_id = '$user_id'";
+        $run_email = mysqli_query($conn,$query_email);
+        $row_email = mysqli_fetch_array($run_email);
+
+      ?>
+
     <form action="" autocomplete="off" method="POST" enctype="multipart/form-data">
 
       <!---or ajax search to select na lang ng recipients--> 
       <!---kapag pinindot na yung textbox for recipients mag papalit ng placeholder parang sa gmail--->
     <span class="form-control" style="border:none;outline:none; border-bottom:1px solid rgba(0,0,0,0.1); border-radius: 0;">
       <label for="">From:</label>
-      <input type="text" style="border:none;outline:none;" name="from">
+      <input type="text" style="border:none;outline:none;" name="from" value="<?php echo $row_email['email']?>" readonly>
     </span>
     <span class="form-control d-flex" style="border:none;outline:none; border-bottom:1px solid rgba(0,0,0,0.1); border-radius: 0;">
         <label for="">To:</label>

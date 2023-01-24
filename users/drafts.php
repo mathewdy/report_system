@@ -73,9 +73,22 @@ $user_id = $_SESSION['user_id'];
     <div class="dropdown border-top">
       <!-- Banda dito ko kailangan yung query ng user image -->
 
-      <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="..." alt="user" width="24" height="24" class="rounded-circle">
-      </a>
+      <?php
+
+        $query_image = "SELECT image FROM users WHERE user_id = '$user_id'";
+        $run_image = mysqli_query($conn,$query_image);
+
+        if(mysqli_num_rows($run_image) > 0) {
+          foreach($run_image as $row_image){
+            ?>
+              <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="<?php echo "Images/" . $row_image['image']?>" alt="user" width="24" height="24" class="rounded-circle">
+              </a>
+
+            <?php
+          }
+        }
+      ?>
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
         <li><a class="dropdown-item" href="#">Profile</a></li>
         <li><hr class="dropdown-divider"></li>
