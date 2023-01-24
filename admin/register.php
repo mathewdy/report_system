@@ -107,7 +107,7 @@ if (isset($_POST['register'])) {
     $dilg_id = ucfirst($_POST['dilg_id']);
     $barangay_id = 0;
 
-    $query_validation = "SELECT email FROM users WHERE email = '$username'";
+    $query_validation = "SELECT `user_type`,`email` FROM `users` WHERE user_type = '1' AND email = '$username' ";
     $run_validation = mysqli_query($conn, $query_validation);
 
     if (mysqli_num_rows($run_validation) > 0) {
@@ -127,13 +127,13 @@ if (isset($_POST['register'])) {
     } else {
         //validation
         //generate user_id 
-        $query_user_id = "SELECT * FROM users ORDER BY user_id DESC LIMIT 1";
+        $query_user_id = "SELECT * FROM users WHERE user_type = '1' ORDER BY user_id DESC LIMIT 1";
         $run_user_id = mysqli_query($conn, $query_user_id);
         if (mysqli_num_rows($run_user_id) > 0) {
             foreach ($run_user_id as $row) {
                 $user_id = $row['user_id'];
                 $get_number = str_replace("ADM", "", $user_id);
-                $id_increment = $get_number++;
+                $id_increment = $get_number + 1;
                 $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
 
                 $id = "ADM" . $get_string;
@@ -141,7 +141,7 @@ if (isset($_POST['register'])) {
                 $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,dilg_id,image,date_time_created,date_time_updated) 
                 VALUES ('$user_type','$id','$username', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$dilg_id', '$image', '$date $time' , '$date $time')";
                 $run_registration = mysqli_query($conn, $query_registration);
-                move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
+                move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
 
 
                 if ($run_registration) {
@@ -156,7 +156,7 @@ if (isset($_POST['register'])) {
 
             $username = $_POST['email'];
 
-            $query_validation = "SELECT email FROM users WHERE email = '$username'";
+            $query_validation = "SELECT `user_type`,`email` FROM `users` WHERE user_type = '1' AND email = '$username' ";
             $run_validation = mysqli_query($conn, $query_validation);
 
             if (mysqli_num_rows($run_validation) > 0) {
