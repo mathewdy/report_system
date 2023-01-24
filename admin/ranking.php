@@ -28,11 +28,7 @@ include('session.php');
         <tbody>
             <?php
 
-            $sql = "SELECT to_user, COUNT(to_user) as count
-                    FROM reports
-                    WHERE status = '1'
-                    GROUP BY to_user
-                    ORDER BY count DESC ";
+            $sql = "SELECT * FROM barangay LEFT JOIN ( SELECT to_user, COUNT(*) AS count FROM reports WHERE status = '1' GROUP BY to_user ) count ON count.to_user = barangay.brgy  ORDER BY count DESC ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
@@ -44,7 +40,7 @@ include('session.php');
 
                     <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $row['to_user'] ?></td>
+                        <td><?php echo $row['brgy'] ?></td>
                         <td><?php echo $row['count'] ?></td>
 
                     </tr>
