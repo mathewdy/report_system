@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
+include('session.php');
 include('edit-notes.php');
 
 $user_id = $_SESSION['user_id'];

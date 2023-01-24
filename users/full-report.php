@@ -3,6 +3,7 @@
 include('../connection.php');
 session_start();
 ob_start();
+include('session.php');
 
 ?>
 

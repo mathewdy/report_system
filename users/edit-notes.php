@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
+include('session.php');
 
 if (isset($_POST['update'])) {
 
