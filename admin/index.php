@@ -25,36 +25,11 @@ $user_id = $_SESSION['user_id'];
 </head>
 
 <body>
-  <?php
-
-
-
-
-  $ciphering = "AES-128-CTR";
-
-  // Use OpenSSl Encryption method
-  $iv_length = openssl_cipher_iv_length($ciphering);
-  $options = 0;
-
-  // Non-NULL Initialization Vector for encryption
-  $encryption_iv = '1234567891011121';
-
-  // Store the encryption key
-  $encryption_key = "TeamAgnat";
-
-  // Use openssl_encrypt() function to encrypt the data
-  $encryption = openssl_encrypt(
-    $user_id,
-    $ciphering,
-    $encryption_key,
-    $options,
-    $encryption_iv
-  );
-
-  $report_link = "add-report.php?uid=" . $encryption;
-  $view_link = "reports.php?uid=" . $encryption;
-  $draft_link = "draft.php?uid=" . $encryption;
-  $note_link = "add-note.php?uid=" . $encryption;
+ <?php
+  $report_link = "add-report.php";
+  $view_link = "reports.php";
+  $draft_link = "draft.php";
+  $note_link = "add-note.php";
   ?>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh;">

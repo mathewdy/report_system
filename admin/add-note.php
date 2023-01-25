@@ -12,36 +12,14 @@ error_reporting(E_ERROR & E_WARNING);
 
 $user_id = $_SESSION['user_id'];
 
-if (isset($_GET['uid'])) {
-  // Store the cipher method
-  $ciphering = "AES-128-CTR";
-  $options = 0;
-  // Non-NULL Initialization Vector for decryption
-  $decryption_iv = '1234567891011121';
-
-  // Store the decryption key
-  $decryption_key = "TeamAgnat";
-
-  // Use openssl_decrypt() function to decrypt the data
-  $user_id = openssl_decrypt(
-    $_GET['uid'],
-    $ciphering,
-    $decryption_key,
-    $options,
-    $decryption_iv
-  );
-  // foreach ($_GET as $encrypting_lrn => $encrypt_lrn){
-  //   $decrypt_lrn = $_GET[$encrypting_lrn] = base64_decode(urldecode($encrypt_lrn));
-  //   $decrypted_lrn = ((($decrypt_lrn*987654)/56789)/12345678911);
-  // }
 
 
-}
 
-$report_link = "add-report.php?uid=" . $user_id;
-$view_link = "reports.php?uid=" . $user_id;
-$draft_link = "draft.php?uid=" . $user_id;
-$note_link = "add-note.php?uid=" . $user_id;
+
+$report_link = "add-report.php";
+$view_link = "reports.php";
+$draft_link = "draft.php";
+$note_link = "add-note.php";
 
 
 
