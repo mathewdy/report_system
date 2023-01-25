@@ -35,6 +35,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -43,7 +44,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+                $count = 1;
                 foreach ($run as $row) {
+
                     $month = $row['month'];
 
                     if ($month == 1) {
@@ -51,8 +54,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count  ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -60,6 +65,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -73,6 +79,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -81,7 +88,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 2) {
@@ -89,8 +98,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -98,6 +109,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -112,6 +124,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -120,7 +133,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 3) {
@@ -128,8 +143,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -137,6 +154,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -150,6 +168,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -158,7 +177,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 4) {
@@ -166,8 +187,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -175,10 +198,10 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
-
         </tbody>
     </table>
 
@@ -188,6 +211,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -196,7 +220,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 5) {
@@ -204,8 +230,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -213,10 +241,10 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
-
         </tbody>
     </table>
 
@@ -226,15 +254,17 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
         </thead>
         <tbody>
-
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 6) {
@@ -242,8 +272,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -251,6 +283,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -264,6 +297,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -272,7 +306,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 7) {
@@ -280,8 +316,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -289,10 +327,10 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
-
         </tbody>
     </table>
 
@@ -302,6 +340,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -310,7 +349,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 8) {
@@ -318,8 +359,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -327,6 +370,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -339,6 +383,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -347,7 +392,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 9) {
@@ -355,8 +402,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -364,10 +413,10 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
-
         </tbody>
     </table>
 
@@ -377,6 +426,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -385,7 +435,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 10) {
@@ -393,8 +445,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -402,6 +456,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -414,6 +469,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -422,7 +478,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 11) {
@@ -430,8 +488,10 @@ $run = mysqli_query($conn, $sql);
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -439,6 +499,7 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
             }
             ?>
@@ -452,6 +513,7 @@ $run = mysqli_query($conn, $sql);
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -460,15 +522,20 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
+
                 foreach ($run as $row) {
+                    $count = 1;
                     $month = $row['month'];
 
                     if ($month == 12) {
+
             ?>
 
                         <tr>
-                            <td><?php echo $month ?></td>
+                            <td><?php echo $count ?></td>
                             <td><?php echo $row['subject']  ?></td>
+                            <td><?php echo $row['date_created']  ?></td>
+
 
 
                         </tr>
@@ -476,11 +543,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
                     }
+                    $count++;
                 }
-            } else {
-                echo "No reports";
             }
-
             ?>
 
         </tbody>

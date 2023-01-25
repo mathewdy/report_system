@@ -37,6 +37,7 @@ $month = date('F');
     <table>
         <thead>
             <tr>
+                <th>Week</th>
                 <th>Subject</th>
                 <th>Date Created</th>
             </tr>
@@ -53,8 +54,9 @@ $month = date('F');
             ?>
 
                     <tr>
-                        <td><?php echo $month ?></td>
+                        <td><?php echo $row['week'] ?></td>
                         <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['date_created'] ?></td>
 
 
                     </tr>
