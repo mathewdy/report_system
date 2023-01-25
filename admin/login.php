@@ -16,7 +16,7 @@ include('../connection.php');
 
 <body>
     <form action="" method="POST">
-        <label for="">Username</label>
+        <label for="">Login</label>
         <input type="text" name="username" maxlength="25" required>
         <label>Password</label>
         <input type="password" name="password" maxlength="50" required>

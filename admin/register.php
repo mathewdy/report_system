@@ -23,7 +23,7 @@ ob_start();
     <form action="" method="POST" enctype="multipart/form-data">
 
         <h2>Log In Info</h2>
-        <label for="">Username</label>
+        <label for="">Email</label>
         <br>
         <input type="text" name="email">
         <br>
