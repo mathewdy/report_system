@@ -77,20 +77,20 @@ $user_id = $_SESSION['user_id'];
 
         <?php
 
-      $query_image = "SELECT image FROM users WHERE user_id = '$user_id'";
-      $run_image = mysqli_query($conn,$query_image);
+        $query_image = "SELECT image FROM users WHERE user_id = '$user_id'";
+        $run_image = mysqli_query($conn, $query_image);
 
-      if(mysqli_num_rows($run_image) > 0) {
-        foreach($run_image as $row_image){
-          ?>
+        if (mysqli_num_rows($run_image) > 0) {
+          foreach ($run_image as $row_image) {
+        ?>
             <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo "Images/" . $row_image['image']?>" alt="user" width="24" height="24" class="rounded-circle">
+              <img src="<?php echo "Images/" . $row_image['image'] ?>" alt="user" width="24" height="24" class="rounded-circle">
             </a>
 
-          <?php
+        <?php
+          }
         }
-      }
-      ?>
+        ?>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
           <li><a class="dropdown-item" href="#">Profile</a></li>
           <li>
@@ -101,46 +101,71 @@ $user_id = $_SESSION['user_id'];
       </div>
     </div>
     <div class="container my-5">
-      <?php
 
 
-      $query_reports = "SELECT * FROM REPORTS WHERE to_user = '$user_id'";
-      $run_reports = mysqli_query($conn, $query_reports);
-
-      //dapat dito riri, mag mumukhang table parang lang
-
-      if (mysqli_num_rows($run_reports) > 0) {
-        $no = 1;
-        foreach ($run_reports as $row) {
-      ?>
-
-          <br>
-          <label for="">No. <?php echo $no ?></label>
-          <br>
-          <label for=""><?php echo $row['from_user'] ?></label>
-          <br>
-          <p><?php echo $row['subject'] ?></p>
 
 
-          <a href="full-report.php?to_user=<?php echo $row['to_user'] ?>">View Entire Report</a>
-
-          <br>
-          <label for="">
-            <?php
-            echo $date = date("M-d-Y", strtotime($row['date_created']));
-            ?>
-          </label>
-
-
-      <?php
-          $no++;
-        }
-      } else {
-        echo "No reports";
-      }
+      <table id="data">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>To</th>
+            <th>Subject</th>
+            <th>Date Sent</th>
+            <th>Date End</th>
 
 
-      ?>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+
+
+          //query of barangay 
+
+          $query = "SELECT `barangay` FROM `users` WHERE user_id = '$user_id'";
+          $run = mysqli_query($conn, $query);
+          $select = mysqli_fetch_array($run);
+
+          $brgy = $select['barangay'];
+
+
+
+
+          $query_reports = "SELECT * FROM REPORTS WHERE to_user = '$brgy' AND status = '4' ";
+          $run_reports = mysqli_query($conn, $query_reports);
+
+          //dapat dito riri, mag mumukhang table parang lang
+
+          if (mysqli_num_rows($run_reports) > 0) {
+            $no = 1;
+            foreach ($run_reports as $row) {
+
+          ?>
+
+              <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
+                <td><?php echo $no; ?></td>
+                <td><?php echo $row['to_user'] ?></td>
+                <td><?php echo $row['subject'] ?></td>
+                <td><?php echo $row['date_start'] ?></td>
+                <td><?php echo $row['date_end'] ?></td>
+
+
+                <td>
+                  <a href="full-report.php?to_user=<?php echo $row['to_user'] ?>">View Entire Report</a>
+                </td>
+              </tr>
+        </tbody>
+      </table>
+
+
+
+  <?php
+            }
+          }
+  ?>
 
     </div>
   </main>
@@ -149,6 +174,8 @@ $user_id = $_SESSION['user_id'];
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 
 </body>
+
+
 
 </html>
 
