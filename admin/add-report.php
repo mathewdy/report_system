@@ -43,6 +43,19 @@ $note_link = "add-note.php";
 </head>
 
 <body>
+
+
+  <?php
+  // database query 
+
+  $query = "SELECT * FROM users WHERE user_id = '$user_id'";
+  $run_query_data = mysqli_query($conn, $query);
+  $rows = mysqli_fetch_array($run_query_data);
+
+
+
+  ?>
+
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -120,7 +133,7 @@ $note_link = "add-note.php";
         <form action="" method="POST" enctype="multipart/form-data">
           <span class="d-flex form-control">
             <label for="">From:</label>
-            <input type="text" class="w-100" style="border:none; outline:none;" name="from">
+            <input type="text" class="w-100" style="border:none; outline:none;" name="from" value="<?php echo $rows['email'] ?>" readonly>
           </span>
           <span class="d-flex form-control">
             <label for="">To:</label>
