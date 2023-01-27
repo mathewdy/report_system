@@ -7,6 +7,7 @@ ob_start();
 
 
 if (isset($_GET['status']) && isset($_GET['user_id']) && isset($_GET['report_id'])) {
+    $report_id = $_GET['report_id'];
 
     $query = "DELETE FROM `reports` WHERE report_id = '$report_id' AND status = '2'";
     $run_query = mysqli_query($conn, $query);

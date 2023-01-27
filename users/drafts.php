@@ -90,7 +90,7 @@ $user_id = $_SESSION['user_id'];
         }
       ?>
       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="profile.php">Profile</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
       </ul>
