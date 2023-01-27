@@ -169,7 +169,7 @@ if (isset($_POST['add'])) {
   $run_insert = mysqli_query($conn, $insert);
 
   if ($run_insert) {
-    echo "sucess";
+    echo "<script>alert('success')</script>";
   } else {
     $conn->error;
   }

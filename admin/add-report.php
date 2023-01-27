@@ -318,7 +318,7 @@ if (isset($_POST['send'])) {
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
-          echo "sucess";
+          echo "<script>alert('Success')</script>";
         } else {
           $conn->error;
         }
@@ -332,7 +332,7 @@ if (isset($_POST['send'])) {
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        echo "<script>alert('Success')</script>";
       } else {
         $conn->error;
       }
@@ -363,7 +363,7 @@ if (isset($_POST['send'])) {
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
-          echo "sucess";
+          echo "<script>alert('Success')</script>";
         } else {
           $conn->error;
         }
@@ -377,7 +377,7 @@ if (isset($_POST['send'])) {
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        echo "<script>alert('Success')</script>";
       } else {
         $conn->error;
       }
@@ -498,7 +498,7 @@ if (isset($_POST['draft'])) {
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        echo "<script>alert('Draft')</script>";
       } else {
         $conn->error;
       }
@@ -528,7 +528,7 @@ if (isset($_POST['draft'])) {
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
-          echo "sucess";
+          echo "<script>alert('Draft')</script>";
         } else {
           $conn->error;
         }
@@ -542,7 +542,7 @@ if (isset($_POST['draft'])) {
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        echo "<script>alert('Draft')</script>";
       } else {
         $conn->error;
       }

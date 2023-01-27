@@ -217,7 +217,8 @@ if (isset($_POST['register'])) {
 
 
                 if ($run_registration) {
-                    echo "Added";
+                    echo "<script>alert('Succesfull register')</script>";
+                    echo "<script>window.location.href='login.php' </script>";
 
                     //redirection sa login page
                 } else {
@@ -232,6 +233,7 @@ if (isset($_POST['register'])) {
             $run_validation = mysqli_query($conn, $query_validation);
 
             if (mysqli_num_rows($run_validation) > 0) {
+                echo "<script>alert('Succesfull register')</script>";
                 echo "<script>alert('Email already taken') </script>";
                 exit();
             }
@@ -243,7 +245,8 @@ if (isset($_POST['register'])) {
             $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
             if ($run_registration) {
-                echo "Added";
+                echo "<script>alert('Succesfull register')</script>";
+                echo "<script>window.location.href='login.php' </script>";
                 //redirection sa login page
 
             } else {
