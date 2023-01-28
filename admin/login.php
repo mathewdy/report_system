@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
@@ -17,26 +18,30 @@ include('../connection.php');
     <title>Login admin</title>
 </head>
 <style>
-    .bg{
+    .bg {
         position: fixed;
         bottom: 0;
         left: 0;
         z-index: -1;
     }
-    .blob{
+
+    .blob {
         position: fixed;
         top: -150%;
         transform: rotate(-120deg);
         right: -70%;
         z-index: -2;
     }
-    body{
+
+    body {
         overflow-x: hidden;
     }
-    .avatar{
+
+    .avatar {
         height: 100px;
     }
 </style>
+
 <body class="d-none">
     <div class="preload-wrapper">
         <div class="spinner-border text-info" role="status">
@@ -65,22 +70,22 @@ include('../connection.php');
                                     <img class="card-img-top avatar" src="../src/img/avatar.svg" alt="">
                                     <p class="h5 text-center">Welcome Admin!</p>
                                     <form action="" method="POST">
-                                    <div class="col-lg-12 mb-4">
-                                        <label for="">Username</label>
-                                        <input type="text" class="form-control" name="username" maxlength="25" required>
-                                    </div>
-                                    <div class="col-lg-12 mb-4">
-                                        <label>Password</label>
-                                        <input type="password" class="form-control" name="password" maxlength="50" required>
-                                    </div>
-                                    <hr>
-                                    <div class="col-lg-12 text-center">
-                                        <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
-                                    </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="">Username</label>
+                                            <input type="text" class="form-control" name="username" maxlength="25" required>
+                                        </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" name="password" maxlength="50" required>
+                                        </div>
+                                        <hr>
+                                        <div class="col-lg-12 text-center">
+                                            <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
+                                        </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>   
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,7 +105,7 @@ include('../connection.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        $(window).on('load', function(){
+        $(window).on('load', function() {
             $('body').removeClass('d-none');
             $('.preload-wrapper').fadeOut(1000);
         })
@@ -141,5 +146,5 @@ if (isset($_POST['login'])) {
     }
 }
 
-
+ob_end_flush();
 ?>

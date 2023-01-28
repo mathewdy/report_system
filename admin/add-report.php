@@ -131,6 +131,13 @@ $note_link = "add-note.php";
     <div class="container">
       <div class="card shadow p-5" style="border: none;">
         <form action="" method="POST" enctype="multipart/form-data">
+
+          <span class="d-flex form-control">
+            <label for="">Date Start</label>
+            <input type="date" name="date_start">
+            <label for="">Date End</label>
+            <input type="date" name="date_end">
+          </span>
           <span class="d-flex form-control">
             <label for="">From:</label>
             <input type="text" class="w-100" style="border:none; outline:none;" name="from" value="<?php echo $rows['email'] ?>" readonly>

@@ -20,26 +20,30 @@ ob_start();
     <title>Document</title>
 </head>
 <style>
-    .bg{
+    .bg {
         position: fixed;
         bottom: 0;
         left: 0;
         z-index: -1;
     }
-    .blob{
+
+    .blob {
         position: absolute;
         height: 50rem;
         top: -50%;
         right: -25%;
         z-index: -2;
     }
-    body{
+
+    body {
         overflow-x: hidden;
     }
-    .avatar{
+
+    .avatar {
         height: 100px;
     }
 </style>
+
 <body class="d-none">
     <div class="preload-wrapper">
         <div class="spinner-border text-info" role="status">
@@ -51,7 +55,7 @@ ob_start();
 
     <div class="container-xxl">
         <div class="row d-flex justify-content-center align-items-center pt-5">
-            <div class="col-lg-10">    
+            <div class="col-lg-10">
                 <div class="row shadow">
                     <div class="col-lg-6 p-5 d-flex justify-content-center align-items-center" style="background: #7694D4;">
                         <img class="card-img-top" src="../src/img/draw.svg" alt="">
@@ -126,12 +130,12 @@ ob_start();
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        $(window).on('load', function(){
+        $(window).on('load', function() {
             $('body').removeClass('d-none');
             $('.preload-wrapper').fadeOut(1000);
         })
@@ -207,7 +211,7 @@ if (isset($_POST['register'])) {
                 $id = "TA" . $get_string;
 
                 //insert
-                $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '$image', '$date $time' , '$date $time')";
+                $query_registration = "INSERT INTO users (user_type,user_id,email,password,first_name,middle_name,last_name,date_of_birth,address,barangay,barangay_id,dilg_id,image,date_time_created,date_time_updated) VALUES ('$user_type','$id','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$address', '$barangay', '$barangay_id', '0' , '$image', '$date $time' , '$date $time')";
                 $run_registration = mysqli_query($conn, $query_registration);
                 move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
 

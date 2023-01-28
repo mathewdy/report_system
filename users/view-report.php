@@ -134,7 +134,7 @@ $user_id = $_SESSION['user_id'];
 
 
 
-          $query_reports = "SELECT * FROM REPORTS WHERE to_user = '$brgy' AND status = '4' ";
+          $query_reports = "SELECT * FROM reports WHERE to_user = '$brgy' AND status = '4' ";
           $run_reports = mysqli_query($conn, $query_reports);
 
           //dapat dito riri, mag mumukhang table parang lang
