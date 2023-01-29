@@ -95,7 +95,7 @@ $note_link = "add-note.php";
       </div>
     </div>
     <div class="container">
-      <div class="card shadow p-5" style="border: none;">
+      <div class="row">
 
         <!-- NOTES -->
 
@@ -140,18 +140,23 @@ $note_link = "add-note.php";
 
 
         ?>
+      <div class="col-lg-3">
+        <div class="card shadow p-5" style="border: none; min-height: 18rem;">
 
-            <p class="card-text"> <?php if (empty($rows['content'])) {
-                                    echo "";
-                                  } else {
-                                    echo $rows['content'];
-                                  }
+                <p class="card-text"> <?php if (empty($rows['content'])) {
+                        echo "";
+                      } else {
+                        echo $rows['content'];
+                      }
 
-                                  ?> </p>
-            <span>
-              <a id="<?php echo ($note_id); ?>" data-id="<?= $note_id ?>" class="btn btn-primary btn-sm edit" data-bs-toggle="modal" data-bs-target="#editNote">Edit</a>
-              <a href="<?php echo ($delete_link) ?>" class="btn btn-danger btn-sm">Delete</a>
-            </span>
+                      ?> </p>
+          <span class="mt-auto text-end">
+            <a id="<?php echo ($note_id); ?>" data-id="<?= $note_id ?>" class="btn btn-primary btn-sm edit" data-bs-toggle="modal" data-bs-target="#editNote">Edit</a>
+            <a href="<?php echo ($delete_link) ?>" class="btn btn-danger btn-sm">Delete</a>
+          </span>
+        </div>
+      </div>
+      
 
             <!-- Modal -->
             <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -170,11 +175,13 @@ $note_link = "add-note.php";
                 </div>
               </div>
             </div>
+
         <?php
           }
         }
         ?>
       </div>
+
       <!-- <div class="card shadow p-5" style="border: none;">
         <form action="" method="POST" enctype="multipart/form-data">
 
