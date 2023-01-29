@@ -88,9 +88,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 2) {
@@ -133,9 +133,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 3) {
@@ -177,9 +177,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 4) {
@@ -220,9 +220,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 5) {
@@ -262,9 +262,9 @@ $run = mysqli_query($conn, $sql);
         <tbody>
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 6) {
@@ -306,9 +306,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 7) {
@@ -349,9 +349,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 8) {
@@ -392,9 +392,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 9) {
@@ -435,9 +435,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 10) {
@@ -478,9 +478,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 11) {
@@ -522,9 +522,9 @@ $run = mysqli_query($conn, $sql);
 
             <?php
             if (mysqli_num_rows($run) > 0) {
-
+                $count = 1;
                 foreach ($run as $row) {
-                    $count = 1;
+
                     $month = $row['month'];
 
                     if ($month == 12) {
