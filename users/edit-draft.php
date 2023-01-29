@@ -28,9 +28,9 @@ error_reporting(E_ERROR & E_WARNING);
     <?php
 
     if (isset($_GET['status']) && isset($_GET['user_id']) && isset($_GET['report_id'])) {
-        echo $status = $_GET['status'];
-        echo $user_id = $_GET['user_id'];
-        echo $report_id = $_GET['report_id'];
+        $status = $_GET['status'];
+        $user_id = $_GET['user_id'];
+        $report_id = $_GET['report_id'];
 
 
         $query = "SELECT * FROM reports WHERE status = '$status' AND user_id = '$user_id' AND report_id = '$report_id'";
@@ -76,7 +76,7 @@ error_reporting(E_ERROR & E_WARNING);
                 echo $row['message'];
             }  ?>  
         </textarea disabled readonly>
-             <input type="file" name="files[]" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable>
+        <input type="file" name="files[]" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable>
 
 
         <input type="submit" name="send" value="Send">
@@ -187,7 +187,7 @@ if (isset($_POST['send'])) {
         $run_update_report = mysqli_query($conn, $update_report);
 
         if ($run_update_report) {
-            echo "sucess";
+            echo "<script>window.location.href='home.php' </script>";
         } else {
             $conn->error;
         }
@@ -204,7 +204,7 @@ if (isset($_POST['send'])) {
         $run_update_report = mysqli_query($conn, $update_report);
 
         if ($run_update_report) {
-            echo "sucess";
+            echo "<script>window.location.href='home.php' </script>";
         } else {
             $conn->error;
         }
@@ -287,7 +287,7 @@ if (isset($_POST['draft'])) {
         $run_update_report = mysqli_query($conn, $update_report);
 
         if ($run_update_report) {
-            echo "sucess";
+            echo "<script>window.location.href='drafts.php' </script>";
         } else {
             $conn->error;
         }
@@ -304,7 +304,8 @@ if (isset($_POST['draft'])) {
         $run_update_report = mysqli_query($conn, $update_report);
 
         if ($run_update_report) {
-            echo "sucess";
+            echo "<script>window.location.href='drafts.php' </script>";
+
         } else {
             $conn->error;
         }

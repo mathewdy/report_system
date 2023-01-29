@@ -3,8 +3,10 @@ ob_start();
 session_start();
 include('../connection.php');
 include('session.php');
- $user_id = $_SESSION['user_id'];
- $email = $_SESSION['email'];
+$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
+require '../vendor/autoload.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +63,14 @@ include('session.php');
       </li>
       <li>
         <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+          </svg>  
+        </a>
+      </li>
+      <li>
+        <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+          Sent
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
             <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
           </svg>  
@@ -203,6 +213,18 @@ include('session.php');
 
 if(isset($_POST['send'])){
 
+
+  $options = array(
+    'cluster' => 'ap1',
+    'useTLS' => true
+  );
+  $pusher = new Pusher\Pusher(
+    'ac61d56134893cb6bd8b',
+    '88335cc2df68ad7e3ae5',
+    '1544747',
+    $options
+  );
+
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
@@ -294,9 +316,10 @@ if(isset($_POST['send'])){
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
-          echo "sucess";
+          $data['message'] = "sucess";
+          $pusher->trigger('my-channel', 'my-event', $data);
         } else {
-          $conn->error;
+          echo $conn->error;
         }
       }
     } else {
@@ -308,9 +331,10 @@ if(isset($_POST['send'])){
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        $data['message'] = "sucess";
+        $pusher->trigger('my-channel', 'my-event', $data);
       } else {
-        $conn->error;
+        echo $conn->error;
       }
     }
   } else {
@@ -339,9 +363,10 @@ if(isset($_POST['send'])){
         $run_insert_report = mysqli_query($conn, $insert_report);
 
         if ($run_insert_report) {
-          echo "sucess";
+          $data['message'] = "sucess";
+          $pusher->trigger('my-channel', 'my-event', $data);
         } else {
-          $conn->error;
+         echo  $conn->error;
         }
       }
     } else {
@@ -353,9 +378,10 @@ if(isset($_POST['send'])){
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "sucess";
+        $data['message'] = "sucess";
+          $pusher->trigger('my-channel', 'my-event', $data);
       } else {
-        $conn->error;
+       echo  $conn->error;
       }
     }
   }

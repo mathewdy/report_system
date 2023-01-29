@@ -322,12 +322,6 @@ if (isset($_POST['send'])) {
       }
     }
 
-
-
-
-
-
-
     // validation of report id 
     //insert report id 
 

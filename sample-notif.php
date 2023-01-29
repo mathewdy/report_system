@@ -20,7 +20,7 @@ include('connection.php');
 
     //query ko yung number of rows at yung 0 status at kung notif lang talaga para sa kanya. sana all sa kanya
 
-    $query_num_notif ="SELECT reports.id, reports.notif_status FROM reports WHERE reports.user_id = 'TA00002' ";
+    $query_num_notif ="SELECT  reports.id, reports.notif_status FROM reports WHERE reports.user_id = 'TA00002' ";
     $run_notif_num = mysqli_query($conn,$query_num_notif);
     $row_num = mysqli_num_rows($run_notif_num);
 

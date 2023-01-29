@@ -93,11 +93,32 @@ ob_start();
                                             </div>
                                         </div>
                                     </div>
+
+                                
+
                                     <div class="col-lg-6">
                                         <div class="row">
                                             <div class="col-lg-12 mb-3">
-                                                <label for="">Barangay</label>
-                                                <input type="text" class="form-control form-control-sm" name="barangay">
+                                            <select name="barangay" id=""  class="form-select">
+                                                <option value="" selected disabled  class="form-select">-Barangay-</option>
+                                                <?php
+
+                                                    $query_barangay = "SELECT * FROM barangay";
+                                                    $run_barangay = mysqli_query($conn,$query_barangay);
+
+                                                    if(mysqli_num_rows($run_barangay) > 0){
+                                                        foreach($run_barangay as $rows){
+                                                            ?>
+
+                                                                    <option value="<?php echo $rows['brgy']?>"><?php echo $rows['brgy']?></option>
+
+                                                            <?php
+                                                        }
+                                                    }
+                                                    
+
+                                                ?>
+                                            </select>
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="">Barangay ID</label>
