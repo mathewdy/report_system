@@ -120,7 +120,7 @@ $note_link = "add-note.php";
           <tbody>
             <?php
 
-            $sql = "SELECT * FROM reports WHERE status = '1' ORDER BY id ASC  ";
+            $sql = "SELECT * FROM reports   ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
@@ -161,6 +161,10 @@ $note_link = "add-note.php";
                   <td><?php echo $row['subject'] ?></td>
                   <?php if ($row['status'] == 1) {
                     echo "<td  bgcolor = green> </td>";
+                  } elseif ($row['status'] == 2) {
+                    echo "<td  bgcolor = yellow> </td>";
+                  } else {
+                    echo "<td  bgcolor = red> </td>";
                   }  ?>
                   <td>
                     <a href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
