@@ -46,7 +46,7 @@ if ($curQuarter == 1) {
     MONTHNAME(date_created) as monthname 
     FROM reports 
     WHERE status = '1' AND YEAR(date_created) = YEAR(CURDATE()) 
-    ORDER BY quarter, date_created ASC;";
+    ORDER BY quarter, date_created ASC";
 
     $run = mysqli_query($conn, $sql);
     ?>
