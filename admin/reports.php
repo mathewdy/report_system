@@ -113,7 +113,7 @@ $note_link = "add-note.php";
               <th>Report ID</th>
               <th>To</th>
               <th>Subject</th>
-              <!-- <th>Status</th> -->
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -159,7 +159,9 @@ $note_link = "add-note.php";
                   <td><?php echo $row['report_id'] ?></td>
                   <td><?php echo $row['to_user'] ?></td>
                   <td><?php echo $row['subject'] ?></td>
-                  <!-- <td><?php echo $row['status'] ?></td> -->
+                  <?php if ($row['status'] == 1) {
+                    echo "<td  bgcolor = green> </td>";
+                  }  ?>
                   <td>
                     <a href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
                   </td>
