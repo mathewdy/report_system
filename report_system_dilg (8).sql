@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2023 at 05:15 AM
+-- Generation Time: Jan 29, 2023 at 06:39 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -130,6 +130,7 @@ CREATE TABLE `reports` (
   `report_id` varchar(50) NOT NULL,
   `from_user` varchar(50) NOT NULL,
   `to_user` varchar(50) NOT NULL,
+  `barangay` varchar(50) NOT NULL,
   `subject` varchar(50) NOT NULL,
   `message` longtext NOT NULL,
   `pdf_files` blob NOT NULL,
@@ -149,8 +150,8 @@ CREATE TABLE `reports` (
 -- Dumping data for table `reports`
 --
 
-INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `subject`, `message`, `pdf_files`, `image`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(49, 'TA00005', 'RID00011', 'Cum sed voluptatem m', 'Barangay 4', 'Ducimus tempor enim', '<p>report</p>', '', '', 1, 0, '0000-00-00', '0000-00-00', 0, '2023-08-11', '12:54:13', '2023-02-02', '12:54:13');
+INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `image`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(49, 'TA00005', 'RID00011', 'Cum sed voluptatem m', 'Barangay 4', '', 'Ducimus tempor enim', '<p>report</p>', '', '', 1, 0, '0000-00-00', '0000-00-00', 0, '2023-08-11', '12:54:13', '2023-02-02', '12:54:13');
 
 -- --------------------------------------------------------
 
@@ -301,7 +302,7 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -324,8 +325,7 @@ ALTER TABLE `user_types`
 --
 ALTER TABLE `reports`
   ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`status`) REFERENCES `report_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reports_ibfk_3` FOREIGN KEY (`to_user`) REFERENCES `barangay` (`brgy`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`status`) REFERENCES `report_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`

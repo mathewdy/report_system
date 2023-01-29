@@ -3,6 +3,9 @@
 include('../connection.php');
 ob_start();
 session_start();
+ $user_id = $_SESSION['user_id'];
+require  '../vendor/autoload.php';
+
 
 ?>
 
@@ -22,7 +25,7 @@ session_start();
 
     //query ko yung number of rows at yung 0 status at kung notif lang talaga para sa kanya. sana all sa kanya
 
-    $query_num_notif ="SELECT  reports.id, reports.notif_status FROM reports WHERE reports.user_id = 'TA00002' ";
+    $query_num_notif ="SELECT  reports.id, reports.notif_status FROM reports WHERE reports.user_id = '$user_id' ";
     $run_notif_num = mysqli_query($conn,$query_num_notif);
     $row_num = mysqli_num_rows($run_notif_num);
 
@@ -42,12 +45,12 @@ session_start();
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Notification <?php echo $row_num?>
             </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" id="notification">
 
             <?php
 
 
-            $query_notifs = "SELECT reports.id, reports.from_user, reports.to_user, reports.subject, reports.notif_status, reports.date_created FROM reports WHERE reports.user_id = 'TA00002' ";
+            $query_notifs = "SELECT reports.id, reports.from_user, reports.to_user, reports.subject, reports.notif_status, reports.date_created FROM reports WHERE reports.user_id = '$user_id' ";
             $run_notif = mysqli_query($conn,$query_notifs);
             if(mysqli_num_rows($run_notif) > 0){
                 foreach($run_notif as $row){
@@ -55,7 +58,7 @@ session_start();
                         <!----tas pipindutin yung view notif if ever na papagawa ko or hindi para gumanda system--->
                         <!---riri ikaw na bahala mag ayos ng notifcation-->
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="#" >
                                 <span>From:</span>
                                 <?php echo $row['from_user']?>
                                 <li><hr class="dropdown-divider"></li>
@@ -81,8 +84,29 @@ session_start();
     </div>
   </div>
 </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('ac61d56134893cb6bd8b', {
+  cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    $.ajax({url: "notification1.php", success: function(result){
+    $("#notification").html(result);
+    }});
+});
+</script>
+
+</body>
 </html>
 
 
