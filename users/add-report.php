@@ -290,7 +290,14 @@ if(isset($_POST['send'])){
 
 
 
+    $check_subject = "SELECT subject FROM reports WHERE subjects =  '$subject'";
+    $run_subject = mysqli_query($conn,$check_subject);
 
+    if($run_subject){
+      echo "<script>alert('Already sent subject') </script>";
+      echo "<script>window.location.href='add-report.php'</script>";
+      exit();
+    }
 
 
     // validation of report id 
