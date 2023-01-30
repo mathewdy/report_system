@@ -156,7 +156,20 @@ $note_link = "add-note.php";
           </span>
 
           <span class="d-flex mb-2">
-            <label for="">Barangay</label>
+
+            <label for="">Barangay:</label>
+            <br>
+            <label for="">Bagong Kalsada</label>
+            <input type="checkbox" name="brgy[]" value="Bagong Kalsada">
+            <br>
+            <label for="">Bandero</label>
+            <input type="checkbox" name="brgy[]" value="Bandero">
+            <br>
+            <label for="">Barandal</label>
+            <input type="checkbox" name="brgy[]" value="Barandal">
+            <br>
+            <label for="">Banlic</label>
+            <input type="checkbox" name="brgy[]" value="Banlic">
             <br>
             <label for="">Barangay 1</label>
             <input type="checkbox" name="brgy[]" value="Barangay 1">
@@ -179,6 +192,127 @@ $note_link = "add-note.php";
             <label for="">Barangay 7</label>
             <input type="checkbox" name="brgy[]" value="Barangay 7">
             <br>
+            <label for="">Batino</label>
+            <input type="checkbox" name="brgy[]" value="Batino">
+            <br>
+            <label for="">Bubuyan </label>
+            <input type="checkbox" name="brgy[]" value="Bubuyan">
+            <br>
+            <label for="">Bucal</label>
+            <input type="checkbox" name="brgy[]" value="Bucal">
+            <br>
+            <label for="">Bunggo</label>
+            <input type="checkbox" name="brgy[]" value="Bunggo">
+            <br>
+            <label for="">Burol</label>
+            <input type="checkbox" name="brgy[]" value="Burol">
+            <br>
+            <label for="">Canlubang</label>
+            <input type="checkbox" name="brgy[]" value="Canlubang">
+            <br>
+            <label for="">Halang</label>
+            <input type="checkbox" name="brgy[]" value="Halang">
+            <br>
+            <label for="">Hornalan</label>
+            <input type="checkbox" name="brgy[]" value="Hornalan">
+            <br>
+            <label for="">Kay-Anlog</label>
+            <input type="checkbox" name="brgy[]" value="Kay-Anlog">
+            <br>
+            <label for="">La Mesa</label>
+            <input type="checkbox" name="brgy[]" value="La Mesa">
+            <br>
+            <label for="">Laguerta</label>
+            <input type="checkbox" name="brgy[]" value="Laguerta">
+            <br>
+            <label for="">Lawa</label>
+            <input type="checkbox" name="brgy[]" value="Lawa">
+            <br>
+            <label for="">Lecheria</label>
+            <input type="checkbox" name="brgy[]" value="Lecheria">
+            <br>
+            <label for="">Lingga</label>
+            <input type="checkbox" name="brgy[]" value="Lingga">
+            <br>
+            <label for="">Looc</label>
+            <input type="checkbox" name="brgy[]" value="Looc">
+            <br>
+            <label for="">Mabato</label>
+            <input type="checkbox" name="brgy[]" value="Mabato">
+            <br>
+            <label for="">Majada-Labas</label>
+            <input type="checkbox" name="brgy[]" value="Majada-Labas">
+            <br>
+            <label for="">Makiling</label>
+            <input type="checkbox" name="brgy[]" value="Makiling">
+            <br>
+            <label for="">Mapagong</label>
+            <input type="checkbox" name="brgy[]" value="Mapagong">
+            <br>
+            <label for="">Masili</label>
+            <input type="checkbox" name="brgy[]" value="Masili">
+            <br>
+            <label for="">Mayapa</label>
+            <input type="checkbox" name="brgy[]" value="Mayapa">
+            <br>
+            <label for="">Paciano Rizal</label>
+            <input type="checkbox" name="brgy[]" value="Paciano Rizal">
+            <br>
+            <label for="">Palingon</label>
+            <input type="checkbox" name="brgy[]" value="Palingon">
+            <br>
+            <label for="">Palo-Alto</label>
+            <input type="checkbox" name="brgy[]" value="Palo-Alto">
+            <br>
+            <label for="">Pansol</label>
+            <input type="checkbox" name="brgy[]" value="Pansol">
+            <br>
+            <label for="">Parian</label>
+            <input type="checkbox" name="brgy[]" value="Parian">
+            <br>
+            <label for="">Prinza</label>
+            <input type="checkbox" name="brgy[]" value="Prinza">
+            <br>
+            <label for="">Punta</label>
+            <input type="checkbox" name="brgy[]" value="Punta">
+            <br>
+            <label for="">Puting Lupa</label>
+            <input type="checkbox" name="brgy[]" value="Puting Lupa">
+            <br>
+            <label for="">Saimsim</label>
+            <input type="checkbox" name="brgy[]" value="Saimsim">
+            <br>
+            <label for="">Sampiruhan</label>
+            <input type="checkbox" name="brgy[]" value="Sampiruhan">
+            <br>
+            <label for="">San Cristobal</label>
+            <input type="checkbox" name="brgy[]" value="San Cristobal">
+            <br>
+            <label for="">San Jose</label>
+            <input type="checkbox" name="brgy[]" value="San Jose">
+            <br>
+            <label for="">San Juan</label>
+            <input type="checkbox" name="brgy[]" value="San Juan">
+            <br>
+            <label for="">Sirang Lupa</label>
+            <input type="checkbox" name="brgy[]" value="Sirang Lupa">
+            <br>
+            <label for="">Sucol</label>
+            <input type="checkbox" name="brgy[]" value="Sucol">
+            <br>
+            <label for="">Turbina</label>
+            <input type="checkbox" name="brgy[]" value="Turbina">
+            <br>
+            <label for="">Ulango</label>
+            <input type="checkbox" name="brgy[]" value="Ulango">
+            <br>
+            <label for="">Uwisan</label>
+            <input type="checkbox" name="brgy[]" value="Uwisan">
+            <br>
+            <label for="">Batino</label>
+            <input type="checkbox" name="brgy[]" value="Batino">
+            <br>
+
           </span>
 
           <div>

@@ -77,17 +77,17 @@ $note_link = "add-note.php";
       <hr>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <?php   
-        $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
-        $query_admin = mysqli_query($conn, $sql_admin);
-        $admin_row = mysqli_fetch_array($query_admin);
-        ?>
+          <?php
+          $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+          $query_admin = mysqli_query($conn, $sql_admin);
+          $admin_row = mysqli_fetch_array($query_admin);
+          ?>
           <img src="<?php if (empty($admin_row['image'])) {
                       echo '../src/img/avatar.svg';
                     } else {
                       echo 'admins/' . $admin_row['image'];
                     } ?>" alt="" width="32" height="32" class="rounded-circle me-2">
-            <?= $admin_row['first_name'] .' '. $admin_row['last_name']?>
+          <?= $admin_row['first_name'] . ' ' . $admin_row['last_name'] ?>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="profile.php">Profile</a></li>
@@ -157,6 +157,10 @@ $note_link = "add-note.php";
                     echo "<td style='background: green;'> </td>";
                   } elseif ($row['status'] == 2) {
                     echo "<td style='background: yellow;'> </td>";
+                  } elseif ($row['status'] == 3) {
+                    echo "<td style='background: yellow;'> </td>";
+                  } elseif ($row['status'] == 4) {
+                    echo "<td style='background: blue;'> </td>";
                   } else {
                     echo "<td style='background: red;'> </td>";
                   }  ?>
