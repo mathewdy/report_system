@@ -4,7 +4,7 @@ session_start();
 include('session.php');
 ob_start();
 
-
+$email = $_SESSION['email'];
 $user_id = $_SESSION['user_id'];
 ?>
 
@@ -72,13 +72,13 @@ $user_id = $_SESSION['user_id'];
           </a>
         </li>
         <li>
-        <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-          Sent
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
-            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-          </svg>  
-        </a>
-      </li>
+          <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+            Sent
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+              <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+            </svg>
+          </a>
+        </li>
       </ul>
       <div class="dropdown border-top">
         <!-- Banda dito ko kailangan yung query ng user image -->
@@ -117,7 +117,7 @@ $user_id = $_SESSION['user_id'];
         <thead>
           <tr>
             <th>No.</th>
-            <th>To</th>
+            <th>From</th>
             <th>Subject</th>
             <th>Date Sent</th>
             <th>Date End</th>
@@ -142,7 +142,7 @@ $user_id = $_SESSION['user_id'];
 
 
 
-          $query_reports = "SELECT * FROM reports WHERE to_user = '$brgy' AND status = '4' ";
+          $query_reports = "SELECT * FROM reports WHERE to_user LIKE '%$email%'  AND barangay = '$brgy' ";
           $run_reports = mysqli_query($conn, $query_reports);
 
           //dapat dito riri, mag mumukhang table parang lang
@@ -155,10 +155,11 @@ $user_id = $_SESSION['user_id'];
 
               <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
                 <td><?php echo $no; ?></td>
-                <td><?php echo $row['to_user'] ?></td>
+                <td><?php echo $row['from_user'] ?></td>
                 <td><?php echo $row['subject'] ?></td>
                 <td><?php echo $row['date_start'] ?></td>
                 <td><?php echo $row['date_end'] ?></td>
+
 
 
                 <td>

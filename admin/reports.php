@@ -5,6 +5,7 @@ include('../connection.php');
 include('session.php');
 include 'images.php';
 
+$email = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 
 
@@ -104,8 +105,7 @@ $note_link = "add-note.php";
           <thead>
             <tr>
               <th>No.</th>
-              <th>Report ID</th>
-              <th>To</th>
+              <th>From</th>
               <th>Subject</th>
               <th>Status</th>
               <th>Actions</th>
@@ -114,7 +114,7 @@ $note_link = "add-note.php";
           <tbody>
             <?php
 
-            $sql = "SELECT * FROM reports";
+            $sql = "SELECT * FROM reports WHERE to_user LIKE '%$email%'";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
@@ -150,8 +150,7 @@ $note_link = "add-note.php";
 
                 <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
                   <td><?php echo $count; ?></td>
-                  <td><?php echo $row['report_id'] ?></td>
-                  <td><?php echo $row['to_user'] ?></td>
+                  <td><?php echo $row['from_user'] ?></td>
                   <td><?php echo $row['subject'] ?></td>
                   <?php if ($row['status'] == 1) {
                     echo "<td style='background: green;'> </td>";
