@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2023 at 06:39 AM
+-- Generation Time: Jan 31, 2023 at 04:48 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -130,15 +130,16 @@ CREATE TABLE `reports` (
   `report_id` varchar(50) NOT NULL,
   `from_user` varchar(50) NOT NULL,
   `to_user` varchar(50) NOT NULL,
-  `barangay` varchar(50) NOT NULL,
+  `barangay` varchar(10000) NOT NULL,
   `subject` varchar(50) NOT NULL,
+  `opr` varchar(100) NOT NULL,
   `message` longtext NOT NULL,
+  `duration` varchar(50) NOT NULL,
   `pdf_files` blob NOT NULL,
-  `image` varchar(300) NOT NULL,
   `status` int(225) NOT NULL,
   `notif_status` int(11) NOT NULL,
-  `date_start` date NOT NULL,
-  `date_end` date NOT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
   `deadline` int(11) NOT NULL,
   `date_created` date NOT NULL,
   `time_created` time NOT NULL,
@@ -150,8 +151,10 @@ CREATE TABLE `reports` (
 -- Dumping data for table `reports`
 --
 
-INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `image`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(49, 'TA00005', 'RID00011', 'Cum sed voluptatem m', 'Barangay 4', '', 'Ducimus tempor enim', '<p>report</p>', '', '', 1, 0, '0000-00-00', '0000-00-00', 0, '2023-08-11', '12:54:13', '2023-02-02', '12:54:13');
+INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(49, 'TA00005', 'RID00011', 'Cum sed voluptatem m', 'Barangay 4', '', 'Ducimus tempor enim', '', '<p>report</p>', '', '', 1, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2023-08-11', '00:00:00', '2023-02-02', '12:54:13'),
+(127, 'ADM00005', 'RID00013', 'thaddeusgamit31@gmail.com', 'mathewdy@gmail.com', 'Real', 'sheesh', 'OPRSA', '<p>GASDASDA</p>', 'Daily', '', 3, 0, '2023-01-31 12:00:00', '2023-02-01 12:00:00', 1, '2023-01-31', '10:00:38', '2023-01-31', '10:00:38'),
+(128, 'ADM00005', 'RID00014', 'thaddeusgamit31@gmail.com', 'mathewdy@gmail.com', 'Real', 'jpoy', 'jopyzxc', '', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '2023-02-01 00:00:00', 0, '2023-01-31', '10:04:07', '2023-01-31', '10:04:07');
 
 -- --------------------------------------------------------
 
@@ -173,6 +176,42 @@ INSERT INTO `report_type` (`id`, `report_type`) VALUES
 (2, 'No Submission'),
 (3, 'Incomplete'),
 (4, 'Late');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sent`
+--
+
+CREATE TABLE `sent` (
+  `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `report_id` varchar(50) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
+  `to_user` varchar(50) NOT NULL,
+  `barangay` varchar(10000) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  `opr` varchar(100) NOT NULL,
+  `message` longtext NOT NULL,
+  `duration` varchar(50) NOT NULL,
+  `pdf_files` blob NOT NULL,
+  `status` int(225) NOT NULL,
+  `notif_status` int(11) NOT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `deadline` int(11) NOT NULL,
+  `date_created` date NOT NULL,
+  `time_created` time NOT NULL,
+  `date_updated` date NOT NULL,
+  `time_updated` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sent`
+--
+
+INSERT INTO `sent` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(6, 'ADM00005', 'RID00014', 'thaddeusgamit31@gmail.com', 'mathewdy@gmail.com', 'Real', 'jpoy', 'jopyzxc', '', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '2023-02-01 00:00:00', 0, '2023-01-31', '10:04:07', '2023-01-31', '10:04:07');
 
 -- --------------------------------------------------------
 
@@ -214,7 +253,8 @@ INSERT INTO `users` (`id`, `user_type`, `user_id`, `email`, `password`, `first_n
 (40, 1, 'ADM00004', 'mathew123', '$2y$10$pfBBgXRb.cNI.a.diOq.jO5mBE.mVI5oW3Bgm0yAVzwF/anl5dsxi', 'Hupyra', 'Bitovakuh', 'Bitovakuh', '2005-09-15', 'rurakewafi', 'Qybyjijov', '0', 'Lalew', 0x3332353230333134345f3436363636353433393030383132395f353839363133373432353136393731373735315f6e2e6a7067, '2023-01-17 01:47:11', '2023-01-17 01:47:11'),
 (41, 2, 'TA00005', 'thaddeusgamit31@gmail.com', '$2y$10$RhZ3vIenrmVj6MMaxJk0feGlz7pPSWIKrL3LADN3uxfNXAdtuvMB.', 'Drake', 'Maia', 'Maia', '1973-12-22', 'Fiona', 'Real', 'Nelle', '', 0x556e7469746c65642064657369676e2e6a7067, '2023-01-21 07:47:55', '2023-01-21 07:47:55'),
 (42, 2, 'TA00006', 'mathewdy@gmail.com', '$2y$10$HCF/Lqdn85RUoHKYMry47e2ur5bN6QXQAPTmH1uILvX1X4YnjmMSu', 'Eleanor', 'Gisela', 'Gisela', '1990-09-13', 'Demetria', 'Real', 'Tucker', '', 0x3332303634323139325f3730363038393839303839373237395f313531363939313231343636353132373131315f6e2e6a7067, '2023-01-23 09:06:22', '2023-01-23 09:06:22'),
-(45, 1, 'ADM00005', 'thaddeusgamit31@gmail.com', '$2y$10$1vlxeUocbqMx20xd4zk1tupMx6p32tim7PubsPYPoMt3MK.L8dP0i', 'Cora', 'Hanna', 'Hanna', '1985-01-02', 'Jenna', 'Ella', '0', 'DILG-0002', 0x556e7469746c65642064657369676e2e6a7067, '2023-01-25 09:39:03', '2023-01-25 09:39:03');
+(45, 1, 'ADM00005', 'thaddeusgamit31@gmail.com', '$2y$10$1vlxeUocbqMx20xd4zk1tupMx6p32tim7PubsPYPoMt3MK.L8dP0i', 'Cora', 'Hanna', 'Hanna', '1985-01-02', 'Jenna', 'Ella', '0', 'DILG-0002', 0x556e7469746c65642064657369676e2e6a7067, '2023-01-25 09:39:03', '2023-01-25 09:39:03'),
+(46, 2, 'TA00007', 'Maxine', '$2y$10$lULh0TmDPatNgrINh7CAG.seeRa5/PgeUmDmlnQV3ra01LAC7Zwn2', 'Thane', 'Kaitlin', 'Kaitlin', '1996-06-15', 'Carolyn', 'Palingon', 'Xena', '0', 0x3332353230333134345f3436363636353433393030383132395f353839363133373432353136393731373735315f6e2e6a7067, '2023-01-31 08:42:48', '2023-01-31 08:42:48');
 
 -- --------------------------------------------------------
 
@@ -268,6 +308,12 @@ ALTER TABLE `report_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sent`
+--
+ALTER TABLE `sent`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -302,13 +348,19 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+
+--
+-- AUTO_INCREMENT for table `sent`
+--
+ALTER TABLE `sent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `user_types`
