@@ -61,6 +61,12 @@ $note_link = "add-note.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+    <!-- nadagdag -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Edit sent</title>
 </head>
 
@@ -157,72 +163,183 @@ $note_link = "add-note.php";
 
                 <form action="" method="POST" enctype="multipart/form-data">
 
+                    <div>
+                        <button type="submit" class="btn btn-primary switch" name="update">Update</button>
+                    </div>
+
                     <label for="">From:</label>
-                    <input type="text" name="from" class="switch" value="<?php if (empty($rows['from_user'])) {
-                                                                                echo "";
-                                                                            } else {
-                                                                                echo $rows['from_user'];
-                                                                            } ?> " >
+                    <input type="text" name="from" value="<?php if (empty($rows['from_user'])) {
+                                                                echo "";
+                                                            } else {
+                                                                echo $rows['from_user'];
+                                                            } ?> ">
                     <br>
                     <label for="">To:</label>
-                    <input type="text" name="to" class="switch" value="<?php if (empty($rows['to_user'])) {
-                                                                            echo "";
-                                                                        } else {
-                                                                            echo $rows['to_user'];
-                                                                        } ?> " >
+                    <input type="text" name="to" value="<?php if (empty($rows['to_user'])) {
+                                                            echo "";
+                                                        } else {
+                                                            echo $rows['to_user'];
+                                                        } ?> ">
+                    <br>
+                    <label for="">Barangay:</label>
+                    <input type="text" name="brgy" value="<?php if (empty($rows['barangay'])) {
+                                                                echo "";
+                                                            } else {
+                                                                echo $rows['barangay'];
+                                                            } ?> ">
                     <br>
                     <label for="">Subject:</label>
-                    <input type="text" name="subject" class="switch" value="<?php if (empty($rows['subject'])) {
-                                                                                echo "";
-                                                                            } else {
-                                                                                echo $rows['subject'];
-                                                                            } ?>" >
-
-                    <textarea id="tiny" name="statement" class="switch"> <?php if (empty($rows['message'])) {
-                                                                                        echo "";
-                                                                                    } else {
-                                                                                        echo $rows['message'];
-                                                                                    }  ?>   </textarea>
-        
-        <h1>Document</h1>
-        <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {
-                                                echo "";
-                                            } else {
-                                                echo "pdf/" . $rows['pdf_files'];
-                                            } ?> " width="500" height="500" > 
+                    <input type="text" name="subject" value="<?php if (empty($rows['subject'])) {
+                                                                    echo "";
+                                                                } else {
+                                                                    echo $rows['subject'];
+                                                                } ?>">
+                    <br>
+                    <label for="">OPR:</label>
+                    <input type="text" name="opr" value="<?php if (empty($rows['opr'])) {
+                                                                echo "";
+                                                            } else {
+                                                                echo $rows['opr'];
+                                                            } ?>">
+                    <br>
 
 
-    </form>
-    </div>
-  </div>
-</main>
+
+                    <textarea id="tiny" name="statement"> <?php if (empty($rows['message'])) {
+                                                                echo "";
+                                                            } else {
+                                                                echo $rows['message'];
+                                                            }  ?>   </textarea>
+
+                    <h1>Document</h1>
+                    <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {
+                                                            echo "";
+                                                        } else {
+                                                            echo "pdf/" . $rows['pdf_files'];
+                                                        } ?> " width="500" height="500">
+
+
+                </form>
+            </div>
+        </div>
+    </main>
     <script>
-    tinymce.init({
-    selector: 'textarea#tiny',
-      readonly: true,
-    width: 1000,
-    height: 300,
-    plugins:[
-        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
-        'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 
-        'table', 'emoticons', 'template', 'codesample'
-    ],
-    toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' + 
-    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-    'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
-    menu: {
-        favs: {title: 'menu', items: 'code visualaid | searchreplace | emoticons'}
-    },
-    menubar: 'favs file edit view insert format tools table',
-    content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
-  
-  });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+        tinymce.init({
+            selector: 'textarea#tiny',
+            width: 1000,
+            height: 300,
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+                'table', 'emoticons', 'template', 'codesample'
+            ],
+            toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
+            menu: {
+                favs: {
+                    title: 'menu',
+                    items: 'code visualaid | searchreplace | emoticons'
+                }
+            },
+            menubar: 'favs file edit view insert format tools table',
+            content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
 
- <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
- <script src="../src/js/switch.js"> </script>
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="../src/js/switch.js"> </script>
 </body>
 
 </html>
+
+
+
+<?php
+if (isset($_POST['update'])) {
+
+    $time = date("h:i:s", time());
+    $date = date('y-m-d');
+
+
+    $from = $_POST['from'];
+    $from = mysqli_escape_string($conn, $from);
+
+    $to = $_POST['to'];
+    $to = mysqli_escape_string($conn, $to);
+
+    $subject = $_POST['subject'];
+    $subject = mysqli_escape_string($conn, $subject);
+
+    $opr = $_POST['opr'];
+    $opr = mysqli_escape_string($conn, $opr);
+
+    $statement = $_POST['statement'];
+    $statement = mysqli_escape_string($conn, $statement);
+
+
+    $brgy = $_POST['brgy'];
+    $brgy = mysqli_escape_string($conn, $brgy);
+
+
+
+
+    $time = date("h:i:s", time());
+    $date = date('y-m-d');
+
+    $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+    $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+
+
+    $date_new_start = new DateTime($date_start);
+    $date_new_end = new DateTime($date_end);
+
+    $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+    $days = intval($diff);
+
+
+
+
+
+
+    $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+    $days = intval($diff);
+
+    if ($days == 1) {
+        $duration = "Daily";
+    } elseif ($days == 7) {
+        $duration = "Weekly";
+    } elseif (
+        $days > 2 || $days <= 14
+    ) {
+        $duration = "Bi-weekly";
+    } elseif ($days == 30) {
+        $duration = "Monthly";
+    } elseif ($days == 90) {
+        $duration = "Quarterly";
+    } elseif ($days >= 180) {
+        $duration = "Semestral";
+    } elseif ($days == 365) {
+        $duration = "Annualy";
+    }
+
+
+
+
+    $insert_report = "UPDATE `sent` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration', `status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
+    $run_insert_report = mysqli_query($conn, $insert_report);
+
+
+
+    if ($run_insert_report) {
+        echo "<script>alert('Success update')</script>";
+    } else {
+        $conn->error;
+    }
+}
+
+
+?>

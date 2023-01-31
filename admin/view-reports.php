@@ -191,12 +191,27 @@ $note_link = "add-note.php";
                                                                 echo $rows['to_user'];
                                                               } ?> " disabled>
           <br>
+          <label for="">Barangay</label>
+          <input type="text" name="brgy" class="switch" value="<?php if (empty($rows['barangay'])) {
+                                                                  echo "";
+                                                                } else {
+                                                                  echo $rows['barangay'];
+                                                                } ?> " disabled>
+          <br>
           <label for="">Subject:</label>
           <input type="text" name="subject" class="switch" value="<?php if (empty($rows['subject'])) {
                                                                     echo "";
                                                                   } else {
                                                                     echo $rows['subject'];
                                                                   } ?>" disabled>
+
+          <br>
+          <label for="">OPR</label>
+          <input type="text" name="opr" class="switch" value="<?php if (empty($rows['opr'])) {
+                                                                echo "";
+                                                              } else {
+                                                                echo $rows['opr'];
+                                                              } ?> " disabled>
 
           <textarea id="tiny" name="statement" class="switch" disabled> <?php if (empty($rows['message'])) {
                                                                           echo "";
@@ -285,9 +300,6 @@ if (isset($_POST['update'])) {
   $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
   $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
 
-  $to = $_POST['to'];
-  $to = mysqli_escape_string($conn, $to);
-
 
   $date_new_start = new DateTime($date_start);
   $date_new_end = new DateTime($date_end);
@@ -322,25 +334,18 @@ if (isset($_POST['update'])) {
   }
 
 
-  if (isset($_FILES['pdf_file']['name'])) {
-    $file_name = $_FILES['pdf_file']['name'];
-    $file_tmp = $_FILES['pdf_file']['tmp_name'];
-
-    move_uploaded_file($file_tmp, "./pdf/" . $file_name);
 
 
-    $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`pdf_files`='$file_name',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
-    $run_insert_report = mysqli_query($conn, $insert_report);
+  $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
+  $run_insert_report = mysqli_query($conn, $insert_report);
 
 
 
-    if ($run_insert_report) {
-      echo "<script>alert('Success update')</script>";
-    } else {
-      $conn->error;
-    }
+  if ($run_insert_report) {
+    echo "<script>alert('Success update')</script>";
+  } else {
+    $conn->error;
   }
-} else {
 }
 
 ?>

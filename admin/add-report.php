@@ -404,10 +404,6 @@ if (isset($_POST['send'])) {
   $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
   $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
 
-  $to = $_POST['to'];
-  $to = mysqli_escape_string($conn, $to);
-
-
   $date_new_start = new DateTime($date_start);
   $date_new_end = new DateTime($date_end);
 
