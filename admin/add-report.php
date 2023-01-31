@@ -46,6 +46,12 @@ $note_link = "add-note.php";
   .focus {
     border: none;
   }
+  body{
+    overflow-x: hidden;
+  }
+  .active{
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
 </style>
 
 <body>
@@ -62,12 +68,10 @@ $note_link = "add-note.php";
 
   ?>
   <main class="d-flex">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4"></span>
+        <img src="../src/img/dilg.png" height="80" alt="">
+        <span class="fs-4 ps-3">DILG</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -126,211 +130,59 @@ $note_link = "add-note.php";
         </ul>
       </div>
     </div>
-    <div class="container">
-      <div class="card shadow p-5" style="border: none;">
-        <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
-
-          <span class="d-flex mb-3">
-            <div class="row w-100">
-              <div class="col-lg-6">
-                <label for="">Date Start:</label>
-                <input type="date" class="form-control w-100" name="date_start">
+    <div class="container p-0">
+      <nav class="navbar bg-dark navbar-dark">
+        <div class="container">
+          <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
+        </div>
+      </nav>
+      <div class="row pt-2 px-4">
+        <div class="col-lg-12">
+          <div class="card p-5 shadow" style="border: none;">
+          <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <span class="d-flex mb-3">
+              <div class="row w-100">
+                <div class="col-lg-6">
+                  <label for="">Date Start:</label>
+                  <input type="date" class="form-control w-100" name="date_start">
+                </div>
+                <div class="col-lg-6">
+                  <label for="">Date End:</label>
+                  <input type="date" class="form-control w-100" name="date_end">
+                </div>
               </div>
-              <div class="col-lg-6">
-                <label for="">Date End:</label>
-                <input type="date" class="form-control w-100" name="date_end">
-              </div>
+            </span>
+            <span class="d-flex align-items-center mb-3">
+              <label for="" style="margin-right: 12px;">From:</label>
+              <input type="text" class="form-control w-100 ms-2" style="border:none; outline:none;" name="from" value="<?php echo $rows['email'] ?>" readonly>
+            </span>
+            <span class="d-flex align-items-center mb-3">
+              <label style="margin-right: 12px;" for="">To:</label>
+              <input type="text" id="search_data" name="to" class="w-100 brgy ms-2" style="border:none; outline:none;" />
+            </span>
+            <span class="d-flex align-items-center mb-3">
+              <label style="margin-right: 12px;" for="">Barangay:</label>
+              <input type="text" id="brgy" name="brgy[]" class="w-100 brgy ms-2" style="border:none; outline:none;" />
+            </span>
+            <span class="d-flex mb-2">
+              <label for="">Subject:</label>
+              <input type="text" class="w-100 ms-2" style="border:none; outline:none;" name="subject">
+            </span>
+            <div>
+              <textarea id="tiny" name="statement"> </textarea>
             </div>
-          </span>
-          <span class="d-flex align-items-center mb-3">
-            <label for="" style="margin-right: 12px;">From:</label>
-            <input type="text" class="form-control w-100" style="border:none; outline:none;" name="from" value="<?php echo $rows['email'] ?>" readonly>
-          </span>
-          <span class="d-flex align-items-center mb-3">
-            <label style="margin-right: 12px;" for="">To:</label>
-            <input type="text" id="search_data" name="to" class="w-100 brgy mx-2" style="border:none; outline:none;" />
-          </span>
-          <span class="d-flex mb-2">
-            <label for="">Subject:</label>
-            <input type="text" class="w-100" style="border:none; outline:none;" name="subject">
-          </span>
 
-          <span class="d-flex mb-2">
+            <input type="file" class="form-control mt-2" name="pdf_file" id="" accept=".pdf">
 
-            <label for="">Barangay:</label>
-            <br>
-            <label for="">Bagong Kalsada</label>
-            <input type="checkbox" name="brgy[]" value="Bagong Kalsada">
-            <br>
-            <label for="">Bandero</label>
-            <input type="checkbox" name="brgy[]" value="Bandero">
-            <br>
-            <label for="">Barandal</label>
-            <input type="checkbox" name="brgy[]" value="Barandal">
-            <br>
-            <label for="">Banlic</label>
-            <input type="checkbox" name="brgy[]" value="Banlic">
-            <br>
-            <label for="">Barangay 1</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 1">
-            <br>
-            <label for="">Barangay 2</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 2">
-            <br>
-            <label for="">Barangay 3</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 3">
-            <br>
-            <label for="">Barangay 4</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 4">
-            <br>
-            <label for="">Barangay 5</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 5">
-            <br>
-            <label for="">Barangay 6</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 6">
-            <br>
-            <label for="">Barangay 7</label>
-            <input type="checkbox" name="brgy[]" value="Barangay 7">
-            <br>
-            <label for="">Batino</label>
-            <input type="checkbox" name="brgy[]" value="Batino">
-            <br>
-            <label for="">Bubuyan </label>
-            <input type="checkbox" name="brgy[]" value="Bubuyan">
-            <br>
-            <label for="">Bucal</label>
-            <input type="checkbox" name="brgy[]" value="Bucal">
-            <br>
-            <label for="">Bunggo</label>
-            <input type="checkbox" name="brgy[]" value="Bunggo">
-            <br>
-            <label for="">Burol</label>
-            <input type="checkbox" name="brgy[]" value="Burol">
-            <br>
-            <label for="">Canlubang</label>
-            <input type="checkbox" name="brgy[]" value="Canlubang">
-            <br>
-            <label for="">Halang</label>
-            <input type="checkbox" name="brgy[]" value="Halang">
-            <br>
-            <label for="">Hornalan</label>
-            <input type="checkbox" name="brgy[]" value="Hornalan">
-            <br>
-            <label for="">Kay-Anlog</label>
-            <input type="checkbox" name="brgy[]" value="Kay-Anlog">
-            <br>
-            <label for="">La Mesa</label>
-            <input type="checkbox" name="brgy[]" value="La Mesa">
-            <br>
-            <label for="">Laguerta</label>
-            <input type="checkbox" name="brgy[]" value="Laguerta">
-            <br>
-            <label for="">Lawa</label>
-            <input type="checkbox" name="brgy[]" value="Lawa">
-            <br>
-            <label for="">Lecheria</label>
-            <input type="checkbox" name="brgy[]" value="Lecheria">
-            <br>
-            <label for="">Lingga</label>
-            <input type="checkbox" name="brgy[]" value="Lingga">
-            <br>
-            <label for="">Looc</label>
-            <input type="checkbox" name="brgy[]" value="Looc">
-            <br>
-            <label for="">Mabato</label>
-            <input type="checkbox" name="brgy[]" value="Mabato">
-            <br>
-            <label for="">Majada-Labas</label>
-            <input type="checkbox" name="brgy[]" value="Majada-Labas">
-            <br>
-            <label for="">Makiling</label>
-            <input type="checkbox" name="brgy[]" value="Makiling">
-            <br>
-            <label for="">Mapagong</label>
-            <input type="checkbox" name="brgy[]" value="Mapagong">
-            <br>
-            <label for="">Masili</label>
-            <input type="checkbox" name="brgy[]" value="Masili">
-            <br>
-            <label for="">Mayapa</label>
-            <input type="checkbox" name="brgy[]" value="Mayapa">
-            <br>
-            <label for="">Paciano Rizal</label>
-            <input type="checkbox" name="brgy[]" value="Paciano Rizal">
-            <br>
-            <label for="">Palingon</label>
-            <input type="checkbox" name="brgy[]" value="Palingon">
-            <br>
-            <label for="">Palo-Alto</label>
-            <input type="checkbox" name="brgy[]" value="Palo-Alto">
-            <br>
-            <label for="">Pansol</label>
-            <input type="checkbox" name="brgy[]" value="Pansol">
-            <br>
-            <label for="">Parian</label>
-            <input type="checkbox" name="brgy[]" value="Parian">
-            <br>
-            <label for="">Prinza</label>
-            <input type="checkbox" name="brgy[]" value="Prinza">
-            <br>
-            <label for="">Punta</label>
-            <input type="checkbox" name="brgy[]" value="Punta">
-            <br>
-            <label for="">Puting Lupa</label>
-            <input type="checkbox" name="brgy[]" value="Puting Lupa">
-            <br>
-            <label for="">Saimsim</label>
-            <input type="checkbox" name="brgy[]" value="Saimsim">
-            <br>
-            <label for="">Sampiruhan</label>
-            <input type="checkbox" name="brgy[]" value="Sampiruhan">
-            <br>
-            <label for="">San Cristobal</label>
-            <input type="checkbox" name="brgy[]" value="San Cristobal">
-            <br>
-            <label for="">San Jose</label>
-            <input type="checkbox" name="brgy[]" value="San Jose">
-            <br>
-            <label for="">San Juan</label>
-            <input type="checkbox" name="brgy[]" value="San Juan">
-            <br>
-            <label for="">Sirang Lupa</label>
-            <input type="checkbox" name="brgy[]" value="Sirang Lupa">
-            <br>
-            <label for="">Sucol</label>
-            <input type="checkbox" name="brgy[]" value="Sucol">
-            <br>
-            <label for="">Turbina</label>
-            <input type="checkbox" name="brgy[]" value="Turbina">
-            <br>
-            <label for="">Ulango</label>
-            <input type="checkbox" name="brgy[]" value="Ulango">
-            <br>
-            <label for="">Uwisan</label>
-            <input type="checkbox" name="brgy[]" value="Uwisan">
-            <br>
-            <label for="">Batino</label>
-            <input type="checkbox" name="brgy[]" value="Batino">
-            <br>
-
-          </span>
-
-          <div>
-            <textarea id="tiny" name="statement"> </textarea>
-          </div>
-
-          <input type="file" class="form-control mt-2" name="pdf_file" id="" accept=".pdf">
-          <br>
-
-          <span class="d-flex justify-content-end align-items-center">
-            <input type="submit" class="btn btn-primary btn-md" name="send" value="Submit">
-            <input type="submit" class="btn btn-danger btn-md" name="draft" value="Save as Draft">
-          </span>
-
-
-
-        </form>
+            <span class="d-flex justify-content-end align-items-center">
+              <input type="submit" class="btn btn-primary btn-md" name="send" value="Submit">
+              <input type="submit" class="btn btn-danger btn-md" name="draft" value="Save as Draft">
+            </span>
+          </form>
+        </div>
+        </div>
       </div>
+      
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -338,8 +190,6 @@ $note_link = "add-note.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
-
-  <script src="../src/Tagator/fm.tagator.jquery.js"></script>
   <script src="../src/js/multiple.js"></script>
   <script>
     $('#search_data').tokenfield({
@@ -347,6 +197,35 @@ $note_link = "add-note.php";
         source: function(data, response) {
           $.ajax({
             url: 'brgy.php',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+              name: data.term
+            },
+            success: function(res) {
+              // response(res)
+              var usr = $.map(res, function(name) {
+                return {
+                  label: name,
+                  value: name
+                }
+              })
+              var results = $.ui.autocomplete.filter(usr, data.term)
+              response(results)
+              console.log(results)
+            }
+          })
+        },
+        delay: 100
+      },
+    })
+  </script>
+  <script>
+    $('#brgy').tokenfield({
+      autocomplete: {
+        source: function(data, response) {
+          $.ajax({
+            url: 'brgy2.php',
             method: 'GET',
             dataType: 'json',
             data: {
