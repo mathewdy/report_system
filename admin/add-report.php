@@ -1,7 +1,7 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 ob_start();
 session_start();
-date_default_timezone_set('Asia/Manila');
 include('../connection.php');
 include('session.php');
 include('images.php');
@@ -370,6 +370,8 @@ if (isset($_POST['send'])) {
 
 
 
+
+
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
@@ -399,8 +401,8 @@ if (isset($_POST['send'])) {
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
-  $date_start = date('Y-m-d', strtotime($_POST['date_start']));
-  $date_end = date('Y-m-d', strtotime($_POST['date_end']));
+  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
 
   $to = $_POST['to'];
   $to = mysqli_escape_string($conn, $to);
@@ -475,7 +477,14 @@ if (isset($_POST['send'])) {
 
 
         if ($run_insert_report) {
-          echo "<script>alert('Success')</script>";
+
+          $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          $run_sent_report = mysqli_query($conn, $sent_report);
+
+          if ($run_sent_report) {
+            echo "<script>alert('Success')</script>";
+          }
         } else {
           $conn->error;
         }
@@ -492,67 +501,19 @@ if (isset($_POST['send'])) {
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "<script>alert('Success')</script>";
+
+        $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        $run_sent_report = mysqli_query($conn, $sent_report);
+
+        if ($run_sent_report) {
+          echo "<script>alert('Success')</script>";
+        }
       } else {
         $conn->error;
       }
     }
-  } //  else {
-
-  //   // inserting with out file
-
-  //   $file_name = " ";
-
-
-
-  //   $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
-  //   $run_validate_report = mysqli_query($conn, $validate_report);
-
-
-  //   if (mysqli_num_rows($run_validate_report) > 0) {
-
-  //     foreach ($run_validate_report as $row) {
-  //       $report_id = $row['report_id'];
-  //       $get_number = str_replace("RID", "", $report_id);
-  //       $id_increment = $get_number + 1;
-  //       $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-
-  //       $report_id = "RID" . $get_string;
-
-
-  //       $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-  //                    VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','string','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-  //       $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-  //       //insert a query
-
-
-  //       if ($run_insert_report) {
-  //         echo "<script>alert('Success without file')</script>";
-  //       } else {
-  //         $conn->error;
-  //       }
-  //     }
-  //   } else {
-
-  //     $report_id = "RID00001";
-
-
-
-
-  //     $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-  //       VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-  //     $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-  //     if ($run_insert_report) {
-  //       echo "<script>alert('Success')</script>";
-  //     } else {
-  //       $conn->error;
-  //     }
-  //   }
-  // }
+  }
 }
 
 
@@ -562,7 +523,14 @@ if (isset($_POST['send'])) {
 
 if (isset($_POST['draft'])) {
 
-  $time = date("h:i:s", time());
+
+
+
+
+  $time = date(
+    "h:i:s",
+    time()
+  );
   $date = date('y-m-d');
 
 
@@ -575,6 +543,9 @@ if (isset($_POST['draft'])) {
   $subject = $_POST['subject'];
   $subject = mysqli_escape_string($conn, $subject);
 
+  $opr = $_POST['opr'];
+  $opr = mysqli_escape_string($conn, $opr);
+
   $statement = $_POST['statement'];
   $statement = mysqli_escape_string($conn, $statement);
 
@@ -584,11 +555,15 @@ if (isset($_POST['draft'])) {
 
 
 
-  $time = date("h:i:s", time());
+
+  $time = date(
+    "h:i:s",
+    time()
+  );
   $date = date('y-m-d');
 
-  $date_start = date('Y-m-d', strtotime($_POST['date_start']));
-  $date_end = date('Y-m-d', strtotime($_POST['date_end']));
+  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
 
   $to = $_POST['to'];
   $to = mysqli_escape_string($conn, $to);
@@ -607,6 +582,24 @@ if (isset($_POST['draft'])) {
 
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   $days = intval($diff);
+
+  if ($days == 1) {
+    $duration = "Daily";
+  } elseif ($days == 7) {
+    $duration = "Weekly";
+  } elseif (
+    $days > 2 || $days <= 14
+  ) {
+    $duration = "Bi-weekly";
+  } elseif ($days == 30) {
+    $duration = "Monthly";
+  } elseif ($days == 90) {
+    $duration = "Quarterly";
+  } elseif ($days >= 180) {
+    $duration = "Semestral";
+  } elseif ($days == 365) {
+    $duration = "Annualy";
+  }
 
 
 
@@ -639,12 +632,15 @@ if (isset($_POST['draft'])) {
 
 
 
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
 
+
         if ($run_insert_report) {
+
           echo "<script>alert('Success')</script>";
         } else {
           $conn->error;
@@ -657,68 +653,12 @@ if (isset($_POST['draft'])) {
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
-        echo "<script>alert('Success')</script>";
-      } else {
-        $conn->error;
-      }
-    }
-  } else {
 
-    // inserting with out file
-
-    $file_name = " ";
-
-
-
-    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
-    $run_validate_report = mysqli_query($conn, $validate_report);
-
-
-    if (mysqli_num_rows($run_validate_report) > 0) {
-
-      foreach ($run_validate_report as $row) {
-        $report_id = $row['report_id'];
-        $get_number = str_replace("RID", "", $report_id);
-        $id_increment = $get_number + 1;
-        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-
-        $report_id = "RID" . $get_string;
-
-
-
-
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-        $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-        //insert a query
-
-
-        if ($run_insert_report) {
-          echo "<script>alert('Success')</script>";
-        } else {
-          $conn->error;
-        }
-      }
-    } else {
-
-      $report_id = "RID00001";
-
-
-
-
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-      $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-      if ($run_insert_report) {
         echo "<script>alert('Success')</script>";
       } else {
         $conn->error;
