@@ -83,7 +83,7 @@ include('../connection.php');
                                             <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
                                         </div>
                                     </form>
-                                    <a href="register.php">Create new account</a>
+                                    <a href="register.php" class="text-center">Create new account</a>
                                 </div>
                             </div>
                         </div>
