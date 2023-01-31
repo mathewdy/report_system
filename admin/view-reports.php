@@ -159,7 +159,7 @@ $note_link = "add-note.php?uid=" . $report_id;
 
           $status = $rows['status'];
 
-          if ($status == 3) {
+          if ($status == 3 || $status == 2) {
           ?>
             <!-- burahin mo tong comment pag ngawa mo na  -->
             <!-- tapos etong switch is lakihn mo onti -->
@@ -266,82 +266,81 @@ if (isset($_POST['update'])) {
   $subject = $_POST['subject'];
   $subject = mysqli_escape_string($conn, $subject);
 
+  $opr = $_POST['opr'];
+  $opr = mysqli_escape_string($conn, $opr);
+
   $statement = $_POST['statement'];
   $statement = mysqli_escape_string($conn, $statement);
-  $status = 1;
 
 
-  //file upload 
-
-  $targetDir = "pdf/";
-  $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
-
-  $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
-  $fileNames = array_filter($_FILES['files']['name']);
-  if (!empty($fileNames)) {
-    foreach ($_FILES['files']['name'] as $key => $val) {
-      // File upload path 
-      $fileName = basename($_FILES['files']['name'][$key]);
-      $targetFilePath = $targetDir . $fileName;
-
-      // Check whether file type is valid 
-      $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-      if (in_array($fileType, $allowTypes)) {
-        // Upload file to server 
-        if (is_uploaded_file($_FILES["files"]["tmp_name"][$key])) {
-
-          $mime = mime_content_type($_FILES["files"]["tmp_name"][$key]);
-
-          if ($mime === 'application/pdf') {
-
-            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
-              // Image db insert sql 
-              $insert_pdf_ValuesSQL .= $fileName;
-            } else {
-              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
-            }
-          } elseif (strpos($mime, 'image/') === 0) {
-
-            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
-              // Image db insert sql 
-              $insert_images_ValuesSQL .= $fileName;
-            } else {
-              $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
-            }
-          } else {
-            echo ("not supported file, please choose pdf or jpg or png");
-          }
-        }
-      }
-    }
-
-    //insert a query
-    $update_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`subject`='$subject',`message`='$statement',`pdf_files`='$insert_pdf_ValuesSQL',`image`='$insert_images_ValuesSQL',`status`='1',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id'";
-    $run_update_report = mysqli_query($conn, $update_report);
-
-    if ($run_update_report) {
-      echo "sucess";
-    } else {
-      $conn->error;
-    }
-  } else {
-
-    $insert_pdf_ValuesSQL = "";
-    $insert_images_ValuesSQL = "";
+  $brgy = $_POST['brgy'];
+  $brgy = mysqli_escape_string($conn, $brgy);
 
 
-    // with out docuemnts
 
-    //insert a query
-    $update_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`subject`='$subject',`message`='$statement',`pdf_files`='$insert_pdf_ValuesSQL',`image`='$insert_images_ValuesSQL',`status`='1',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id'";
-    $run_update_report = mysqli_query($conn, $update_report);
 
-    if ($run_update_report) {
-      echo "sucess";
+  $time = date("h:i:s", time());
+  $date = date('y-m-d');
+
+  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+
+  $to = $_POST['to'];
+  $to = mysqli_escape_string($conn, $to);
+
+
+  $date_new_start = new DateTime($date_start);
+  $date_new_end = new DateTime($date_end);
+
+  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+  $days = intval($diff);
+
+
+
+
+
+
+  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+  $days = intval($diff);
+
+  if ($days == 1) {
+    $duration = "Daily";
+  } elseif ($days == 7) {
+    $duration = "Weekly";
+  } elseif (
+    $days > 2 || $days <= 14
+  ) {
+    $duration = "Bi-weekly";
+  } elseif ($days == 30) {
+    $duration = "Monthly";
+  } elseif ($days == 90) {
+    $duration = "Quarterly";
+  } elseif ($days >= 180) {
+    $duration = "Semestral";
+  } elseif ($days == 365) {
+    $duration = "Annualy";
+  }
+
+
+  if (isset($_FILES['pdf_file']['name'])) {
+    $file_name = $_FILES['pdf_file']['name'];
+    $file_tmp = $_FILES['pdf_file']['tmp_name'];
+
+    move_uploaded_file($file_tmp, "./pdf/" . $file_name);
+
+
+    $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`pdf_files`='$file_name',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
+    $run_insert_report = mysqli_query($conn, $insert_report);
+
+
+
+    if ($run_insert_report) {
+      echo "<script>alert('Success update')</script>";
     } else {
       $conn->error;
     }
   }
+} else {
 }
 
 ?>

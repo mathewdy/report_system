@@ -523,14 +523,7 @@ if (isset($_POST['send'])) {
 
 if (isset($_POST['draft'])) {
 
-
-
-
-
-  $time = date(
-    "h:i:s",
-    time()
-  );
+  $time = date("h:i:s", time());
   $date = date('y-m-d');
 
 
@@ -556,10 +549,7 @@ if (isset($_POST['draft'])) {
 
 
 
-  $time = date(
-    "h:i:s",
-    time()
-  );
+  $time = date("h:i:s", time());
   $date = date('y-m-d');
 
   $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
