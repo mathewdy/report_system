@@ -32,15 +32,23 @@ $note_link = "add-note.php";
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Report</title>
 </head>
-
+<style>
+  .focus {
+    border: none;
+  }
+  body{
+    overflow-x: hidden;
+  }
+  .active{
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+</style>
 <body>
   <main class="d-flex">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4"></span>
+        <img src="../src/img/dilg.png" height="80" alt="">
+        <span class="fs-4 ps-3">DILG</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -99,8 +107,13 @@ $note_link = "add-note.php";
         </ul>
       </div>
     </div>
-    <div class="container">
-      <div class="card shadow py-3" style="border: none; min-height: 35rem;">
+    <div class="container-fluid p-0">
+      <nav class="navbar bg-dark navbar-dark">
+        <div class="container">
+          <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
+        </div>
+      </nav>
+      <div class="card shadow py-3 mx-4" style="border: none; min-height: 35rem;">
         <table class="table table-bordered" id="data">
           <thead>
             <tr>
