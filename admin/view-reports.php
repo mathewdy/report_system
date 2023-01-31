@@ -159,10 +159,10 @@ $note_link = "add-note.php?uid=" . $report_id;
 
           $status = $rows['status'];
 
-          if ($status == 2) {
+          if ($status == 3) {
           ?>
             <!-- burahin mo tong comment pag ngawa mo na  -->
-            <!-- tapos etong switch is lakihan mo onti -->
+            <!-- tapos etong switch is lakihn mo onti -->
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" role="switch" id="constraint_checkbox">
             </div>
@@ -203,14 +203,6 @@ $note_link = "add-note.php?uid=" . $report_id;
                                                                         } else {
                                                                           echo $rows['message'];
                                                                         }  ?>   </textarea disabled>
-
-
-        <h1>Images</h1>
-        <img src="<?php if (empty($rows['image'])) {
-                    echo "";
-                  } else {
-                    echo "pdf/" . $rows['image'];
-                  } ?>" alt="No image" height="500px" width="500px">
         
         <h1>Document</h1>
         <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {

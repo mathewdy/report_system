@@ -36,13 +36,16 @@ $note_link = "add-note.php";
   .focus {
     border: none;
   }
-  body{
+
+  body {
     overflow-x: hidden;
   }
-  .active{
+
+  .active {
     background: rgba(255, 255, 255, 0.3) !important;
   }
 </style>
+
 <body>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
@@ -166,15 +169,15 @@ $note_link = "add-note.php";
                   <td><?php echo $row['from_user'] ?></td>
                   <td><?php echo $row['subject'] ?></td>
                   <?php if ($row['status'] == 1) {
-                    echo "<td style='background: green;'> </td>";
+                    echo "<td <p style = color:green> Complete </p> </td>";
                   } elseif ($row['status'] == 2) {
-                    echo "<td style='background: yellow;'> </td>";
+                    echo "<td <p style = color:red> No Submssion </p> </td>";
                   } elseif ($row['status'] == 3) {
-                    echo "<td style='background: yellow;'> </td>";
+                    echo "<td <p style = color:yellow> Incomplete </p> </td>";
                   } elseif ($row['status'] == 4) {
-                    echo "<td style='background: blue;'> </td>";
+                    echo "<td <p style = color:blue> Late </p> </td>";
                   } else {
-                    echo "<td style='background: red;'> </td>";
+                    echo "<td <p style = color:red> No Submssion </p>  </td>";
                   }  ?>
                   <td>
                     <a href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>

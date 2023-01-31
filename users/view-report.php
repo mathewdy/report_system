@@ -119,11 +119,8 @@ $user_id = $_SESSION['user_id'];
             <th>No.</th>
             <th>From</th>
             <th>Subject</th>
-            <th>Date Sent</th>
-            <th>Date End</th>
-
-
-
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -148,20 +145,28 @@ $user_id = $_SESSION['user_id'];
           //dapat dito riri, mag mumukhang table parang lang
 
           if (mysqli_num_rows($run_reports) > 0) {
-            $no = 1;
+            $no = 0;
             foreach ($run_reports as $row) {
+              $no++;
 
           ?>
 
-              <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
-                <td><?php echo $no; ?></td>
+              <tr>
+                <td><?php echo $no ?></td>
                 <td><?php echo $row['from_user'] ?></td>
                 <td><?php echo $row['subject'] ?></td>
-                <td><?php echo $row['date_start'] ?></td>
-                <td><?php echo $row['date_end'] ?></td>
-
-
-
+                <?php if ($row['status'] == 1) {
+                  echo "<td <p style = color:green> Complete </p> </td>";
+                } elseif ($row['status'] == 2) {
+                  echo "<td <p style = color:red> No Submssion </p> </td>";
+                } elseif ($row['status'] == 3) {
+                  echo "<td <p style = color:yellow> Incomplete </p> </td>";
+                } elseif ($row['status'] == 4) {
+                  echo "<td <p style = color:blue> Late </p> </td>";
+                } else {
+                  echo "<td <p style = color:red> No Submssion </p>  </td>";
+                }  ?>
+                <td>
                 <td>
                   <a href="full-report.php?to_user=<?php echo $row['to_user'] ?>">View Entire Report</a>
                 </td>
