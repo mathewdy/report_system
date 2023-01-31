@@ -43,10 +43,10 @@ if (isset($_GET['rid'])) {
     exit();
   }
 }
-$report_link = "add-report.php?uid=" . $report_id;
-$view_link = "reports.php?uid=" . $report_id;
-$draft_link = "draft.php?uid=" . $report_id;
-$note_link = "add-note.php?uid=" . $report_id;
+$report_link = "add-report.php";
+$view_link = "reports.php";
+$draft_link = "draft.php";
+$note_link = "add-note.php";
 
 
 
