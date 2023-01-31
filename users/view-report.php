@@ -142,7 +142,7 @@ $user_id = $_SESSION['user_id'];
 
 
 
-          $query_reports = "SELECT * FROM reports WHERE to_user LIKE '%$email%'  AND barangay = '$brgy' ";
+          $query_reports = "SELECT * FROM reports WHERE to_user LIKE '%$email%' AND barangay LIKE '%$brgy%' ";
           $run_reports = mysqli_query($conn, $query_reports);
 
           //dapat dito riri, mag mumukhang table parang lang
