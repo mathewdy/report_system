@@ -49,9 +49,9 @@ $ranking = "ranking.php";
 
 <body>
   <div class="preload-wrapper">
-      <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
-      </div>
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
@@ -126,6 +126,9 @@ $ranking = "ranking.php";
         <div class="col-lg-4">
           <ul class="nav flex-column">
             <li class="nav-item">
+              <a class="nav-link text-dark" href="daily.php">Daily</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-dark" href="weekly.php">Weekly</a>
             </li>
             <li class="nav-item">
@@ -141,12 +144,12 @@ $ranking = "ranking.php";
         </div>
         <div class="col-lg-8">
           <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0; min-height: 35rem;">
-          <?php
+            <?php
 
             $sql = "SELECT *, EXTRACT(week FROM date_created) AS week,
                                 EXTRACT(MONTH FROM date_created) AS month
                                 FROM reports 
-                                WHERE status = '1' AND  YEAR(date_created) = YEAR(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE())
+                                WHERE duration = 'Weekly'  AND YEAR(date_created) = YEAR(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE())
                                 ORDER BY week, date_created ASC";
 
             $run = mysqli_query($conn, $sql);
@@ -155,46 +158,51 @@ $ranking = "ranking.php";
 
             ?>
             <h1 class="text-center text-muted h4"><?php echo $month; ?></h1>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Week</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Week</th>
+                  <th>Subject</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            foreach ($run as $row) {
-                                $month = $row['month'];
-
-
-
-                        ?>
-
-                                <tr>
-                                    <td><?php echo $row['week'] ?></td>
-                                    <td><?php echo $row['subject']  ?></td>
-                                    <td> <?php echo $row['date_created'] ?></td>
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  foreach ($run as $row) {
+                    $month = $row['month'];
 
 
-                                </tr>
+
+                ?>
+
+                    <tr>
+                      <td><?php echo $row['week'] ?></td>
+                      <td><?php echo $row['subject']  ?></td>
+                      <td> <?php echo $row['opr'] ?></td>
+                      <td> <?php echo $row['date_start'] ?></td>
+                      <td> <?php echo $row['date_end'] ?></td>
 
 
-                        <?php
 
-                            }
-                        }
-                        ?>
+                    </tr>
 
-                    </tbody>
-                </table>
+
+                <?php
+
+                  }
+                }
+                ?>
+
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      
+
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -124,13 +124,19 @@ $ranking = "ranking.php";
                 <div class="col-lg-4">
                     <ul class="nav flex-column">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" href="daily.php">Daily</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-secondary" href="weekly.php">Weekly</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="bi-weekly.php">Bi-Weekly</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-secondary" href="monthly.php">Monthly</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="semi-annual.php">Semi-Annual</a>
+                            <a class="nav-link text-dark" href="semi-anual.php">Semi-Annual</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-secondary" href="annualy.php">Annual</a>
@@ -205,8 +211,10 @@ $ranking = "ranking.php";
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Subject</th>
-                                        <th>Date Created</th>
+                                        <th>Report</th>
+                                        <th>OPR</th>
+                                        <th>Date Start</th>
+                                        <th>Deadline</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -223,9 +231,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -268,9 +279,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -312,9 +326,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -355,9 +372,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -397,9 +417,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -441,9 +464,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -484,9 +510,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -527,9 +556,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -570,9 +602,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -613,9 +648,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 
@@ -657,9 +695,12 @@ $ranking = "ranking.php";
                                     ?>
 
                                                 <tr>
-                                                    <td><?php echo $count ?></td>
+                                                    <td><?php echo $count  ?></td>
                                                     <td><?php echo $row['subject']  ?></td>
-                                                    <td><?php echo $row['date_created']  ?></td>
+                                                    <td> <?php echo $row['opr'] ?></td>
+                                                    <td> <?php echo $row['date_start'] ?></td>
+                                                    <td> <?php echo $row['date_end'] ?></td>
+
 
 
 

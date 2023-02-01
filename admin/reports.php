@@ -49,9 +49,9 @@ $ranking = "ranking.php";
 
 <body>
   <div class="preload-wrapper">
-      <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
-      </div>
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
@@ -125,6 +125,9 @@ $ranking = "ranking.php";
       <div class="row mt-4">
         <div class="col-lg-4">
           <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="daily.php">Daily</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link text-secondary" href="weekly.php">Weekly</a>
             </li>
@@ -220,7 +223,7 @@ $ranking = "ranking.php";
           </div>
         </div>
       </div>
-      
+
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -23,9 +23,9 @@ $ranking = "ranking.php";
 
 
 if ($curQuarter == 1 || $curQuarter == 2) {
-    $months = ['January', 'February', 'March', 'April', 'May', 'June'];
+  $months = ['January', 'February', 'March', 'April', 'May', 'June'];
 } elseif ($curQuarter == 3 || $curQuarter == 4) {
-    $months = ['July', 'August', 'September', 'October', 'November', 'December'];
+  $months = ['July', 'August', 'September', 'October', 'November', 'December'];
 }
 
 
@@ -60,9 +60,9 @@ if ($curQuarter == 1 || $curQuarter == 2) {
 
 <body>
   <div class="preload-wrapper">
-      <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
-      </div>
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
@@ -137,7 +137,13 @@ if ($curQuarter == 1 || $curQuarter == 2) {
         <div class="col-lg-4">
           <ul class="nav flex-column">
             <li class="nav-item">
+              <a class="nav-link text-dark" href="daily.php">Daily</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-secondary" href="weekly.php">Weekly</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="bi-weekly.php">Bi-Weekly</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-secondary" href="monthly.php">Monthly</a>
@@ -152,285 +158,309 @@ if ($curQuarter == 1 || $curQuarter == 2) {
         </div>
         <div class="col-lg-8">
           <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0; max-height: 70vh; overflow: hidden; overflow-y:scroll ;">
-          <?php
-    $sql = "SELECT *, EXTRACT(Month FROM date_created) AS month,
+            <?php
+            $sql = "SELECT *, EXTRACT(Month FROM date_created) AS month,
                             MONTHNAME(date_created) as monthname
                             FROM reports 
-                            WHERE   status = '1' AND YEAR(date_created) = YEAR(CURDATE())
+                            WHERE duration = 'semestral' AND YEAR(date_created) = YEAR(CURDATE())
                             ORDER BY month, date_created  ASC";
 
-    $run = mysqli_query($conn, $sql);
+            $run = mysqli_query($conn, $sql);
 
-    ?>
+            ?>
 
 
-    <h1 class="text-center text-muted h4"> <?php echo $months[0] ?></h1>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Subject</th>
-                <th>Date Created</th>
-            </tr>
-        </thead>
-        <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[0] ?></h1>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-            <?php
-            if (mysqli_num_rows($run) > 0) {
-                $count = 1;
-                foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
                     $month = $row['monthname'];
 
                     if ($month == $months[0]) {
 
-            ?>
+                ?>
 
-                        <tr>
-                            <td><?php echo $count  ?></td>
-                            <td><?php echo $row['subject']  ?></td>
-                            <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                        </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
 
-                <h1 class="text-center text-muted h4"> <?php echo $months[1] ?></h1>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[1] ?></h1>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            $count = 1;
-                            foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
-                                $month = $row['monthname'];
+                    $month = $row['monthname'];
 
-                                if ($month == $months[1]) {
+                    if ($month == $months[1]) {
 
-                        ?>
+                ?>
 
-                                    <tr>
-                                        <td><?php echo $count  ?></td>
-                                        <td><?php echo $row['subject']  ?></td>
-                                        <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                                    </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
 
 
-                <h1 class="text-center text-muted h4"> <?php echo $months[2] ?></h1>
-                <table class="table table-bordered mb-5">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[2] ?></h1>
+            <table class="table table-bordered mb-5">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            $count = 1;
-                            foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
-                                $month = $row['monthname'];
+                    $month = $row['monthname'];
 
-                                if ($month == $months[2]) {
+                    if ($month == $months[2]) {
 
-                        ?>
+                ?>
 
-                                    <tr>
-                                        <td><?php echo $count  ?></td>
-                                        <td><?php echo $row['subject']  ?></td>
-                                        <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                                    </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
-                <h1 class="text-center text-muted h4"> <?php echo $months[3] ?></h1>
-                <table class="table table-bordered mb-5">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[3] ?></h1>
+            <table class="table table-bordered mb-5">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            $count = 1;
-                            foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
-                                $month = $row['monthname'];
+                    $month = $row['monthname'];
 
-                                if ($month == $months[3]) {
+                    if ($month == $months[3]) {
 
-                        ?>
+                ?>
 
-                                    <tr>
-                                        <td><?php echo $count  ?></td>
-                                        <td><?php echo $row['subject']  ?></td>
-                                        <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                                    </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
 
-                <h1 class="text-center text-muted h4"> <?php echo $months[4] ?></h1>
-                <table class="table table-bordered mb-5">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[4] ?></h1>
+            <table class="table table-bordered mb-5">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            $count = 1;
-                            foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
-                                $month = $row['monthname'];
+                    $month = $row['monthname'];
 
-                                if ($month == $months[4]) {
+                    if ($month == $months[4]) {
 
-                        ?>
+                ?>
 
-                                    <tr>
-                                        <td><?php echo $count  ?></td>
-                                        <td><?php echo $row['subject']  ?></td>
-                                        <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                                    </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
 
-                <h1 class="text-center text-muted h4"> <?php echo $months[5] ?></h1>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Subject</th>
-                            <th>Date Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <h1 class="text-center text-muted h4"> <?php echo $months[5] ?></h1>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Report</th>
+                  <th>OPR</th>
+                  <th>Date Start</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                        <?php
-                        if (mysqli_num_rows($run) > 0) {
-                            $count = 1;
-                            foreach ($run as $row) {
+                <?php
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 1;
+                  foreach ($run as $row) {
 
-                                $month = $row['monthname'];
+                    $month = $row['monthname'];
 
-                                if ($month == $months[5]) {
+                    if ($month == $months[5]) {
 
-                        ?>
+                ?>
 
-                                    <tr>
-                                        <td><?php echo $count  ?></td>
-                                        <td><?php echo $row['subject']  ?></td>
-                                        <td><?php echo $row['date_created']  ?></td>
+                      <tr>
+                        <td><?php echo $count  ?></td>
+                        <td><?php echo $row['subject']  ?></td>
+                        <td> <?php echo $row['opr'] ?></td>
+                        <td> <?php echo $row['date_start'] ?></td>
+                        <td> <?php echo $row['date_end'] ?></td>
 
 
 
 
-                                    </tr>
+                      </tr>
 
 
-                        <?php
-                                }
-                                $count++;
-                            }
-                        }
-                        ?>
+                <?php
+                    }
+                    $count++;
+                  }
+                }
+                ?>
 
-                    </tbody>
-                </table>
+              </tbody>
+            </table>
 
           </div>
         </div>
       </div>
-      
+
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

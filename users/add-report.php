@@ -414,18 +414,12 @@ if (isset($_POST['send'])) {
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
-  $date_start = date('Y-m-d h:i:s');
+  $date_start = date('Y-m-d h:i');
   $date_end = date('Y-m-d h:i', strtotime($_POST['date_end']));
 
 
   $date_new_start = new DateTime($date_start);
   $date_new_end = new DateTime($date_end);
-
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
-
-
-
 
 
 

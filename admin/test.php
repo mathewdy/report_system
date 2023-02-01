@@ -157,9 +157,44 @@ if (isset($_POST['submit'])) {
 
 
 
+    $time = date("h:i:s", time());
+    $date = date('y-m-d');
 
-    $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
-    $date_end = date('Y-m-d h:i:s ', strtotime($_POST['date_end']));
+    $date_start = date('Y-m-d h:i');
+    $date_end = date('Y-m-d h:i', strtotime($_POST['date_end']));
+
+    $date_new_start = new DateTime($date_start);
+    $date_new_end = new DateTime($date_end);
+
+    $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+    $days = intval($diff);
+
+    // print_r($date_start);
+    // print_r($date_end);
+
+
+
+
+
+
+    if ($days == 1 || $days == 0) {
+        $duration = "Daily";
+    } elseif ($days == 7) {
+        $duration = "Weekly";
+    } elseif ($days > 2 || $days <= 14) {
+        $duration = "Bi-weekly";
+    } elseif ($days == 30) {
+        $duration = "Monthly";
+    } elseif ($days == 90) {
+        $duration = "Quarterly";
+    } elseif ($days >= 180) {
+        $duration = "Semestral";
+    } elseif ($days == 365) {
+        $duration = "Annualy";
+    }
+
+    echo $days . "<br>";
+    echo $duration;
 
 
     // $to = $_POST['to'];
@@ -175,8 +210,6 @@ if (isset($_POST['submit'])) {
 
 
 
-    print_r($date_start);
-    print_r($date_end);
 
 
     // $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference

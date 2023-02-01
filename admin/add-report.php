@@ -429,10 +429,9 @@ if (isset($_POST['send'])) {
 
 
 
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
 
-  if ($days == 1) {
+
+  if ($days == 1 || $days == 0) {
     $duration = "Daily";
   } elseif ($days == 7) {
     $duration = "Weekly";
