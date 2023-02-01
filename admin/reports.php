@@ -122,84 +122,105 @@ $ranking = "ranking.php";
           <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
         </div>
       </nav>
-      <div class="card shadow py-3 mx-4" style="border: none; min-height: 35rem;">
-        <table class="table table-bordered table-hover" id="data">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>From</th>
-              <th>Subject</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-
-            $sql = "SELECT * FROM reports WHERE to_user LIKE '%$email%'";
-            $run = mysqli_query($conn, $sql);
-
-            if (mysqli_num_rows($run) > 0) {
-              $count = 0;
-              foreach ($run as $row) {
-                $report_id = $row['report_id'];
-                // Store the cipher method
-                $ciphering = "AES-128-CTR";
-
-                // Use OpenSSl Encryption method
-                $iv_length = openssl_cipher_iv_length($ciphering);
-                $options = 0;
-
-                // Non-NULL Initialization Vector for encryption
-                $encryption_iv = '1234567891011121';
-
-                // Store the encryption key
-                $encryption_key = "TeamAgnat";
-
-                // Use openssl_encrypt() function to encrypt the data
-                $encryption = openssl_encrypt(
-                  $report_id,
-                  $ciphering,
-                  $encryption_key,
-                  $options,
-                  $encryption_iv
-                );
-                //   $encrypted_data = (($lrn*12345678911*56789)/987654);
-                $view_link = "view-reports.php?rid=" . $encryption;
-                $delete_link = "delete-reports.php?rid=" . $encryption;
-                $count++;
-            ?>
-
-                <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
-                  <td><?php echo $count; ?></td>
-                  <td><?php echo $row['from_user'] ?></td>
-                  <td><?php echo $row['subject'] ?></td>
-                  <?php if ($row['status'] == 1) {
-                    echo "<td> <p class='text-success'> Complete </p> </td>";
-                  } elseif ($row['status'] == 2) {
-                    echo "<td> <p class='text-danger'> No Submission </p> </td>";
-                  } elseif ($row['status'] == 3) {
-                    echo "<td><p class='text-warning'> Incomplete </p> </td>";
-                  } elseif ($row['status'] == 4) {
-                    echo "<td> <p class='text-primary'> Late </p> </td>";
-                  } else {
-                    echo "<td> <p class='text-danger'> No Submssion </p>  </td>";
-                  }  ?>
-                  <td>
-                    <a class='text-danger text-decoration-none' href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
-                  </td>
+      <div class="row mt-4">
+        <div class="col-lg-4">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="weekly.php">Weekly</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="monthly.php">Monthly</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="semi-anual.php">Semi-Annual</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" href="annualy.php">Annual</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0; min-height: 35rem;">
+            <table class="table table-bordered table-hover" id="data">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>From</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
+              </thead>
+              <tbody>
+                <?php
+
+                $sql = "SELECT * FROM reports WHERE to_user LIKE '%$email%'";
+                $run = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($run) > 0) {
+                  $count = 0;
+                  foreach ($run as $row) {
+                    $report_id = $row['report_id'];
+                    // Store the cipher method
+                    $ciphering = "AES-128-CTR";
+
+                    // Use OpenSSl Encryption method
+                    $iv_length = openssl_cipher_iv_length($ciphering);
+                    $options = 0;
+
+                    // Non-NULL Initialization Vector for encryption
+                    $encryption_iv = '1234567891011121';
+
+                    // Store the encryption key
+                    $encryption_key = "TeamAgnat";
+
+                    // Use openssl_encrypt() function to encrypt the data
+                    $encryption = openssl_encrypt(
+                      $report_id,
+                      $ciphering,
+                      $encryption_key,
+                      $options,
+                      $encryption_iv
+                    );
+                    //   $encrypted_data = (($lrn*12345678911*56789)/987654);
+                    $view_link = "view-reports.php?rid=" . $encryption;
+                    $delete_link = "delete-reports.php?rid=" . $encryption;
+                    $count++;
+                ?>
+
+                    <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
+                      <td><?php echo $count; ?></td>
+                      <td><?php echo $row['from_user'] ?></td>
+                      <td><?php echo $row['subject'] ?></td>
+                      <?php if ($row['status'] == 1) {
+                        echo "<td> <p class='text-success'> Complete </p> </td>";
+                      } elseif ($row['status'] == 2) {
+                        echo "<td> <p class='text-danger'> No Submission </p> </td>";
+                      } elseif ($row['status'] == 3) {
+                        echo "<td><p class='text-warning'> Incomplete </p> </td>";
+                      } elseif ($row['status'] == 4) {
+                        echo "<td> <p class='text-primary'> Late </p> </td>";
+                      } else {
+                        echo "<td> <p class='text-danger'> No Submssion </p>  </td>";
+                      }  ?>
+                      <td>
+                        <a class='text-danger text-decoration-none' href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
+                      </td>
+                    </tr>
 
 
 
-            <?php
-              }
-            }
+                <?php
+                  }
+                }
 
-            ?>
-          </tbody>
-        </table>
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+      
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
