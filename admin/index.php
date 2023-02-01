@@ -12,6 +12,7 @@ $report_link = "add-report.php";
 $view_link = "reports.php";
 $draft_link = "draft.php";
 $note_link = "add-note.php";
+$ranking = "ranking.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +28,7 @@ $note_link = "add-note.php";
   <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../src/css/preloader.css">
 </head>
 <style>
   .focus {
@@ -40,6 +42,11 @@ $note_link = "add-note.php";
   }
 </style>
 <body>
+  <div class="preload-wrapper">
+      <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Loading...</span>
+      </div>
+  </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -74,9 +81,9 @@ $note_link = "add-note.php";
           </a>
         </li>
         <li>
-          <a href="<?php echo $note_link ?>" class="nav-link text-white">
-            <i class="bi bi-stickies me-2"></i>
-            Notes
+          <a href="<?php echo $ranking ?>" class="nav-link text-white">
+            <i class="bi bi-award me-2"></i>
+            Ranking
           </a>
         </li>
       </ul>
@@ -218,6 +225,7 @@ $note_link = "add-note.php";
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
   <!-- <script src="../src/js/update.js"> </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="../src/js/preload.js"></script>
   <script>
       $(document).ready(function(){
           $('.edit').click(function(){

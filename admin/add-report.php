@@ -13,6 +13,7 @@ $report_link = "add-report.php";
 $view_link = "reports.php";
 $draft_link = "draft.php";
 $note_link = "add-note.php";
+$ranking = "ranking.php"
 ?>
 
 
@@ -39,7 +40,7 @@ $note_link = "add-note.php";
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="stylesheet" href="../src/css/preloader.css">
   <title> Add Report </title>
 </head>
 <style>
@@ -70,6 +71,11 @@ $note_link = "add-note.php";
 
   ?>
   <main class="d-flex">
+  <div class="preload-wrapper">
+      <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Loading...</span>
+      </div>
+  </div>
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="../src/img/dilg.png" height="80" alt="">
@@ -101,10 +107,16 @@ $note_link = "add-note.php";
             Drafts
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="<?php echo $note_link ?>" class="nav-link text-white">
             <i class="bi bi-stickies me-2"></i>
             Notes
+          </a>
+        </li> -->
+        <li>
+          <a href="<?php echo $ranking ?>" class="nav-link text-white">
+            <i class="bi bi-award me-2"></i>
+            Ranking
           </a>
         </li>
       </ul>
@@ -132,7 +144,7 @@ $note_link = "add-note.php";
         </ul>
       </div>
     </div>
-    <div class="container p-0">
+    <div class="container-fluid p-0">
       <nav class="navbar bg-dark navbar-dark">
         <div class="container">
           <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
@@ -156,7 +168,7 @@ $note_link = "add-note.php";
               </span>
               <span class="d-flex align-items-center mb-3">
                 <label for="" style="margin-right: 12px;">From:</label>
-                <input type="text" class="form-control w-100 ms-2" style="border:none; outline:none;" name="from" value="<?php echo $rows['email'] ?>" readonly>
+                <input type="text" class="form-control w-100 ms-2" name="from" value="<?php echo $rows['email'] ?>" readonly>
               </span>
               <span class="d-flex align-items-center mb-3">
                 <label style="margin-right: 12px;" for="">To:</label>
@@ -168,11 +180,11 @@ $note_link = "add-note.php";
               </span>
               <span class="d-flex mb-2">
                 <label for="">Subject:</label>
-                <input type="text" class="w-100 ms-2" style="border:none; outline:none;" name="subject">
+                <input type="text" class="form-control w-100 ms-2" name="subject">
               </span>
               <span class="d-flex mb-2">
                 <label for="">OPR:</label>
-                <input type="text" class="w-100 ms-2" style="border:none; outline:none;" name="opr">
+                <input type="text" class="form-control w-100 ms-2" name="opr">
               </span>
               <div>
                 <textarea id="tiny" name="statement"> </textarea>
@@ -180,9 +192,9 @@ $note_link = "add-note.php";
 
               <input type="file" class="form-control mt-2" name="pdf_file" id="" accept=".pdf">
 
-              <span class="d-flex justify-content-end align-items-center">
+              <span class="d-flex justify-content-end align-items-center mt-3">
                 <input type="submit" class="btn btn-primary btn-md" name="send" value="Submit">
-                <input type="submit" class="btn btn-danger btn-md" name="draft" value="Save as Draft">
+                <input type="submit" class="btn btn-danger btn-md ms-2" name="draft" value="Save as Draft">
               </span>
             </form>
           </div>
@@ -196,6 +208,7 @@ $note_link = "add-note.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
+  <script src="../src/js/preload.js"></script>
   <script src="../src/js/multiple.js"></script>
   <script>
     $('#search_data').tokenfield({
