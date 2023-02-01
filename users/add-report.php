@@ -3,6 +3,7 @@ ob_start();
 session_start();
 include('../connection.php');
 include('session.php');
+
 $user_id = $_SESSION['user_id'];
 $email = $_SESSION['email'];
 require '../vendor/autoload.php';
@@ -158,7 +159,7 @@ require '../vendor/autoload.php';
     $( ".brgy" ).autocomplete({
         source: function(request, response){
             $.ajax({
-                url:'http://localhost/report_system/users/brgy.php',
+                url:'http://localhost/report_system/users/brgy2.php',
                 type: 'GET',
                 dataType: 'json',
                 success:function(data){
