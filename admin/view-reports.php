@@ -95,9 +95,9 @@ $ranking = "ranking.php";
 
 <body>
   <div class="preload-wrapper">
-      <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
-      </div>
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
@@ -171,77 +171,77 @@ $ranking = "ranking.php";
       <div class="card shadow p-5" style="border: none; min-height: 35rem;">
         <!-- query of db -->
         <?php
-            $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
-            $run_query_data = mysqli_query($conn, $query_data);
-            $rows = mysqli_fetch_array($run_query_data);
-            ?>
+        $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
+        $run_query_data = mysqli_query($conn, $query_data);
+        $rows = mysqli_fetch_array($run_query_data);
+        ?>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
 
-              <?php
+          <?php
 
 
-              $status = $rows['status'];
+          $status = $rows['status'];
 
-              if ($status == 3 || $status == 2) {
-              ?>
-                <!-- burahin mo tong comment pag ngawa mo na  -->
-                <!-- tapos etong switch is lakihn mo onti -->
-                <div class="form-check form-switch mb-5">
-                  <input class="form-check-input" type="checkbox" role="switch" id="constraint_checkbox">
-                  <p>Toggle Edit</p>
-                </div>
-                <div>
-                  <!-- RYAN IBABA MO NALANG TONG UPDATE NA BUTTON -->
-                </div>
+          if ($status == 3 || $status == 2) {
+          ?>
+            <!-- burahin mo tong comment pag ngawa mo na  -->
+            <!-- tapos etong switch is lakihn mo onti -->
+            <div class="form-check form-switch mb-5">
+              <input class="form-check-input" type="checkbox" role="switch" id="constraint_checkbox">
+              <p>Toggle Edit</p>
+            </div>
+            <div>
+              <!-- RYAN IBABA MO NALANG TONG UPDATE NA BUTTON -->
+            </div>
 
-                <input type="file" name="files[]" class="form-control" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable>
+            <!-- <input type="file" name="files[]" class="form-control" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable> -->
 
-              <?php
-              }
-              ?>
+          <?php
+          }
+          ?>
 
-              <label for="">From:</label>
-              <input type="text" name="from" class="switch form-control" value="<?php if (empty($rows['from_user'])) {
-                                                                      echo "";
-                                                                    } else {
-                                                                      echo $rows['from_user'];
-                                                                    } ?> " disabled>
-              <br>
-              <label for="">To:</label>
-              <input type="text" name="to" class="switch form-control" value="<?php if (empty($rows['to_user'])) {
-                                                                    echo "";
-                                                                  } else {
-                                                                    echo $rows['to_user'];
-                                                                  } ?> " disabled>
-              <br>
-              <label for="">Barangay</label>
-              <input type="text" name="brgy" class="switch form-control" value="<?php if (empty($rows['barangay'])) {
-                                                                      echo "";
-                                                                    } else {
-                                                                      echo $rows['barangay'];
-                                                                    } ?> " disabled>
-              <br>
-              <label for="">Subject:</label>
-              <input type="text" name="subject" class="switch form-control" value="<?php if (empty($rows['subject'])) {
-                                                                        echo "";
-                                                                      } else {
-                                                                        echo $rows['subject'];
-                                                                      } ?>" disabled>
-
-              <br>
-              <label for="">OPR</label>
-              <input type="text" name="opr" class="switch form-control" value="<?php if (empty($rows['opr'])) {
-                                                                    echo "";
-                                                                  } else {
-                                                                    echo $rows['opr'];
-                                                                  } ?> " disabled>
-
-              <textarea id="tiny" name="statement" class="switch" disabled> <?php if (empty($rows['message'])) {
+          <label for="">From:</label>
+          <input type="text" name="from" class="switch form-control" value="<?php if (empty($rows['from_user'])) {
                                                                               echo "";
                                                                             } else {
-                                                                              echo $rows['message'];
-                                                                            }  ?>   </textarea disabled>
+                                                                              echo $rows['from_user'];
+                                                                            } ?> " disabled>
+          <br>
+          <label for="">To:</label>
+          <input type="text" name="to" class="switch form-control" value="<?php if (empty($rows['to_user'])) {
+                                                                            echo "";
+                                                                          } else {
+                                                                            echo $rows['to_user'];
+                                                                          } ?> " disabled>
+          <br>
+          <label for="">Barangay</label>
+          <input type="text" name="brgy" class="switch form-control" value="<?php if (empty($rows['barangay'])) {
+                                                                              echo "";
+                                                                            } else {
+                                                                              echo $rows['barangay'];
+                                                                            } ?> " disabled>
+          <br>
+          <label for="">Subject:</label>
+          <input type="text" name="subject" class="switch form-control" value="<?php if (empty($rows['subject'])) {
+                                                                                  echo "";
+                                                                                } else {
+                                                                                  echo $rows['subject'];
+                                                                                } ?>" disabled>
+
+          <br>
+          <label for="">OPR</label>
+          <input type="text" name="opr" class="switch form-control" value="<?php if (empty($rows['opr'])) {
+                                                                              echo "";
+                                                                            } else {
+                                                                              echo $rows['opr'];
+                                                                            } ?> " disabled>
+
+          <textarea id="tiny" name="statement" class="switch" disabled> <?php if (empty($rows['message'])) {
+                                                                          echo "";
+                                                                        } else {
+                                                                          echo $rows['message'];
+                                                                        }  ?>   </textarea disabled>
             
             <h1>Document</h1>
             <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {
