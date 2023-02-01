@@ -143,7 +143,7 @@ if ($curQuarter == 1 || $curQuarter == 2) {
               <a class="nav-link text-secondary" href="monthly.php">Monthly</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark" href="semi-annual.php">Semi-Annual</a>
+              <a class="nav-link text-dark" href="semi-anual.php">Semi-Annual</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-secondary" href="annualy.php">Annual</a>

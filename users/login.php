@@ -131,12 +131,10 @@ if (isset($_POST['login'])) {
 
                 if (password_verify($password, $row['password'])){ 
                     //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['email'] = $email;
+                        $_SESSION['email'] = $row['email'];
                         $_SESSION['user_id'] = $row['user_id'];
                         header("location: home.php");
                     die();
-
-                    
                 }   
                 
                 }

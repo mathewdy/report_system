@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2023 at 02:47 AM
+-- Generation Time: Feb 01, 2023 at 11:03 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -95,6 +95,27 @@ INSERT INTO `barangay` (`id`, `brgy`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `start_event` datetime NOT NULL,
+  `end_event` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `start_event`, `end_event`) VALUES
+(20, 'ios ba?', '2023-02-06 00:00:00', '2023-02-07 00:00:00'),
+(23, 'baka gamitan ko to ng swal para maayos HAHHAHA ', '2023-02-02 00:00:00', '2023-02-03 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notes`
 --
 
@@ -153,7 +174,13 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(132, 'ADM00001', 'RID00001', 'rose_1@dilg.com', 'hazel_1@dilg.com', 'Barandal', 'sample subject', 'sample opr', '<p>hahahaha sample&nbsp;</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '09:45:35', '2023-02-01', '09:45:35');
+(138, 'ADM00001', 'RID00001', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'sample', 'samlela', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:26:17', '2023-02-01', '05:26:17'),
+(139, 'ADM00001', 'RID00002', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'daldalhi', 'di tayo mag aaway', '<p>sa tunay na mundoooooooooooooooooooooooooooooo DADALHN KIT<strong> sa aming bahay di tayo mag aaway</strong></p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:36:21', '2023-02-01', '05:36:21'),
+(140, 'ADM00001', 'RID00003', 'rose_1@dilg.com', 'mathew_2@dilg.com', 'Laguerta', 'jopay ', 'jopay2', '<p>JOPAAAY imiss you</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:39:48', '2023-02-01', '05:39:48'),
+(141, 'TA00003', 'RID00004', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'reports1', 'CPH', '<p>reply from barangay // mathew/_1&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:45:29', '2023-02-01', '10:45:29'),
+(142, 'ADM00001', 'RID00005', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'sayo lang', 'baliw', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 05:50:00', '2023-02-14 05:51:00', 13, '2023-02-01', '05:51:49', '2023-02-01', '05:51:49'),
+(143, 'TA00003', 'RID00006', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'Reply', 'Ko sa baliw na subject', '<p>SAYO LANG&nbsp;<strong>BALIW&nbsp;</strong></p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:53:15', '2023-02-01', '10:53:15'),
+(144, 'TA00003', 'RID00007', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'replt_y2', 'baliw part 2', '<p>baliwhsdadsahdahsduasdas part 2&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:54:10', '2023-02-01', '10:54:10');
 
 -- --------------------------------------------------------
 
@@ -210,11 +237,13 @@ CREATE TABLE `sent` (
 --
 
 INSERT INTO `sent` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(6, 'ADM00005', 'RID00014', 'thaddeusgamit31@gmail.com', 'mathewdy@gmail.com', 'Real', 'jpoy', 'jopyzxc', '', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '2023-02-01 00:00:00', 0, '2023-01-31', '10:04:07', '2023-01-31', '10:04:07'),
-(7, 'ADM00005', 'RID00015', 'thaddeusgamit31@gmail.com', 'mathew123', 'Bagong Kalsada, Mayapa', 'hahahah', 'hahahahhaha', ' ', 'Bi-weekly', '', 3, 0, '2023-02-14 12:00:00', '2023-02-22 12:00:00', 8, '2023-02-01', '08:10:22', '2023-02-01', '08:10:22'),
-(8, 'ADM00005', 'RID00016', 'thaddeusgamit31@gmail.com', 'Maxine', 'Palingon', 'subject uwu', 'sample OPR ', '<p>hahahaha</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '08:24:29', '2023-02-01', '08:24:29'),
-(9, 'TA00008', 'RID00017', 'rose_1@dilg.com', 'rose_1@dilg.com', 'Barangay 7', 'sample subject', 'sample opr', '<p>haha tite&nbsp;</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '09:31:18', '2023-02-01', '09:31:18'),
-(10, 'ADM00001', 'RID00001', 'rose_1@dilg.com', 'hazel_1@dilg.com', 'Barandal', 'sample subject', 'sample opr', '<p>hahahaha sample&nbsp;</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '09:45:35', '2023-02-01', '09:45:35');
+(15, 'ADM00001', 'RID00001', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'sample', 'samlela', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:26:17', '2023-02-01', '05:26:17'),
+(16, 'ADM00001', 'RID00002', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'daldalhi', 'di tayo mag aaway', '<p>sa tunay na mundoooooooooooooooooooooooooooooo DADALHN KIT<strong> sa aming bahay di tayo mag aaway</strong></p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:36:21', '2023-02-01', '05:36:21'),
+(17, 'ADM00001', 'RID00003', 'rose_1@dilg.com', 'mathew_2@dilg.com', 'Laguerta', 'jopay ', 'jopay2', '<p>JOPAAAY imiss you</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-01', '05:39:48', '2023-02-01', '05:39:48'),
+(18, 'TA00003', 'RID00004', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'reports1', 'CPH', '<p>reply from barangay // mathew/_1&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:45:29', '2023-02-01', '10:45:29'),
+(19, 'ADM00001', 'RID00005', 'rose_1@dilg.com', 'mathew_1@dilg.com', 'San Juan', 'sayo lang', 'baliw', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 05:50:00', '2023-02-14 05:51:00', 13, '2023-02-01', '05:51:49', '2023-02-01', '05:51:49'),
+(20, 'TA00003', 'RID00006', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'Reply', 'Ko sa baliw na subject', '<p>SAYO LANG&nbsp;<strong>BALIW&nbsp;</strong></p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:53:15', '2023-02-01', '10:53:15'),
+(21, 'TA00003', 'RID00007', 'mathew_1@dilg.com', 'rose_1@dilg.com', 'Mabato', 'replt_y2', 'baliw part 2', '<p>baliwhsdadsahdahsduasdas part 2&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-01 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-01', '10:54:10', '2023-02-01', '10:54:10');
 
 -- --------------------------------------------------------
 
@@ -227,6 +256,14 @@ CREATE TABLE `try` (
   `name` varchar(50) NOT NULL,
   `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `try`
+--
+
+INSERT INTO `try` (`id`, `name`, `date`) VALUES
+(5, 'tite malake', '2023-02-14'),
+(6, 'bilat ', '2023-02-05');
 
 -- --------------------------------------------------------
 
@@ -259,7 +296,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_type`, `user_id`, `email`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `address`, `barangay`, `barangay_id`, `dilg_id`, `image`, `date_time_created`, `date_time_updated`) VALUES
 (49, 1, 'ADM00001', 'rose_1@dilg.com', '$2y$10$KLEf5nSZGwBwN5bOw9e/a.B2JQS2TXbzF.lxQvUx8jnM/GH/W9lyW', 'Lucian', 'Grace', 'Grace', '2020-11-25', 'Russell', 'Mabato', '0', 'Hannah', 0x6c632e706e67, '2023-02-01 09:39:56', '2023-02-01 09:39:56'),
-(50, 2, 'TA00001', 'hazel_1@dilg.com', '$2y$10$sR6fOUsVs4AokYJVdMPKcuW51jPK1BnrT.5vNcS8gpTBbXNQRC.Ny', 'Cameron', 'Beau', 'Beau', '1983-05-16', 'Olga', 'Barandal', 'Germaine', '', 0x636d2e706e67, '2023-02-01 09:43:15', '2023-02-01 09:43:15');
+(50, 2, 'TA00001', 'hazel_1@dilg.com', '$2y$10$sR6fOUsVs4AokYJVdMPKcuW51jPK1BnrT.5vNcS8gpTBbXNQRC.Ny', 'Cameron', 'Beau', 'Beau', '1983-05-16', 'Olga', 'Barandal', 'Germaine', '', 0x636d2e706e67, '2023-02-01 09:43:15', '2023-02-01 09:43:15'),
+(51, 2, 'TA00002', 'tite@gmail.com', '$2y$10$O9zKLPT8fg2QX4R.NJcFau8vg.H92jUn6wL49/UMRB9A6PEJ8dktS', 'Wilma', 'Shelly', 'Shelly', '1975-11-15', 'Lara', 'Sampiruhan', 'Madaline', '0', 0x70726f6a656374206d616e616765722e504e47, '2023-02-01 10:24:56', '2023-02-01 10:24:56'),
+(52, 2, 'TA00003', 'mathew_1@dilg.com', '$2y$10$udkwlxFDwmoj3yhApxFCdOZuZ8clpCcRr/I01ItUbmgQSR2PeIKha', 'Jopay', 'Tite', 'Tite', '2013-06-15', 'Jakeem', 'San Juan', 'Eden', '0', 0x627572616f742e6a7067, '2023-02-01 04:48:15', '2023-02-01 04:48:15'),
+(53, 2, 'TA00004', 'mathew_2@dilg.com', '$2y$10$4KjV8GZxhxZlggBZL96OauUovEWuBP9TCknAjSP76JU3.0QWAr37a', 'Wylie', 'April', 'April', '1972-12-18', 'Quinlan', 'Laguerta', 'Virginia', '0', 0x3332363532353238325f323135323139393436383331383331375f373639373735303836333034313531323134305f6e2e6a7067, '2023-02-01 05:39:05', '2023-02-01 05:39:05');
 
 -- --------------------------------------------------------
 
@@ -290,6 +330,12 @@ INSERT INTO `user_types` (`id`, `user_type`) VALUES
 ALTER TABLE `barangay`
   ADD PRIMARY KEY (`id`),
   ADD KEY `brgy` (`brgy`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `notes`
@@ -350,6 +396,12 @@ ALTER TABLE `barangay`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
@@ -359,25 +411,25 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `sent`
 --
 ALTER TABLE `sent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `try`
 --
 ALTER TABLE `try`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `user_types`

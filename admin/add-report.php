@@ -158,11 +158,11 @@ $ranking = "ranking.php"
                 <div class="row w-100">
                   <div class="col-lg-6">
                     <label for="">Date Start:</label>
-                    <input type="datetime-local" class="form-control w-100" name="date_start">
+                    <input type="datetime-local" class="form-control w-100" name="date_start" required>
                   </div>
                   <div class="col-lg-6">
                     <label for="">Date End:</label>
-                    <input type="datetime-local" class="form-control w-100" name="date_end">
+                    <input type="datetime-local" class="form-control w-100" name="date_end" required>
                   </div>
                 </div>
               </span>
@@ -423,8 +423,8 @@ if (isset($_POST['send'])) {
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   $days = intval($diff);
 
-  print_r($date_start);
-  print_r($date_end);
+  // print_r($date_start);
+  // print_r($date_end);
 
 
 
@@ -496,7 +496,7 @@ if (isset($_POST['send'])) {
             echo "<script>alert('Success')</script>";
           }
         } else {
-          $conn->error;
+          echo "error" . $conn->error;
         }
       }
     } else {
@@ -520,7 +520,7 @@ if (isset($_POST['send'])) {
           echo "<script>alert('Success')</script>";
         }
       } else {
-        $conn->error;
+        echo "error" . $conn->error;
       }
     }
   }
@@ -643,7 +643,7 @@ if (isset($_POST['draft'])) {
 
           echo "<script>alert('Success')</script>";
         } else {
-          $conn->error;
+          echo "error" . $conn->error;
         }
       }
     } else {
@@ -661,7 +661,7 @@ if (isset($_POST['draft'])) {
 
         echo "<script>alert('Success')</script>";
       } else {
-        $conn->error;
+        echo "error" . $conn->error;
       }
     }
   }

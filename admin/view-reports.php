@@ -269,6 +269,7 @@ $ranking = "ranking.php";
     selector: 'textarea#tiny',
     width: 1000,
     height: 300,
+    readonly: true,
     plugins:[
         'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
         'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 

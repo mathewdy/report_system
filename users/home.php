@@ -5,7 +5,8 @@ include('../connection.php');
 include('session.php');
 include('edit-notes.php');
 
-$user_id = $_SESSION['user_id'];
+echo $user_id = $_SESSION['user_id'];
+echo $email = $_SESSION['email'];
 
 ?>
 

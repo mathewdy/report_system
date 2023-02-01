@@ -128,13 +128,13 @@ require '../vendor/autoload.php';
             <span class="d-flex mb-3">
               <div class="row w-100">
                 <div class="col-lg-6">
-                  <label for="">Date Start:</label>
+                  <!-- <label for="">Date Start:</label>
                   <input type="datetime-local" class="form-control w-100" name="date_start">
                 </div>
                 <div class="col-lg-6">
                   <label for="">Date End:</label>
                   <input type="datetime-local" class="form-control w-100" name="date_end">
-                </div>
+                </div> -->
               </div>
             </span>
             <span class="d-flex align-items-center mb-3">
@@ -453,10 +453,8 @@ if (isset($_POST['send'])) {
         //insert a query
 
 
-
-
         $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date','0','$days','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
 
@@ -464,15 +462,13 @@ if (isset($_POST['send'])) {
         if ($run_insert_report) {
 
           $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date','0','$days','$date','$time','$date','$time')";
           $run_sent_report = mysqli_query($conn, $sent_report);
 
           if ($run_sent_report) {
 
             $data['message'] = "sucess";
             $pusher->trigger('my-channel', 'my-event', $data);
-
-
             echo "<script>alert('Success')</script>";
           }
         } else {
@@ -487,13 +483,13 @@ if (isset($_POST['send'])) {
 
 
       $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date','0','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
 
         $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date','0','$days','$date','$time','$date','$time')";
         $run_sent_report = mysqli_query($conn, $sent_report);
 
         if ($run_sent_report) {

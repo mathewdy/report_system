@@ -1,11 +1,11 @@
 <?php
 include('../connection.php');
 session_start();
-include('session.php');
 ob_start();
-
 $email = $_SESSION['email'];
-$user_id = $_SESSION['user_id'];
+echo $email. "<br>";
+echo $user_id = $_SESSION['user_id'];
+
 ?>
 
 
@@ -127,48 +127,35 @@ $user_id = $_SESSION['user_id'];
 
           <?php
 
-
-          //query of barangay 
-
-          $query = "SELECT `barangay` FROM `users` WHERE user_id = '$user_id'";
-          $run = mysqli_query($conn, $query);
-          $select = mysqli_fetch_array($run);
-
-          $brgy = $select['barangay'];
-
-
-
-
-          $query_reports = "SELECT * FROM reports WHERE to_user LIKE '%$email%' AND barangay LIKE '%$brgy%' ";
-          $run_reports = mysqli_query($conn, $query_reports);
-
-          //dapat dito riri, mag mumukhang table parang lang
+          $query_reports = "SELECT * FROM reports WHERE to_user = '$email'";
+          $run_reports = mysqli_query($conn,$query_reports);
 
           if (mysqli_num_rows($run_reports) > 0) {
             $no = 0;
             foreach ($run_reports as $row) {
               $no++;
-
           ?>
 
               <tr>
                 <td><?php echo $no ?></td>
                 <td><?php echo $row['from_user'] ?></td>
                 <td><?php echo $row['subject'] ?></td>
-                <?php if ($row['status'] == 1) {
-                  echo "<td <p style = color:green> Complete </p> </td>";
-                } elseif ($row['status'] == 2) {
-                  echo "<td <p style = color:red> No Submssion </p> </td>";
-                } elseif ($row['status'] == 3) {
-                  echo "<td <p style = color:yellow> Incomplete </p> </td>";
-                } elseif ($row['status'] == 4) {
-                  echo "<td <p style = color:blue> Late </p> </td>";
-                } else {
-                  echo "<td <p style = color:red> No Submssion </p>  </td>";
-                }  ?>
                 <td>
+                  <?php if ($row['status'] == 1) {
+                    echo "<p style = color:green> Complete </p>";
+                  } elseif ($row['status'] == 2) {
+                    echo "<p style = color:red> No Submssion </p>";
+                  } elseif ($row['status'] == 3) {
+                    echo "<td class='text-warning'> Incomplete </p>";
+                  } elseif ($row['status'] == 4) {
+                    echo "<p style = color:blue> Late </p>";
+                  } else {
+                    echo "<p style = color:red> No Submssion </p>";
+                  }  
+                  ?>
+                </td>
                 <td>
-                  <a href="full-report.php?to_user=<?php echo $row['to_user'] ?>">View Entire Report</a>
+                  <a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&to_user=<?php echo $row['to_user']?>">View Report</a>
                 </td>
               </tr>
         </tbody>

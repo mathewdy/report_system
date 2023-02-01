@@ -2,7 +2,6 @@
 include('../connection.php');
 session_start();
 ob_start();
-
 ?>
 
 
@@ -20,87 +19,71 @@ ob_start();
 
 <body>
 
+haha
+
     <a href="sent-reports.php">Back</a>
     <?php
 
-    if (isset($_GET['report_id'])) {
+    if(isset($_GET['report_id']) && isset($_GET['to_user'])) {
+        $email = $_GET['to_user'];
         $report_id = $_GET['report_id'];
-        $query_report = "SELECT * FROM sent WHERE report_id = '$report_id'";
+        $query_report = "SELECT * FROM sent WHERE report_id = '$report_id' AND to_user = '$email'";
         $run_report_id = mysqli_query($conn, $query_report);
 
         if (mysqli_num_rows($run_report_id) > 0) {
             foreach ($run_report_id as $row) {
-    ?>
 
-                <form action="" method="post" enctype="multipart/form-data">
-
+                ?>
                     <label for="">From:</label>
-                    <input type="text" name="from" class="switch" value="<?php if (empty($row['from_user'])) {
-                                                                                echo "";
-                                                                            } else {
-                                                                                echo $row['from_user'];
-                                                                            } ?> " readonly>
+                    <input type="text" name="from" value="<?php echo $row['from_user'];?> " readonly>
                     <br>
                     <label for="">To:</label>
-                    <input type="text" name="to" class="switch" value="<?php if (empty($row['to_user'])) {
-                                                                            echo "";
-                                                                        } else {
-                                                                            echo $row['to_user'];
-                                                                        } ?> " readonly>
+                    <input type="text" name="to" value="<?php echo $row['to_user']?>" readonly>
+                    <br>
+                    <label for="">Barangay:</label>
+                    <input type="text" name="brgy" value="<?php echo $row['barangay']?> " readonly>
+                    <br>
+
+                    <label for="">Date Start:</label>
+                    <input type="text" name="date_start" value="<?php echo $row['date_start']?>" readonly> 
+                    <br>
+                    <label for="">Date End:</label>
+                    <input type="text" name="date_end" value="<?php echo $row['date_end']?>" readonly>
                     <br>
                     <label for="">Subject:</label>
-                    <input type="text" name="subject" class="switch" value="<?php if (empty($row['subject'])) {
-                                                                                echo "";
-                                                                            } else {
-                                                                                echo $row['subject'];
-                                                                            } ?>" readonly>
+                    <input type="text" name="subject" value="<?php echo $row['subject'] ?>"readonly>
                     <br>
-
                     <label for="">OPR:</label>
-                    <input type="text" name="subject" class="switch" value="<?php if (empty($row['opr'])) {
-                                                                                echo "";
-                                                                            } else {
-                                                                                echo $row['opr'];
-                                                                            } ?>" readonly>
+                    <input type="text" name="opr" value="<?php echo $row['opr'] ?>"readonly>
                     <br>
 
+                    <textarea id="tiny" name="statement"> <?php echo $row['message'] ?> </textarea>
+
+                    <h1>Document</h1>
+                    <embed type="application/pdf" src="<?php if (empty($row['pdf_files'])) {
+                                                            echo "";
+                                                        } else {
+                                                            echo "pdf/" . $row['pdf_files'];
+                                                        } ?> " width="500" height="500">
+                <?php
 
 
-                    <textarea id="default" name="statement" readonly>
-                        <?php if (empty($row['message'])) {
-                            echo "";
-                        } else {
-                            echo $row['message'];
-                        }  ?>  
-                    </textarea disabled >
-
-                     <h1>Document</h1>
-        <embed type="application/pdf" src="<?php if (empty($row['pdf_files'])) {
-                                                echo "";
-                                            } else {
-                                                echo "Images/" . $row['pdf_files'];
-                                            } ?> " width="500" height="500" > 
-
-
-
-                    </form>
-
-                    
-
-                    <?php
-                }
             }
+
         }
+    }
+            
 
+          
+        
 
-                    ?>
-
-
+?>
+</body>
 
 <script>
     // Move focus to specific element
     tinymce.init({
-    selector: 'textarea#default',
+    selector: 'textarea#tiny',
     readonly: true,
     width: 1000,
     height: 300,
