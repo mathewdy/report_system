@@ -31,9 +31,9 @@ $user_id = "ADM00001";
 
 
         <label for="">Date Start</label>
-        <input type="date" name="date_start">
+        <input type="datetime-local" name="date_start">
         <label for="">Date End</label>
-        <input type="date" name="date_end">
+        <input type="datetime-local" name="date_end">
 
         <br>
 
@@ -139,47 +139,48 @@ if (isset($_POST['submit'])) {
     $date = date('y-m-d');
 
 
-    $from = $_POST['from'];
-    $from = mysqli_escape_string($conn, $from);
+    // $from = $_POST['from'];
+    // $from = mysqli_escape_string($conn, $from);
 
-    $to = $_POST['to'];
-    $to = mysqli_escape_string($conn, $to);
+    // $to = $_POST['to'];
+    // $to = mysqli_escape_string($conn, $to);
 
-    $subject = $_POST['subject'];
-    $subject = mysqli_escape_string($conn, $subject);
+    // $subject = $_POST['subject'];
+    // $subject = mysqli_escape_string($conn, $subject);
 
-    $statement = $_POST['statement'];
-    $statement = mysqli_escape_string($conn, $statement);
-
-
-    $barangay = $_POST['brgy'];
+    // $statement = $_POST['statement'];
+    // $statement = mysqli_escape_string($conn, $statement);
 
 
-
-
-    $time = date("h:i:s", time());
-    $date = date('y-m-d');
-
-    $date_start = date('Y-m-d', strtotime($_POST['date_start']));
-    $date_end = date('Y-m-d', strtotime($_POST['date_end']));
-
-    $to = $_POST['to'];
-    $to = mysqli_escape_string($conn, $to);
-
-
-    $date_new_start = new DateTime($date_start);
-    $date_new_end = new DateTime($date_end);
-
-    $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-    $days = intval($diff);
+    // $barangay = $_POST['brgy'];
 
 
 
 
 
+    $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+    $date_end = date('Y-m-d h:i:s ', strtotime($_POST['date_end']));
 
-    $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-    $days = intval($diff);
+
+    // $to = $_POST['to'];
+    // $to = mysqli_escape_string($conn, $to);
+
+
+    // $date_new_start = new DateTime($date_start);
+    // $date_new_end = new DateTime($date_end);
+
+    // $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+    // $days = intval($diff);
+
+
+
+
+    print_r($date_start);
+    print_r($date_end);
+
+
+    // $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+    // $days = intval($diff);
 
 
 
@@ -187,115 +188,115 @@ if (isset($_POST['submit'])) {
 
 
     //file upload 
-    if (isset($_FILES['pdf_file']['name'])) {
-        $file_name = $_FILES['pdf_file']['name'];
-        $file_tmp = $_FILES['pdf_file']['tmp_name'];
+    // if (isset($_FILES['pdf_file']['name'])) {
+    //     $file_name = $_FILES['pdf_file']['name'];
+    //     $file_tmp = $_FILES['pdf_file']['tmp_name'];
 
-        move_uploaded_file($file_tmp, "./pdf/" . $file_name);
-
-
-        $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
-        $run_validate_report = mysqli_query($conn, $validate_report);
+    //     move_uploaded_file($file_tmp, "./pdf/" . $file_name);
 
 
-        if (mysqli_num_rows($run_validate_report) > 0) {
-
-            foreach ($run_validate_report as $row) {
-                $report_id = $row['report_id'];
-                $get_number = str_replace("RID", "", $report_id);
-                $id_increment = $get_number + 1;
-                $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-
-                $report_id = "RID" . $get_string;
-
-                //insert a query
-
-                foreach ($barangay as $brgy) {
-
-                    $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-                     VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-                    $run_insert_report = mysqli_query($conn, $insert_report);
-                }
-
-                if ($run_insert_report) {
-                    echo "<script>alert('Success')</script>";
-                } else {
-                    $conn->error;
-                }
-            }
-        } else {
-
-            $report_id = "RID00001";
+    //     $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    //     $run_validate_report = mysqli_query($conn, $validate_report);
 
 
-            foreach ($barangay as $brgy) {
+    //     if (mysqli_num_rows($run_validate_report) > 0) {
 
-                $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-                     VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-                $run_insert_report = mysqli_query($conn, $insert_report);
-            }
-            if ($run_insert_report) {
-                echo "<script>alert('Success')</script>";
-            } else {
-                $conn->error;
-            }
-        }
-    } else {
+    //         foreach ($run_validate_report as $row) {
+    //             $report_id = $row['report_id'];
+    //             $get_number = str_replace("RID", "", $report_id);
+    //             $id_increment = $get_number + 1;
+    //             $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
 
-        $file_name = " ";
+    //             $report_id = "RID" . $get_string;
 
+    //             //insert a query
 
+    //             foreach ($barangay as $brgy) {
 
-        $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
-        $run_validate_report = mysqli_query($conn, $validate_report);
+    //                 $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+    //                  VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+    //                 $run_insert_report = mysqli_query($conn, $insert_report);
+    //             }
 
+    //             if ($run_insert_report) {
+    //                 echo "<script>alert('Success')</script>";
+    //             } else {
+    //                 $conn->error;
+    //             }
+    //         }
+    //     } else {
 
-        if (mysqli_num_rows($run_validate_report) > 0) {
-
-            foreach ($run_validate_report as $row) {
-                $report_id = $row['report_id'];
-                $get_number = str_replace("RID", "", $report_id);
-                $id_increment = $get_number + 1;
-                $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-
-                $report_id = "RID" . $get_string;
+    //         $report_id = "RID00001";
 
 
-                foreach ($barangay as $brgy) {
+    //         foreach ($barangay as $brgy) {
 
-                    $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-                     VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-                    $run_insert_report = mysqli_query($conn, $insert_report);
-                }
+    //             $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+    //                  VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+    //             $run_insert_report = mysqli_query($conn, $insert_report);
+    //         }
+    //         if ($run_insert_report) {
+    //             echo "<script>alert('Success')</script>";
+    //         } else {
+    //             $conn->error;
+    //         }
+    //     }
+    // } else {
 
-                //insert a query
-
-
-                if ($run_insert_report) {
-                    echo "<script>alert('Success')</script>";
-                } else {
-                    $conn->error;
-                }
-            }
-        } else {
-
-            $report_id = "RID00001";
+    //     $file_name = " ";
 
 
-            foreach ($barangay as $brgy) {
 
-                $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-                     VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-                $run_insert_report = mysqli_query($conn, $insert_report);
-            }
+    //     $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+    //     $run_validate_report = mysqli_query($conn, $validate_report);
 
-            if ($run_insert_report) {
-                echo "<script>alert('Success')</script>";
-            } else {
-                $conn->error;
-            }
-        }
-    }
+
+    //     if (mysqli_num_rows($run_validate_report) > 0) {
+
+    //         foreach ($run_validate_report as $row) {
+    //             $report_id = $row['report_id'];
+    //             $get_number = str_replace("RID", "", $report_id);
+    //             $id_increment = $get_number + 1;
+    //             $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+    //             $report_id = "RID" . $get_string;
+
+
+    //             foreach ($barangay as $brgy) {
+
+    //                 $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+    //                  VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+    //                 $run_insert_report = mysqli_query($conn, $insert_report);
+    //             }
+
+    //             //insert a query
+
+
+    //             if ($run_insert_report) {
+    //                 echo "<script>alert('Success')</script>";
+    //             } else {
+    //                 $conn->error;
+    //             }
+    //         }
+    //     } else {
+
+    //         $report_id = "RID00001";
+
+
+    //         foreach ($barangay as $brgy) {
+
+    //             $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `message`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+    //                  VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$statement','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+    //             $run_insert_report = mysqli_query($conn, $insert_report);
+    //         }
+
+    //         if ($run_insert_report) {
+    //             echo "<script>alert('Success')</script>";
+    //         } else {
+    //             $conn->error;
+    //         }
+    //     }
+    // }
 
 
 

@@ -30,12 +30,12 @@ if (isset($_GET['rid'])) {
     // }
 
     if (empty($_GET['rid'])) {    //lrn verification starts here
-        echo "<script>alert('User id not found');
+        echo "<script>alert('sent not found');
         window.location = 'sent.php';</script>";
         exit();
     }
 
-    $verify_report = "SELECT report_id FROM `reports` WHERE report_id = '$report_id'";
+    $verify_report = "SELECT report_id FROM `sent` WHERE report_id = '$report_id'";
     $query_request = mysqli_query($conn, $verify_report) or die(mysqli_error($conn));
     if (mysqli_num_rows($query_request) == 0) {
         echo "

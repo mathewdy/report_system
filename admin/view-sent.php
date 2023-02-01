@@ -181,6 +181,17 @@ $note_link = "add-note.php";
                                                                             } else {
                                                                                 echo $rows['subject'];
                                                                             } ?>" disabled>
+                    <br>
+
+
+                    <label for="">Subject:</label>
+                    <input type="text" name="subject" class="switch" value="<?php if (empty($rows['subject'])) {
+                                                                                echo "";
+                                                                            } else {
+                                                                                echo $rows['subject'];
+                                                                            } ?>" disabled>
+                    <br>
+
 
                     <textarea id="tiny" name="statement" class="switch" disabled> <?php if (empty($rows['message'])) {
                                                                                         echo "";

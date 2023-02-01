@@ -2,10 +2,10 @@
 include "../connection.php";
 
 $data = [];
-$sql = "SELECT email FROM users";
+$sql = "SELECT * FROM barangay";
 $query = mysqli_query($conn, $sql);
 while($row = mysqli_fetch_assoc($query)){
-    array_push($data, $row['email']);
+    array_push($data, $row['brgy']);
     // $users[] = $row;
 }
 ?>

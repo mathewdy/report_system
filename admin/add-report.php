@@ -71,11 +71,11 @@ $ranking = "ranking.php"
 
   ?>
   <main class="d-flex">
-  <div class="preload-wrapper">
+    <div class="preload-wrapper">
       <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">Loading...</span>
       </div>
-  </div>
+    </div>
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="../src/img/dilg.png" height="80" alt="">
@@ -158,11 +158,11 @@ $ranking = "ranking.php"
                 <div class="row w-100">
                   <div class="col-lg-6">
                     <label for="">Date Start:</label>
-                    <input type="date" class="form-control w-100" name="date_start">
+                    <input type="datetime-local" class="form-control w-100" name="date_start">
                   </div>
                   <div class="col-lg-6">
                     <label for="">Date End:</label>
-                    <input type="date" class="form-control w-100" name="date_end">
+                    <input type="datetime-local" class="form-control w-100" name="date_end">
                   </div>
                 </div>
               </span>
@@ -414,8 +414,8 @@ if (isset($_POST['send'])) {
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
-  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
-  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+  $date_start = date('Y-m-d h:i', strtotime($_POST['date_start']));
+  $date_end = date('Y-m-d h:i', strtotime($_POST['date_end']));
 
   $date_new_start = new DateTime($date_start);
   $date_new_end = new DateTime($date_end);
@@ -423,7 +423,8 @@ if (isset($_POST['send'])) {
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   $days = intval($diff);
 
-
+  print_r($date_start);
+  print_r($date_end);
 
 
 
