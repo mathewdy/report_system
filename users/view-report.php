@@ -3,185 +3,197 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
-echo $email. "<br>";
-echo $user_id = $_SESSION['user_id'];
-
+$user_id = $_SESSION['user_id'];
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <title>View-report</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="../src/css/template-2.css" rel="stylesheet">
+	<link href="../src/css/preloader.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+	<title>DILG</title>
 </head>
-
+<style>
+	td{
+		padding: 12px 0;
+	}
+</style>
 <body>
-  <main class="d-flex">
-    <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; min-height: 100vh;">
-      <a href="#" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-buildings-fill" viewBox="0 0 16 16">
-          <path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V.5ZM2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-1 2v1H2v-1h1Zm1 0h1v1H4v-1Zm9-10v1h-1V3h1ZM8 5h1v1H8V5Zm1 2v1H8V7h1ZM8 9h1v1H8V9Zm2 0h1v1h-1V9Zm-1 2v1H8v-1h1Zm1 0h1v1h-1v-1Zm3-2v1h-1V9h1Zm-1 2h1v1h-1v-1Zm-2-4h1v1h-1V7Zm3 0v1h-1V7h1Zm-2-2v1h-1V5h1Zm1 0h1v1h-1V5Z" />
-        </svg>
-        <span class="visually-hidden">Icon-only</span>
-      </a>
-      <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item">
-          <a href="home.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-              <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
-            </svg>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="view-report.php" class="nav-link active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Inbox">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="add-report.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Create Report">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
-              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="add-notes.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
-              <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z" />
-              <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
-              <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="drafts.php" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-            Sent
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
-              <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-            </svg>
-          </a>
-        </li>
-      </ul>
-      <div class="dropdown border-top">
-        <!-- Banda dito ko kailangan yung query ng user image -->
-
-        <?php
-
-        $query_image = "SELECT image FROM users WHERE user_id = '$user_id'";
-        $run_image = mysqli_query($conn, $query_image);
-
-        if (mysqli_num_rows($run_image) > 0) {
-          foreach ($run_image as $row_image) {
-        ?>
-            <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo "Images/" . $row_image['image'] ?>" alt="user" width="24" height="24" class="rounded-circle">
-            </a>
-
-        <?php
-          }
-        }
-        ?>
-        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-          <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
-        </ul>
-      </div>
+	<div class="preload-wrapper">
+    	<div class="spinner-grow text-info" role="status">
+        	<span class="sr-only">Loading...</span>
+    	</div>
     </div>
-    <div class="container my-5">
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+					<img src="../src/img/dilg.png" height="50" alt="">
+					<span class="ms-3 align-middle">DILG</span>
+				</a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="home.php">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+                        </a>
+					</li>
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="view-report.php">
+                            <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
+                        </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="add-report.php">
+                            <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
+                        </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="sent-reports.php">
+                            <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
+                        </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="align-self-center text-dark" data-feather="menu"></i>
+                </a>
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+							<?php
+
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
+							$run_image = mysqli_query($conn,$query_image);
+
+							if(mysqli_num_rows($run_image) > 0) {
+							foreach($run_image as $row_image){
+								?>
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                	<img src="<?php echo "Images/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+								</a>
+
+								<?php
+							}
+							}
 
 
+							?>
+                            </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.php"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout.php">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
+			<main class="content">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<div class="col-xl-12 col-xxl-12 d-flex">
+							<div class="w-100">
+								<div class="row">
+									<div class="col-lg-12">
+										<table class="w-100" id="data">
+											<thead>
+												<tr>
+													<th>No.</th>
+													<th>From</th>
+													<th>Subject</th>
+													<th>Status</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
 
-      <table id="data">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>From</th>
-            <th>Subject</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
+												$query_reports = "SELECT * FROM reports WHERE to_user = '$email'";
+												$run_reports = mysqli_query($conn,$query_reports);
 
-          <?php
+												if (mysqli_num_rows($run_reports) > 0) {
+													$no = 0;
+													foreach ($run_reports as $row) {
+													$no++;
+												?>
+												<tr class="border-bottom border-secondary">
+													<td><?php echo $no ?></td>
+													<td><?php echo $row['from_user'] ?></td>
+													<td style="width: 50%;"><?php echo $row['subject'] ?></td>
+													<td>
+													<?php if ($row['status'] == 1) {
+														echo "<span class='text-success'> Complete </span>";
+													} elseif ($row['status'] == 2) {
+														echo "<span class='text-danger'> No Submssion </span>";
+													} elseif ($row['status'] == 3) {
+														echo "<span class='text-warning'> Incomplete </span>";
+													} elseif ($row['status'] == 4) {
+														echo "<span class='text-primary'> Late </span>";
+													} else {
+														echo "<span class='text-danger'> No Submssion </span>";
+													}  
+													?>
+													</td>
+													<td>
+													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&to_user=<?php echo $row['to_user']?>">View Report</a>
+													</td>
+												</tr>
+												<?php
+													}
+												}
+												?>
+										</tbody>
+									</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
 
-          $query_reports = "SELECT * FROM reports WHERE to_user = '$email'";
-          $run_reports = mysqli_query($conn,$query_reports);
-
-          if (mysqli_num_rows($run_reports) > 0) {
-            $no = 0;
-            foreach ($run_reports as $row) {
-              $no++;
-          ?>
-
-              <tr>
-                <td><?php echo $no ?></td>
-                <td><?php echo $row['from_user'] ?></td>
-                <td><?php echo $row['subject'] ?></td>
-                <td>
-                  <?php if ($row['status'] == 1) {
-                    echo "<p style = color:green> Complete </p>";
-                  } elseif ($row['status'] == 2) {
-                    echo "<p style = color:red> No Submssion </p>";
-                  } elseif ($row['status'] == 3) {
-                    echo "<td class='text-warning'> Incomplete </p>";
-                  } elseif ($row['status'] == 4) {
-                    echo "<p style = color:blue> Late </p>";
-                  } else {
-                    echo "<p style = color:red> No Submssion </p>";
-                  }  
-                  ?>
-                </td>
-                <td>
-                  <a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&to_user=<?php echo $row['to_user']?>">View Report</a>
-                </td>
-              </tr>
-        </tbody>
-      </table>
-
-
-
-  <?php
-            }
-          }
-  ?>
-
-    </div>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-end">
+							<p class="mb-0 text-muted">
+								<strong>DILG</strong> &copy; 2023
+							</p>
+						</div>
+					</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="../src/js/template-2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+<script src="../src/js/preload.js"></script>
 </body>
 
-
-
 </html>
-
 <?php
-
 ob_end_flush();
 
 ?>
