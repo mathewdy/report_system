@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2023 at 03:29 AM
+-- Generation Time: Feb 02, 2023 at 11:04 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -115,6 +115,29 @@ INSERT INTO `events` (`id`, `title`, `start_event`, `end_event`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `files`
+--
+
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `uploaded_on` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`id`, `file_name`, `uploaded_on`, `status`) VALUES
+(7, 'SYSTEG_final.pdf', '2023-02-02 17:06:53', '1'),
+(8, 'SYSTEG_final.docx', '2023-02-02 17:06:53', '1'),
+(9, 'SYSTEG_M1.docx', '2023-02-02 17:06:53', '1'),
+(10, 'SYSTEG_M2.docx', '2023-02-02 17:06:53', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notes`
 --
 
@@ -191,6 +214,14 @@ CREATE TABLE `reports` (
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(154, 'ADM00001', 'RID00001', 'melendez@dilg.com', 'mathew@dilg.com', 'Sirang Lupa', 'sample subject', 'sampkle OPR', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '2023-02-02 05:16:00', '2023-02-23 05:16:00', 21, '2023-02-02', '05:39:33', '2023-02-02', '05:39:33'),
+(155, 'TA00001', 'RID00002', 'mathew@dilg.com ', 'melendez@dilg.com ', 'Paciano Rizal ', 'sample report', 'asd;kjfadf ', '<p>burat&nbsp;</p>', 'Bi-weekly', '', 3, 0, '1970-01-01 08:00:00', '1970-01-01 08:00:00', 0, '2023-02-02', '10:40:23', '2023-02-02', '05:47:07');
+
 -- --------------------------------------------------------
 
 --
@@ -241,25 +272,13 @@ CREATE TABLE `sent` (
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `try`
+-- Dumping data for table `sent`
 --
 
-CREATE TABLE `try` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `date` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `try`
---
-
-INSERT INTO `try` (`id`, `name`, `date`) VALUES
-(5, 'tite malake', '2023-02-14'),
-(6, 'bilat ', '2023-02-05');
+INSERT INTO `sent` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(31, 'ADM00001', 'RID00001', 'melendez@dilg.com', 'mathew@dilg.com', 'Sirang Lupa', 'sample subject', 'sampkle OPR', '<p>hahaha</p>', 'Bi-weekly', '', 3, 0, '2023-02-02 05:16:00', '2023-02-23 05:16:00', 21, '2023-02-02', '05:39:33', '2023-02-02', '05:39:33'),
+(32, 'TA00001', 'RID00002', 'mathew@dilg.com', 'melendez@dilg.com', 'Paciano Rizal', 'sample report', 'asd;kjfadf', '<p>burat&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-02 10:40:00', '1970-01-01 01:00:00', 19390, '2023-02-02', '10:40:23', '2023-02-02', '10:40:23');
 
 -- --------------------------------------------------------
 
@@ -291,9 +310,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_type`, `user_id`, `email`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `address`, `barangay`, `barangay_id`, `dilg_id`, `image`, `date_time_created`, `date_time_updated`) VALUES
-(49, 1, 'ADM00001', 'rose_1@dilg.com', '$2y$10$KLEf5nSZGwBwN5bOw9e/a.B2JQS2TXbzF.lxQvUx8jnM/GH/W9lyW', 'Lucian', 'Grace', 'Grace', '2020-11-25', 'Russell', 'Mabato', '0', 'Hannah', 0x6c632e706e67, '2023-02-01 09:39:56', '2023-02-01 09:39:56'),
-(53, 2, 'TA00004', 'mathew_2@dilg.com', '$2y$10$4KjV8GZxhxZlggBZL96OauUovEWuBP9TCknAjSP76JU3.0QWAr37a', 'Wylie1234', 'April123', 'April123', '1972-12-18', 'Quinlan', 'Laguerta', 'Virginia', '0', 0x3332363532353238325f323135323139393436383331383331375f373639373735303836333034313531323134305f6e2e6a7067, '2023-02-01 05:39:05', '2023-02-01 05:39:05'),
-(54, 1, 'ADM00002', 'melendez@dilg.com', '$2y$10$Vw4Ht.V20kwldv9F4Ro3UOd7NafyIlQY22CP72FpF0YAUfmkD3dPW', 'Rigel213', 'Stuart123123', 'Stuart123123', '2010-01-15', 'Alika', 'Real', 'Acton', 'Acton', 0x627572616f742e6a7067, '2023-02-02 09:14:40', '2023-02-02 09:14:40');
+(55, 2, 'TA00001', 'mathew@dilg.com', '$2y$10$kId/hU.2ZCnBTNZXMJel8Owpx9WgWJ19WbatcCcp.JzJUJfER20wm', 'Naomi', 'Ashely', 'Ashely', '2002-10-12', 'Darryl', 'Sirang Lupa', 'Nicole', '', 0x3330383932393836395f353337353638343333323535333837345f383032363536353732373638323230383438315f6e2e6a7067, '2023-02-02 04:20:20', '2023-02-02 04:20:20'),
+(56, 1, 'ADM00001', 'melendez@dilg.com', '$2y$10$mu6T/iXSBiC9uEHyCHrrMOuRaD/Ojug6oE5wIFMR3Ig51aAtzk6wy', 'Abbot', 'Zahir', 'Zahir', '1995-01-10', 'Zeph', 'Paciano Rizal', '0', 'Irma', 0x70726f6a656374206d616e616765722e504e47, '2023-02-02 04:21:02', '2023-02-02 04:21:02');
 
 -- --------------------------------------------------------
 
@@ -332,6 +350,12 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
@@ -362,12 +386,6 @@ ALTER TABLE `report_type`
 -- Indexes for table `sent`
 --
 ALTER TABLE `sent`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `try`
---
-ALTER TABLE `try`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -402,6 +420,12 @@ ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
@@ -417,25 +441,19 @@ ALTER TABLE `opr`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `sent`
 --
 ALTER TABLE `sent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `try`
---
-ALTER TABLE `try`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `user_types`
