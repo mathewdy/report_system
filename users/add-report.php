@@ -128,10 +128,7 @@ $user_id = $_SESSION['user_id'];
 											<!-- <<label for="">Date Start:</label>
 											<input type="datetime-local" class="form-control w-100" name="date_start">
 											</div> -->
-											<div class="col-lg-4 text-end mb-2">
-												<label class="mx-2">Date End</label>
-												<input type="datetime-local" class="form-control py-1 w-100" name="date_end">
-											</div>
+											
 											<div class="col-lg-12 d-flex align-items-center mb-2">
 												<label for=>From:</label>
 												<input type="text" class="form-control py-1 w-100 ms-2" name="from" value="<?php echo $row_email['email'] ?>" readonly>
@@ -144,8 +141,6 @@ $user_id = $_SESSION['user_id'];
 												<label for="">Barangay:</label>
 												<input type="text" id="brgy" name="brgy" class="w-100 brgy ms-2" style="border:none !important; outline:none !important;" />
 												<span class="d-flex align-items-center">
-													<label class="text-muted ms-3">Check This if you want to select all barangay</label>
-													<input type="checkbox" name="all_brgy" id="all_brgy" />
 												</span>
 											</div>
 											<div class="col-lg-12 d-flex align-items-center mb-2">
