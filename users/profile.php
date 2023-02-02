@@ -1,96 +1,209 @@
 <?php
-
-include('../connection.php');
 session_start();
-ob_start();
+date_default_timezone_set('Asia/Manila');
+include('../connection.php');
+include('session.php');
+// include('edit-notes.php');
+
 $user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="../src/css/template-2.css" rel="stylesheet">
+	<link href="../src/css/preloader.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+	<title>DILG</title>
 </head>
+
 <body>
+<div class="preload-wrapper">
+      <div class="spinner-border text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+          <img src="../src/img/dilg.png" height="50" alt="">
+          <span class="ms-3 align-middle">DILG</span>
+        </a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="home.php">
+              <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="view-report.php">
+              <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="add-report.php">
+              <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="sent-reports.php">
+              <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
+            </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="align-self-center text-dark" data-feather="menu"></i>
+                </a>
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+							<?php
+
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
+							$run_image = mysqli_query($conn,$query_image);
+
+							if(mysqli_num_rows($run_image) > 0) {
+							foreach($run_image as $row_image){
+								?>
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                  <img src="<?php echo "Images/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+								</a>
+
+								<?php
+							}
+							}
 
 
+							?>
+                            </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.php"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout.php">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
-    <h2>Edit Profile</h2>
+			<main class="content">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<div class="col-xl-12 col-xxl-12 d-flex">
+							<div class="w-100">
+								<?php
+									$query = "SELECT * FROM users WHERE user_id = '$user_id'";
+									$run = mysqli_query($conn,$query);
 
-    <?php
+									if(mysqli_num_rows($run) > 0){
+										foreach($run as $row){
+								?>
+								<form action="" method="POST" enctype="multipart/form-data">
+									<div class="row">
+								
+										<div class="col-lg-5">
+											<div class="card p-5">
+												<img class="card-img-top" src="<?php echo "Images/" . $row['image']?>" alt="Profile Image" style="max-height: 350px; width: 500px;">
+												<input type="hidden" name="old_image" value="<?php echo $row ['image']?>">
+												<input type="file" name="image">
 
-    $query = "SELECT * FROM users WHERE user_id = '$user_id'";
-    $run = mysqli_query($conn,$query);
+											</div>
+											
+										</div>
+										<div class="col-lg-7">
+											<div class="card p-5">
+												<label for="">Email</label>
+												<input type="email" class="form-control" name="email" value="<?php echo $row['email']?>">
+												<br>
+												<label for="">Password</label>					
+												<input type="password" class="form-control" name="password" id="" value="<?php echo $row['password']?>">
+												<br>
+												<label for="">First Name</label>											
+												<input type="text" class="form-control" name="first_name" value="<?php echo $row['first_name']?>">
+												<br>
+												<label for="">Middle Name</label>										
+												<input type="text" class="form-control" name="middle_name" value="<?php echo $row['middle_name']?>">
+												<br>
+												<label for="">Last Name</label>									
+												<input type="text" class="form-control" name="last_name" value="<?php echo $row['last_name']?>">
+												<br>
+												<label for="">Date of Birth</label>
+												<input type="date" class="form-control" name="date_of_birth" value="<?php echo $row['date_of_birth']?>" id="">
+												<br>
+												<label for="">Address</label>
+												<input type="text" class="form-control" name="address" value="<?php echo $row['address']?>">
+												<br>
+												<label for="">Barangay</label>
+												<input type="text" class="form-control" name="barangay" value="<?php echo $row['barangay']?>">
+												<br>
+												<label for="">Barangay ID</label>
+												<input type="text" class="form-control" name="barangay_id" value="<?php echo $row['barangay_id']?>">
+												<br>
+												<span class="text-end">
+													<input type="submit" class="btn btn-success" name="update" value="Update">
+												</span>
 
-    if(mysqli_num_rows($run) > 0){
-        foreach($run as $row){
-            ?>
-                <form action="" method="POST" enctype="multipart/form-data">
-
-                <img src="<?php echo "Images/" . $row['image']?>" alt="Profile Image" width="100px" height="100px">
-                <input type="hidden" name="old_image" value="<?php echo $row ['image']?>">
-                <br>
-                <input type="file" name="image">
-                <br>
-                <label for="">Email</label>
-                <br>
-                <input type="email" name="email" value="<?php echo $row['email']?>">
-                <br>
-                <label for="">Password</label>
-                <br>
-                <input type="password" name="password" id="" value="<?php echo $row['password']?>">
-                <br>
-                <label for="">First Name</label>
-                <br>
-                <input type="text" name="first_name" value="<?php echo $row['first_name']?>">
-                <br>
-                <label for="">Middle Name</label>
-                <br>
-                <input type="text" name="middle_name" value="<?php echo $row['middle_name']?>">
-                <br>
-                <label for="">Last Name</label>
-                <br>
-                <input type="text" name="last_name" value="<?php echo $row['last_name']?>">
-                <br>
-                <label for="">Date of Birth</label>
-                <br>
-                <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']?>" id="">
-                <br>
-                <label for="">Address</label>
-                <br>
-                <input type="text" name="address" value="<?php echo $row['address']?>">
-                <br>
-                <label for="">Barangay</label>
-                <br>
-                <input type="text" name="barangay" value="<?php echo $row['barangay']?>">
-                <br>
-                <label for="">Barangay ID</label>
-                <br>
-                <input type="text" name="barangay_id" value="<?php echo $row['barangay_id']?>">
-                <br>
-                <input type="submit" name="update" value="Update">
-                </form>
-
-
-            <?php
-        }
-    }
-
-
-    ?>
+											</div>
+										</div>
+									
+									</form>
 
 
-    
+									<?php
+													}
+												}
+
+
+												?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-end">
+							<p class="mb-0 text-muted">
+								<strong>DILG</strong> &copy; 2023
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="../src/js/template-2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="../src/js/preload.js"></script>
+
 </body>
+
 </html>
-
-
-
 <?php
 
 if(isset($_POST['update'])){

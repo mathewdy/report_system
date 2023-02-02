@@ -19,12 +19,18 @@ $email = $_SESSION['email'];
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="../src/css/template-2.css" rel="stylesheet">
+	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 	<title>DILG</title>
 </head>
 
 <body>
+	<div class="preload-wrapper">
+    	<div class="spinner-grow text-info" role="status">
+        	<span class="sr-only">Loading...</span>
+    	</div>
+    </div>
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
