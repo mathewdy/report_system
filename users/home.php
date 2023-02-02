@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
 include('session.php');
-include('edit-notes.php');
+// include('edit-notes.php');
 
 $user_id = $_SESSION['user_id'];
 $email = $_SESSION['email'];
@@ -19,17 +19,12 @@ $email = $_SESSION['email'];
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="../src/css/template-2.css" rel="stylesheet">
-	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 	<title>DILG</title>
 </head>
 
 <body>
-	<div class="preload-wrapper">
-    	<div class="spinner-grow text-info" role="status">
-        	<span class="sr-only">Loading...</span>
-    	</div>
-    </div>
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -167,14 +162,29 @@ $email = $_SESSION['email'];
 												</p>
 											</div>
 											<span class="text-center">
-												<button type="button" id="<?php echo ($note_id); ?>" class="btn btn-primary btn-sm edit" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+												<button type="button" id="<?php echo ($note_id); ?>" data-id="<?= $note_id ?>" class="btn btn-primary btn-sm edit" data-bs-toggle="modal" data-bs-target="#editNote">Edit</button>
 												<a class="btn btn-danger btn-sm" href="<?php echo ($delete_link) ?>">Delete</a>
 											</span>
 										</div>
 									</div>
 
-											<!-- Modal -->
-
+											 <!-- Modal -->
+											 <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="exampleModalLabel">Notes</h1>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body notes">
+														
+													</div>
+													<div class=" modal-footer">
+														
+													</div>
+													</div>
+												</div>
+											</div>
 
 
 
@@ -187,7 +197,7 @@ $email = $_SESSION['email'];
 									<div class="col-lg-3">
 										<div class="card d-flex justify-content-center align-items-center" style="min-height: 20rem; border: 3px solid rgba(0, 0,0,0.2);">
 											<span>
-												<a href=""><i class="align-self-center text-primary" style="width: 150px; height: 150px" data-feather="plus-circle"></i></a>
+												<a href="" data-bs-toggle="modal" data-bs-target="#addNote"><i class="align-self-center text-primary" style="width: 150px; height: 150px" data-feather="plus-circle"></i></a>
 											</span>
 										</div>
 									</div>
@@ -211,12 +221,78 @@ $email = $_SESSION['email'];
 			</footer>
 		</div>
 	</div>
+
+	<!-- Add Note Modal -->
+	<div class="modal fade" id="addNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Note</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+			<form action="add-notes.php" method="POST" enctype="multipart/form-data">
+				<div>
+					<textarea id="tiny" name="content"> </textarea>
+				</div>
+				<span class="d-flex justify-content-end mt-4">
+				<input type="submit" class="btn btn-primary py-1 mx-2" name="add" value="Add">
+				</span>
+			</form>
+          </div>
+          <div class=" modal-footer">
+            
+          </div>
+        </div>
+      </div>
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="../src/js/template-2.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 <script src="../src/js/preload.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.edit').click(function(){
+			var note = $(this).data('id');
+			$.ajax({
+				url: 'edit-modal.php',
+				type: 'post',
+				data: {note: note},
+				success: function(response){
+					$('.notes').html(response);
+					$('#editNote').modal('show');
+				}
+			});
+		});
+	});
+</script>
+<script>
+    tinymce.init({
+      selector: 'textarea#tiny',
+      // width: 2000,
+      height: 300,
+      resize: false,
+      plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+        'table', 'emoticons', 'template', 'codesample'
+      ],
+      toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' +
+        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+        'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
+      menu: {
+        favs: {
+          title: 'menu',
+          items: 'code visualaid | searchreplace | emoticons'
+        }
+      },
+      menubar: 'favs file edit view insert format tools table',
+      content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
+
+    });
+</script>
 </body>
 
 </html>
