@@ -134,7 +134,7 @@ $note_link = "add-note.php";
                                     </span>
                                     <span class="mb-2">
                             <label for="">Password</label>
-                            <input type="password" class="form-control mb-3"  name="password" id="" required>
+                            <input type="password" class="form-control mb-3"  name="password" id="" >
                                         
                                     </span>
                                     <span class="mb-2">
@@ -173,6 +173,7 @@ $note_link = "add-note.php";
                                     <span class="d-flex justify-content-end">
                                     <input type="submit" class="btn btn-md btn-success" name="update" value="Update">
                                     </span>
+                                    <input type="hidden" name="user_id" value="<?php echo $row['user_id']?>">
                                 </div>
                             </div>
                         </form>
@@ -233,7 +234,8 @@ if (isset($_POST['update'])) {
     $barangay = mysqli_escape_string($conn, $barangay);
     $dilg_id = mysqli_escape_string($conn, $dilg_id);
 
-    $user_id = 1;
+    $user_id2 = $_POST['user_id'];
+
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -249,7 +251,7 @@ if (isset($_POST['update'])) {
     }
 
     if (empty($new_image)) {
-        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$dilg_id' WHERE user_id = '$user_id'";
+        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', password = '$hashed_password', address = '$address', barangay = '$barangay' , barangay_id = '$dilg_id' WHERE user_id = '$user_id2'";
         $run_update_1 = mysqli_query($conn, $query_update_1);
 
         if ($run_update_1) {
@@ -267,7 +269,7 @@ if (isset($_POST['update'])) {
         echo "<script>alert('File not allowed'); </script>";
         echo "<script>window.location.href='profile.php' </script>";
     } else {
-        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , dilg_id = '$dilg_id', image =  '$update_filename' WHERE user_id = '$user_id'";
+        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address',  password = '$hashed_password', barangay = '$barangay' , dilg_id = '$dilg_id', image =  '$update_filename' WHERE user_id = '$user_id2'";
         $run_update_2 = mysqli_query($conn, $query_update_2);
 
         if ($run_update_2) {

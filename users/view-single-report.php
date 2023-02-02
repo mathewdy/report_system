@@ -19,8 +19,6 @@ ob_start();
 
 <body>
 
-haha
-
     <a href="sent-reports.php">Back</a>
     <?php
 
