@@ -144,7 +144,7 @@ require '../vendor/autoload.php';
 														<tr class="border-bottom border-secondary">
 															<td><?php echo $row['report_id'] ?></td>
 															<td><?php echo $row['to_user'] ?></td>
-															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>"><?php echo $row['subject'] ?></a></td>
+															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>&to_user=<?php echo $row['to_user']?>"><?php echo $row['subject'] ?></a></td>
 															<td>
 																<?php
 																$date = date_create($row['date_created']);
