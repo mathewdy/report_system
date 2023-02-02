@@ -254,6 +254,7 @@ if (isset($_POST['update'])) {
 
         if ($run_update_1) {
             echo "Updated";
+            echo "<script>window.location.href='profile.php'</script>";
         } else {
             echo "error" . $conn->error;
         }
@@ -270,9 +271,8 @@ if (isset($_POST['update'])) {
         $run_update_2 = mysqli_query($conn, $query_update_2);
 
         if ($run_update_2) {
-            move_uploaded_file($_FILES["image"]["tmp_name"], "guardian_image/" . $_FILES["image"]["name"]);
-            unlink("Images/" . $old_image);
-            echo "<script>alert('Profile updated!') </script>";
+            move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
+            echo "<script>window.location.href='profile.php'</script>";
         } else {
             echo "Error" . $conn->error;
         }

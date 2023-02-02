@@ -120,7 +120,6 @@ if(isset($_POST['update'])){
     $barangay = mysqli_escape_string($conn,$barangay);
     $barangay_id = mysqli_escape_string($conn,$barangay_id);
 
-    $user_id = 2;
 
     //images
 
@@ -139,32 +138,34 @@ if(isset($_POST['update'])){
 
         if($run_update_1){
             echo "Updated";
+            echo "<script>window.location.href='profile.php'</script>";
         }else{
             echo "error" . $conn->error;
         }
     }
-
-    $allowed_extension = array('gif','png','jpg','jpeg', 'PNG', 'GIF', 'JPG', 'JPEG');
-    $filename = $_FILES['image']['name'];
-    $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
-    if(!in_array($file_extension,$allowed_extension)){
-        echo "<script>alert('File not allowed'); </script>";
-        echo "<script>window.location.href='profile.php' </script>";
-    }else{
-        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id', image =  '$update_filename' WHERE user_id = '$user_id'";
-        $run_update_2 = mysqli_query($conn,$query_update_2);
-
-        if($run_update_2){
-            move_uploaded_file($_FILES["image"]["tmp_name"], "guardian_image/".$_FILES["image"]["name"]);
-            unlink("Images/". $old_image);
-            echo "<script>alert('Profile updated!') </script>";
-
+        $allowed_extension = array('gif','png','jpg','jpeg', 'PNG', 'GIF', 'JPG', 'JPEG');
+        $filename = $_FILES['image']['name'];
+        $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
+        if(!in_array($file_extension,$allowed_extension)){
+            echo "<script>alert('File not allowed'); </script>";
+            echo "<script>window.location.href='profile.php' </script>";
         }else{
-            echo "Error" .$conn->error;
-        }
-    }
+            $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id', image =  '$update_filename' WHERE user_id = '$user_id'";
+            $run_update_2 = mysqli_query($conn,$query_update_2);
+    
+            if($run_update_2){
+                move_uploaded_file($_FILES["image"]["tmp_name"], "Images/".$_FILES["image"]["name"]);
+                echo "<script>window.location.href='profile.php'</script>";
 
     
+            }else{
+                echo "Error" .$conn->error;
+            }
+        }
+    
+        
+
+   
 }
 
 
