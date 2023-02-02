@@ -21,7 +21,7 @@ if (isset($_POST['add'])) {
     $run_insert = mysqli_query($conn, $insert);
 
     if ($run_insert) {
-        echo "sucess";
+        echo "<script>window.location.href='home.php' </script>";
     } else {
         $conn->error;
     }

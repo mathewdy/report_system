@@ -128,7 +128,12 @@ $user_id = $_SESSION['user_id'];
 													<div class="card p-5">
 														<div class="row">
 															<div class="col-lg-12 text-end">
-																<p><?= $row['date_start'].' - '. $row['date_end']?></p>
+																<p>
+                                                                    <?php 
+                                                                    $origin =  $row['date_start'].' - '. $row['date_end'];
+                                                                    echo $new_format = date('F d, Y', strtotime($origin));
+                                                                    ?>
+                                                                </p>
 																<!-- papalitan ng format yung date  -->
 																<!-- dapat F d, Y yung format para maging February 2, 2023 - February 5, 2023 (sample yan)-->
 															</div>
