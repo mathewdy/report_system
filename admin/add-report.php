@@ -41,6 +41,8 @@ $ranking = "ranking.php"
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../src/css/preloader.css">
+  <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+
   <title> Add Report </title>
 </head>
 <style>
@@ -210,6 +212,8 @@ $ranking = "ranking.php"
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
   <script src="../src/js/preload.js"></script>
   <script src="../src/js/multiple.js"></script>
+  <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
   <script>
     $('#search_data').tokenfield({
       autocomplete: {
@@ -422,7 +426,12 @@ if (isset($_FILES['pdf_file']['name'])) {
             $run_sent_report = mysqli_query($conn, $sent_report);
   
             if ($run_sent_report) {
-              echo "<script>alert('Success')</script>";
+              echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Report Sent',
+              })
+              </script>";
             }
           } else {
             echo "error" . $conn->error;
@@ -447,7 +456,12 @@ if (isset($_FILES['pdf_file']['name'])) {
         $run_sent_report = mysqli_query($conn, $sent_report);
 
         if ($run_sent_report) {
-          echo "<script>alert('Success')</script>";
+          echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Report Sent',
+              })
+              </script>";
         }
       } else {
         echo "error" . $conn->error;
@@ -574,8 +588,12 @@ if (isset($_FILES['pdf_file']['name'])) {
 
 
         if ($run_insert_report) {
-
-          echo "<script>alert('Success')</script>";
+          echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Saved to drafts',
+              })
+              </script>";
         } else {
           echo "error" . $conn->error;
         }
@@ -593,7 +611,12 @@ if (isset($_FILES['pdf_file']['name'])) {
 
       if ($run_insert_report) {
 
-        echo "<script>alert('Success')</script>";
+        echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Saved to drafts',
+              })
+              </script>";
       } else {
         echo "error" . $conn->error;
       }
