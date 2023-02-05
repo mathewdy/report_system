@@ -120,26 +120,38 @@ if (isset($_POST['login'])) {
     $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$username'";
     $result = mysqli_query($conn, $query);
 
+    if(strpos($username,"@dilg.com") !== false){
+        $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$username'";
+        $result = mysqli_query($conn, $query);
 
-    if (mysqli_num_rows($result) > 0) {
-        foreach ($result as $row) {
-
-            if ($row['user_type'] == '2') {
-                echo "<script>alert('User unavailable'); </script>";
-            } else {
-
-                if (password_verify($password, $row['password'])) {
-                    //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                    $_SESSION['username'] = $username;
-                    $_SESSION['user_id'] = $row['user_id'];
-                    header("location: index.php");
-                    die();
+        if (mysqli_num_rows($result) > 0) {
+            foreach ($result as $row) {
+    
+                if ($row['user_type'] == '2') {
+                    echo "<script>alert('User unavailable'); </script>";
+                } else {
+    
+                    if (password_verify($password, $row['password'])) {
+                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                        $_SESSION['username'] = $username;
+                        $_SESSION['user_id'] = $row['user_id'];
+                        header("location: index.php");
+                        die();
+                    }
                 }
             }
+        } else {
+            echo "User not found" . $conn->error;
         }
-    } else {
-        echo "User not found" . $conn->error;
+
+    }else{
+        echo "Domain not available";
     }
+
+
+
+
+    
 }
 
 ob_end_flush();
