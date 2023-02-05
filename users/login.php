@@ -121,34 +121,43 @@ if (isset($_POST['login'])) {
     $email = mysqli_escape_string($conn,$_POST['email']);
     $password = $_POST['password'];
 
-    $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$email'";
-    $result = mysqli_query($conn,$query);
 
 
-    if(mysqli_num_rows($result) > 0){
-            foreach($result as $row){
-
-                if($row['user_type'] == '1'){
-                    echo "<script>alert('User unavailable'); </script>";
-                }else{
-
-                if (password_verify($password, $row['password'])){ 
-                    //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['email'] = $row['email'];
-                        $_SESSION['user_id'] = $row['user_id'];
-                        header("location: home.php");
-                    die();
-                }   
+    if(strpos($email,"@dilg.com") !== false){
+        $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$email'";
+        $result = mysqli_query($conn,$query);
+    
+    
+        if(mysqli_num_rows($result) > 0){
+                foreach($result as $row){
+    
+                    if($row['user_type'] == '1'){
+                        echo "<script>alert('User unavailable'); </script>";
+                    }else{
+    
+                    if (password_verify($password, $row['password'])){ 
+                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                            $_SESSION['email'] = $row['email'];
+                            $_SESSION['user_id'] = $row['user_id'];
+                            header("location: home.php");
+                        die();
+                    }   
+                    
+                    }
                 
                 }
-            
+            }else{
+                echo "User not found" . $conn->error;
             }
-        }else{
-            echo "User not found" . $conn->error;
-        }
+    
+    
+    
 
+    }else{
+        echo "Domain not available";
+    }
 
-
+   
 }
 
 ob_end_flush();

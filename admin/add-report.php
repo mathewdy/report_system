@@ -6,7 +6,7 @@ include('../connection.php');
 include('session.php');
 include('images.php');
 
-
+error_reporting(E_ERROR | E_PARSE);
 $user_id = $_SESSION['user_id'];
 
 $report_link = "add-report.php";
@@ -184,7 +184,7 @@ $ranking = "ranking.php"
               </span>
               <span class="d-flex mb-2">
                 <label for="">OPR:</label>
-                <input type="text" class="form-control w-100 ms-2" name="opr">
+                <input type="text" id="opr" class="form-control w-100 ms-2" name="opr">
               </span>
               <div>
                 <textarea id="tiny" name="statement"> </textarea>
@@ -240,11 +240,11 @@ $ranking = "ranking.php"
     })
   </script>
   <script>
-    $('#brgy').tokenfield({
+    $('#opr').tokenfield({
       autocomplete: {
         source: function(data, response) {
           $.ajax({
-            url: 'brgy2.php',
+            url: 'opr.php',
             method: 'GET',
             dataType: 'json',
             data: {
@@ -267,82 +267,6 @@ $ranking = "ranking.php"
         delay: 100
       },
     })
-  </script>
-  <!-- <script>
-    $('.brgy').tokenfield({
-        autocomplete :{
-            source: function(data, response){
-                $.ajax({
-                    url: 'brgy.php',
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {
-                    name: data.term
-                    },
-                    success: function(res){
-                    // response(res)
-                    var usr = $.map(res, function(name){
-                        return{
-                        label: name,
-                        value: name
-                        }
-                    }) 
-                    var results = $.ui.autocomplete.filter(usr, data.term)
-                    response(results)
-                    console.log(results)
-                    }
-                })
-            }
-        }
-    });
-  </script> -->
-  <script>
-    //   $('.tagator_textlength').autocomplete({
-    //   source: function(data, response){
-    //     $.ajax({
-    //       url: 'brgy.php',
-    //       method: 'GET',
-    //       dataType: 'json',
-    //       data: {
-    //         name: data.term
-    //       },
-    //       success: function(res){
-    //         // response(res)
-    //         var usr = $.map(res, function(name){
-    //           return{
-    //             label: name,
-    //             value: name
-    //           }
-    //         }) 
-    //         var results = $.ui.autocomplete.filter(usr, data.term)
-    //         response(results)
-    //         console.log(results)
-    //       }
-    //     })
-    //   }
-    // })
-    // $('.brgy').tagator('autocomplete', function(data, response){
-    //   $.ajax({
-    //       url: 'brgy.php',
-    //       method: 'GET',
-    //       dataType: 'json',
-    //       data: {
-    //         name: data.term
-    //       },
-    //       success: function(res){
-    //         // response(res)
-    //         var usr = $.map(res, function(name){
-    //           return{
-    //             label: name,
-    //             value: name
-    //           }
-    //         }) 
-    //         var results = $.ui.autocomplete.filter(usr, data.term)
-    //         response(results)
-    //         console.log(results)
-    //       }
-    //     })
-    // });
   </script>
   <script>
     tinymce.init({
@@ -369,10 +293,6 @@ $ranking = "ranking.php"
 
     });
   </script>
-
-  <!-- <script src="../src/js/multiple.js"></script> -->
-
-
 </body>
 
 </html>
@@ -487,6 +407,7 @@ if (isset($_FILES['pdf_file']['name'])) {
         $query_get_users = mysqli_query($conn, $sql_get_users);
         while($rows = mysqli_fetch_array($query_get_users)){
           $emails = $rows['email'];
+          $brgy = $rows['barangay'];
           $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
           VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);

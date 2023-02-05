@@ -26,6 +26,7 @@ $ranking = "ranking.php";
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../src/css/preloader.css">
@@ -118,7 +119,9 @@ $ranking = "ranking.php";
         </div>
       </nav>
       <div class="row p-5">
-
+        <div class="col-lg-12">
+          <div id="calendar"></div>
+        </div>
         <!-- NOTES -->
 
         <?php
@@ -221,11 +224,184 @@ $ranking = "ranking.php";
       </div> -->
     </div>
   </main>
+
+  <!-- Add Note Modal -->
+  <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Notes</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body notes">
+            
+          </div>
+          <div class=" modal-footer">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
   <!-- <script src="../src/js/update.js"> </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="../src/js/preload.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+  <?php
+    $query = $conn->query("SELECT * FROM events ORDER BY id");
+    ?>
+      <script>
+        $(document).ready(function() {
+        var calendar = $('#calendar').fullCalendar({
+          editable:true,
+          header:{
+          left:'prev,next today',
+          center:'title',
+          right:'month,agendaWeek,agendaDay'
+          },
+          events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
+          selectable:true,
+          selectHelper:true,
+          select: function(start, end, allDay)
+          {
+          var title = prompt("Enter Event Title");
+          if(title)
+          {
+            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+            $.ajax({
+            url:"insert.php",
+            type:"POST",
+            data:{title:title, start:start, end:end},
+            success:function(data)
+            {
+              calendar.fullCalendar('refetchEvents');
+              alert("Added Successfully");
+              window.location.replace("calendar.php");
+            }
+            })
+          }
+          },
+    
+          editable:true,
+          eventResize:function(event)
+          {
+          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+          var title = event.title;
+          var id = event.id;
+          $.ajax({
+            url:"update.php",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function(){
+            calendar.fullCalendar('refetchEvents');
+            alert('Event Update');
+            }
+          })
+          },
+    
+          eventDrop:function(event)
+          {
+          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+          var title = event.title;
+          var id = event.id;
+          $.ajax({
+            url:"update.php",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function()
+            {
+            calendar.fullCalendar('refetchEvents');
+            alert("Event Updated");
+            }
+          });
+          },
+    
+          eventClick:function(event)
+          {
+          if(confirm("Are you sure you want to remove it?"))
+          {
+            var id = event.id;
+            $.ajax({
+            url:"delete.php",
+            type:"POST",
+            data:{id:id},
+            success:function()
+            {
+              calendar.fullCalendar('refetchEvents');
+              alert("Event Removed");
+              window.location.href='calendar.php';
+            }
+            })
+          }
+          },
+    
+        });
+      });
+    </script>
+  <!-- <script>
+    $(document).ready(function(){
+       display_events();
+    })
+
+    function display_events(){
+      var events = new Array();
+          $.ajax({
+              url: 'display_event.php',  
+              dataType: 'json',
+              success: function (response) {
+                  
+              var result=response.data;
+              $.each(result, function (i, item) {
+                events.push({
+                      event_id: result[i].event_id,
+                      title: result[i].title,
+                      start: result[i].start,
+                      end: result[i].end,
+                      color: result[i].color,
+                      url: result[i].url
+                  }); 	
+                  console.log(result)
+
+              })
+              var calendarEl = $('#calendar')[0];
+              var calendar = new FullCalendar.Calendar(calendarEl, {
+                  initialView: 'dayGridMonth',
+                  selectable: true, 
+                  headerToolbar: {
+                  right: 'prev,next today',
+                  left: 'dayGridMonth,dayGridWeek,list',
+                  center: 'title',
+                  select: function(start, end) {
+                    alert(start);
+                    alert(end);
+                    $('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
+                    $('#event_end_date').val(moment(end).format('YYYY-MM-DD'));
+                    $('#event_entry_modal').modal('show');
+                  },
+                  events: events,
+                    eventRender: function(event, element, view) { 
+                    element.bind('click', function() {
+                    alert(event.event_id);
+                    });
+                  },
+                  error: function (xhr, status) {
+                    alert(response.msg);
+                  }
+              },
+              })
+              calendar.render();
+              calendar.addEvents                  
+          }      
+        });//end ajax block	
+    }
+    </script> -->
   <script>
       $(document).ready(function(){
           $('.edit').click(function(){

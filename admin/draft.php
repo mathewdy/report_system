@@ -5,7 +5,7 @@ include('../connection.php');
 include('session.php');
 include('images.php');
 
-
+error_reporting(E_ERROR | E_PARSE);
 
 
 $user_id = $_SESSION['user_id'];

@@ -339,19 +339,15 @@ if (isset($_POST['update'])) {
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
-  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
-  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+  // $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+  // $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
 
 
-  $date_new_start = new DateTime($date_start);
+  $date_new_start = new DateTime($date . " ".  $time);
   $date_new_end = new DateTime($date_end);
 
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   $days = intval($diff);
-
-
-
-
 
 
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
@@ -375,19 +371,26 @@ if (isset($_POST['update'])) {
     $duration = "Annualy";
   }
 
+  $acknowledge_report = "UPDATE reports SET status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE report_id = '$report_id'";
+  $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
 
-
-
-  $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
-  $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-
-  if ($run_insert_report) {
-    echo "<script>alert('Success update')</script>";
-  } else {
-    $conn->error;
+  if($run_acknowledge_report){
+    echo "<script>Alert('Updated') </script>";
+  }else{
+    echo "error" . $conn->error;
   }
+
+
+  // // $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
+  // // $run_insert_report = mysqli_query($conn, $insert_report);
+
+
+
+  // if ($run_insert_report) {
+  //   echo "<script>alert('Success update')</script>";
+  // } else {
+  //   $conn->error;
+  // }
 }
 
 ?>
