@@ -21,6 +21,7 @@ $email = $_SESSION['email'];
 	<link href="../src/css/template-2.css" rel="stylesheet">
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
 
 	<title>DILG</title>
 </head>
@@ -200,6 +201,8 @@ $email = $_SESSION['email'];
 <script src="../src/js/template-2.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="../src/js/preload.js"></script>
+<script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
 
 </body>
 
@@ -260,7 +263,14 @@ if(isset($_POST['update'])){
         $filename = $_FILES['image']['name'];
         $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
         if(!in_array($file_extension,$allowed_extension)){
-            echo "<script>alert('File not allowed'); </script>";
+			echo "
+			<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'File Not Allowed!',
+			})
+			</script>";
             echo "<script>window.location.href='profile.php' </script>";
         }else{
             $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id', image =  '$update_filename' WHERE user_id = '$user_id'";
@@ -268,7 +278,14 @@ if(isset($_POST['update'])){
     
             if($run_update_2){
                 move_uploaded_file($_FILES["image"]["tmp_name"], "Images/".$_FILES["image"]["name"]);
-                echo "<script>window.location.href='profile.php'</script>";
+                echo "<script>
+					Swal.fire({
+						icon: 'success',
+						title: 'Updated Successfully',
+						text: 'Your record has been updated'
+					})
+					</script>";
+				echo "<script>window.location.href='profile.php'</script>";
 
     
             }else{
