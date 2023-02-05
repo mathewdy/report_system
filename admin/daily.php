@@ -8,7 +8,7 @@ include 'images.php';
 $email = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 
-
+error_reporting(E_ERROR | E_PARSE);
 $report_link = "add-report.php";
 $view_link = "reports.php";
 $draft_link = "draft.php";

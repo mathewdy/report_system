@@ -6,7 +6,7 @@ include('../connection.php');
 include('session.php');
 include('images.php');
 
-
+error_reporting(E_ERROR | E_PARSE);
 $user_id = $_SESSION['user_id'];
 
 $report_link = "add-report.php";
@@ -407,6 +407,7 @@ if (isset($_FILES['pdf_file']['name'])) {
         $query_get_users = mysqli_query($conn, $sql_get_users);
         while($rows = mysqli_fetch_array($query_get_users)){
           $emails = $rows['email'];
+          $brgy = $rows['barangay'];
           $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
           VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);

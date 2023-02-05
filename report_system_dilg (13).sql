@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2023 at 05:30 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.1
+-- Generation Time: Feb 05, 2023 at 10:57 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -105,13 +105,6 @@ CREATE TABLE `events` (
   `end_event` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `start_event`, `end_event`) VALUES
-(27, 'sample1', '2023-02-08 00:00:00', '2023-02-09 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -125,17 +118,6 @@ CREATE TABLE `files` (
   `uploaded_on` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `files`
---
-
-INSERT INTO `files` (`id`, `report_id`, `file_name`, `uploaded_on`, `status`) VALUES
-(49, 'RID00002', 'titekaapala (2).xlsx', '', ''),
-(50, 'RID00002', 'tarantadostudentnyo (1).docx', '', ''),
-(51, 'RID00003', 'OBE.pdf', '', ''),
-(52, 'RID00003', 'SP101assign.docx', '', ''),
-(53, 'RID00003', 'Group-8-POS-Autosaved.xlsx', '', '');
 
 -- --------------------------------------------------------
 
@@ -216,17 +198,6 @@ CREATE TABLE `reports` (
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(191, 'TA00002', 'RID00001', 'smadiccu@gmail.com', '', '', 'gago', 'fix na?', '<p>sana okay na</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 04:52:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:52:03', '2023-02-05', '04:52:03'),
-(192, 'TA00001', 'RID00002', 'usersample@gmail.com', 'adminsample@gmail.com', '', 'sfasf', 'sad', '<p>asd</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 04:56:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:56:21', '2023-02-05', '04:56:21'),
-(193, 'TA00001', 'RID00002', 'usersample@gmail.com', 'admin1sample@gmail.com', '', 'sfasf', 'sad', '<p>asd</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 04:56:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:56:21', '2023-02-05', '04:56:21'),
-(194, 'ADM00001', 'RID00003', 'adminsample@gmail.com', 'usersample@gmail.com', '', 'for user', 'tanaginmo', '<p>asdasd</p>', 'Weekly', '', 3, 0, '2023-02-15 11:59:00', '2023-02-22 11:59:00', 7, '2023-02-05', '11:59:52', '2023-02-05', '11:59:52'),
-(195, 'ADM00001', 'RID00003', 'adminsample@gmail.com', 'user1sample@gmail.com', '', 'for user', 'tanaginmo', '<p>asdasd</p>', 'Weekly', '', 3, 0, '2023-02-15 11:59:00', '2023-02-22 11:59:00', 7, '2023-02-05', '11:59:52', '2023-02-05', '11:59:52');
-
 -- --------------------------------------------------------
 
 --
@@ -277,17 +248,6 @@ CREATE TABLE `sent` (
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `sent`
---
-
-INSERT INTO `sent` (`id`, `user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(63, 'TA00002', 'RID00001', 'smadiccu@gmail.com', '', '', 'gago', 'fix na?', '<p>sana okay na</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 00:00:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:52:03', '2023-02-05', '04:52:03'),
-(64, 'TA00001', 'RID00002', 'usersample@gmail.com', 'adminsample@gmail.com', '', 'sfasf', 'sad', '<p>asd</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 04:56:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:56:21', '2023-02-05', '04:56:21'),
-(65, 'TA00001', 'RID00002', 'usersample@gmail.com', 'admin1sample@gmail.com', '', 'sfasf', 'sad', '<p>asd</p>', 'Bi-weekly', '', 3, 0, '2023-02-05 04:56:00', '0000-00-00 00:00:00', 0, '2023-02-05', '04:56:21', '2023-02-05', '04:56:21'),
-(66, 'ADM00001', 'RID00003', 'adminsample@gmail.com', 'usersample@gmail.com', '', 'for user', 'tanaginmo', '<p>asdasd</p>', 'Weekly', '', 3, 0, '2023-02-15 11:59:00', '2023-02-22 11:59:00', 7, '2023-02-05', '11:59:52', '2023-02-05', '11:59:52'),
-(67, 'ADM00001', 'RID00003', 'adminsample@gmail.com', 'user1sample@gmail.com', '', 'for user', 'tanaginmo', '<p>asdasd</p>', 'Weekly', '', 3, 0, '2023-02-15 11:59:00', '2023-02-22 11:59:00', 7, '2023-02-05', '11:59:52', '2023-02-05', '11:59:52');
-
 -- --------------------------------------------------------
 
 --
@@ -312,16 +272,6 @@ CREATE TABLE `users` (
   `date_time_created` datetime NOT NULL,
   `date_time_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `user_type`, `user_id`, `email`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `address`, `barangay`, `barangay_id`, `dilg_id`, `image`, `date_time_created`, `date_time_updated`) VALUES
-(60, 2, 'TA00001', 'usersample@gmail.com', '$2y$10$ugpxk.tZQFag1ayUvNGROOICX0sZiqno8SGUA6yciN.A2WGezPlIO', 'Usersample', 'Asdasd', 'Asdasd', '2023-02-05', 'q123124', 'Saimsim', '2319', '', 0x3331323031303734305f323932393632343736333939383136375f323732333733353436343539383532393433365f6e2e706e67, '2023-02-05 11:54:13', '2023-02-05 11:54:13'),
-(61, 1, 'ADM00001', 'adminsample@gmail.com', '$2y$10$5eV5ut3qhxIAvvkv3m18wu6DK1.kcKT52p.Kh66gQZQy8x0AbiePq', 'Admin', '980w98123', '980w98123', '2023-02-05', 'sdomo23', 'Saimsim', '0', '923901', 0x3331303836323134375f3738353730363933393137333735335f343430343837323231393135373731373039375f6e2e6a7067, '2023-02-05 11:54:41', '2023-02-05 11:54:41'),
-(62, 1, 'ADM00002', 'admin1sample@gmail.com', '$2y$10$YioyWYniqTWsKQyi13g6cunHSV2NlYme1GhgPqaELHxZ4PtilmZJ.', 'Math', 'Oijc0as', 'Oijc0as', '2023-03-09', '91923', 'Barangay 4', '0', 'Sf1231', 0x3236363536343234385f3633393534383637303432373032345f343530333533373730373833323835343337345f6e202831292e6a7067, '2023-02-05 11:55:15', '2023-02-05 11:55:15'),
-(63, 2, 'TA00002', 'user1sample@gmail.com', '$2y$10$ct.08vcrBUQi/6SH.wyahOT5Cgi3kOd0wf.1Yxqqdw2KUIb21omJ6', 'Uasdwe', 'Psad1', 'Psad1', '2023-03-02', '231e98', 'Barangay 5', '2131', '0', 0x74756d626c725f33613639633535303366373337396365313639326432653764303462373032665f31393563313937625f313238302e6a7067, '2023-02-05 11:55:51', '2023-02-05 11:55:51');
 
 -- --------------------------------------------------------
 
@@ -432,7 +382,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `notes`
@@ -450,19 +400,19 @@ ALTER TABLE `opr`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
 
 --
 -- AUTO_INCREMENT for table `sent`
 --
 ALTER TABLE `sent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `user_types`

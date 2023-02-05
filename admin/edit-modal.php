@@ -25,6 +25,8 @@ if(mysqli_num_rows($run_notes) > 0){
     </span>
 </form>
 <?php
+
+error_reporting(E_ERROR | E_PARSE);
     }
 }
 ?>

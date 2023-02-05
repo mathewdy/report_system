@@ -4,6 +4,7 @@ session_start();
 ob_start();
 $email = $_SESSION['email'];
 $user_id = $_SESSION['user_id'];
+error_reporting(E_ERROR | E_PARSE);
 ?>
 <!DOCTYPE html>
 <html lang="en">
