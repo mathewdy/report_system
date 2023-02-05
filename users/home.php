@@ -21,7 +21,7 @@ $email = $_SESSION['email'];
 	<link href="../src/css/template-2.css" rel="stylesheet">
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 	<title>DILG</title>
 </head>
 
@@ -112,6 +112,9 @@ $email = $_SESSION['email'];
 						<div class="col-xl-12 col-xxl-12 d-flex">
 							<div class="w-100">
 								<div class="row">
+									<div class="col-lg-12 mb-5">
+										<div id="calendar"></div>
+									</div>
 									<!-- NOTES -->
 										<?php
 
@@ -257,7 +260,50 @@ $email = $_SESSION['email'];
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <script src="../src/js/preload.js"></script>
+	<?php
+$query = $conn->query("SELECT * FROM events ORDER BY id");
+?>
+<script>
+	$(document).ready(function() {
+		var calendar = $('#calendar').fullCalendar({
+		editable:true,
+		header:{
+		left:'prev,next today',
+		center:'title',
+		right:'month,agendaWeek,agendaDay'
+		},
+		events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
+		selectable:true,
+		selectHelper:true,
+		select: function(start, end, allDay)
+		{
+		var title = prompt("Enter Event Title");
+		if(title)
+		{
+			var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+			var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+			$.ajax({
+			url:"insert.php",
+			type:"POST",
+			data:{title:title, start:start, end:end},
+			success:function(data)
+			{
+			calendar.fullCalendar('refetchEvents');
+			alert("Added Successfully");
+			window.location.replace("calendar.php");
+			}
+			})
+		}
+		},
+		editable:true,
+
+		});
+	});
+</script>
 <script>
 	$(document).ready(function(){
 		$('.edit').click(function(){
