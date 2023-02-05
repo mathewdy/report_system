@@ -133,7 +133,7 @@ $user_id = $_SESSION['user_id'];
 												<label for=>From:</label>
 												<input type="text" class="form-control py-1 w-100 ms-2" name="from" value="<?php echo $row_email['email'] ?>" readonly>
 											</div>
-											<div class="col-lg-12 d-flex align-items-center mb-2">
+											<!-- <div class="col-lg-12 d-flex align-items-center mb-2">
 												<label style="margin-right: 12px;" for="">To:</label>
 												<input type="text" id="search_data" name="to" class="w-100 brgy ms-2" style="border:none; outline:none;" />
 											</div>
@@ -142,7 +142,7 @@ $user_id = $_SESSION['user_id'];
 												<input type="text" id="brgy" name="brgy" class="w-100 brgy ms-2" style="border:none !important; outline:none !important;" />
 												<span class="d-flex align-items-center">
 												</span>
-											</div>
+											</div> -->
 											<div class="col-lg-12 d-flex align-items-center mb-2">
 												<label for="">Subject:</label>
 												<input type="text" class="form-control w-100 ms-2" name="subject">

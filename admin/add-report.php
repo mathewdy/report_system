@@ -170,14 +170,14 @@ $ranking = "ranking.php"
                 <label for="" style="margin-right: 12px;">From:</label>
                 <input type="text" class="form-control w-100 ms-2" name="from" value="<?php echo $rows['email'] ?>" readonly>
               </span>
-              <span class="d-flex align-items-center mb-3">
+              <!-- <span class="d-flex align-items-center mb-3">
                 <label style="margin-right: 12px;" for="">To:</label>
                 <input type="text" id="search_data" name="to" class="w-100 brgy ms-2" style="border:none; outline:none;" />
               </span>
               <span class="d-flex align-items-center mb-3">
                 <label style="margin-right: 12px;" for="">Barangay:</label>
                 <input type="text" id="brgy" name="brgy" class="w-100 brgy ms-2" style="border:none; outline:none;" />
-              </span>
+              </span> -->
               <span class="d-flex mb-2">
                 <label for="">Subject:</label>
                 <input type="text" class="form-control w-100 ms-2" name="subject">
