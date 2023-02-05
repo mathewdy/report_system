@@ -131,8 +131,9 @@ $user_id = $_SESSION['user_id'];
 															<div class="col-lg-12 text-end">
 																<p>
                                                                     <?php 
-                                                                    $origin =  $row['date_start'].' - '. $row['date_end'];
-                                                                    echo $new_format = date('F d, Y', strtotime($origin));
+                                                                    $date_start =  date('F d, Y', strtotime($row['date_start']));
+																	$date_end = date('F d, Y', strtotime($row['date_end']));
+                                                                    echo $date_start . " - " . $date_end;
                                                                     ?>
                                                                 </p>
 																<!-- papalitan ng format yung date  -->

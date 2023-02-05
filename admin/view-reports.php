@@ -200,7 +200,12 @@ $ranking = "ranking.php";
           <?php
           }
           ?>
-
+          <?php 
+                                                                    $date_start =  date('F d, Y', strtotime($rows['date_start']));
+																	$date_end = date('F d, Y', strtotime($rows['date_end']));
+                                                                    echo $date_start . " - " . $date_end;
+                                                                    ?>
+                                                                    <br>
           <label for="">From:</label>
           <input type="text" name="from" class="switch form-control" value="<?php if (empty($rows['from_user'])) {
                                                                               echo "";
