@@ -18,7 +18,8 @@ error_reporting(E_ERROR | E_PARSE);
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<title>DILG</title>
+  <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+  <title>DILG</title>
 </head>
 <style>
 	.token-input{
@@ -193,6 +194,8 @@ error_reporting(E_ERROR | E_PARSE);
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
 <script src="../src/js/preload.js"></script>
+<script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
 <script>
     $('#search_data').tokenfield({
       autocomplete: {
@@ -424,7 +427,12 @@ if (isset($_POST['send'])) {
             $run_sent_report = mysqli_query($conn, $sent_report);
   
             if ($run_sent_report) {
-              echo "<script>alert('Success')</script>";
+              echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Report Sent',
+              })
+              </script>";
             }
           } else {
             echo "error" . $conn->error;
@@ -452,7 +460,12 @@ if (isset($_POST['send'])) {
           $data['message'] = "sucess";
         //   $pusher->trigger('my-channel', 'my-event', $data);
 
-          echo "<script>alert('Success')</script>";
+        echo "<script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Report Sent',
+        })
+        </script>";
         }
       } else {
         $conn->error;
@@ -569,7 +582,12 @@ if (isset($_POST['draft'])) {
         if ($run_insert_report) {
           $data['message'] = "sucess";
         //   $pusher->trigger('my-channel', 'my-event', $data);
-          echo "<script>alert('Success')</script>";
+        echo "<script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Report Sent',
+        })
+        </script>";
         } else {
           $conn->error;
         }
@@ -590,7 +608,12 @@ if (isset($_POST['draft'])) {
         $data['message'] = "sucess";
         // $pusher->trigger('my-channel', 'my-event', $data);
 
-        echo "<script>alert('Success')</script>";
+        echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Report Sent',
+              })
+              </script>";
       } else {
         $conn->error;
       }
