@@ -190,7 +190,7 @@ $ranking = "ranking.php"
                 <textarea id="tiny" name="statement"> </textarea>
               </div>
 
-              <input type="file" class="form-control mt-2" name="pdf_file" id="" accept=".pdf">
+              <input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"/>
 
               <span class="d-flex justify-content-end align-items-center mt-3">
                 <input type="submit" class="btn btn-primary btn-md" name="send" value="Submit">
@@ -452,12 +452,12 @@ if (isset($_POST['send'])) {
 
 
 
-  //file upload 
-  if (isset($_FILES['pdf_file']['name'])) {
-    $file_name = $_FILES['pdf_file']['name'];
-    $file_tmp = $_FILES['pdf_file']['tmp_name'];
+ //file upload 
+if (isset($_FILES['pdf_file']['name'])) {
+  $filename = $_FILES['pdf_file']['name'];
+  $file_tmp = $_FILES['pdf_file']['tmp_name'];
 
-    move_uploaded_file($file_tmp, "./pdf/" . $file_name);
+  
 
 
     $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
@@ -476,26 +476,36 @@ if (isset($_POST['send'])) {
 
         //insert a query
 
+        for($i=0;$i<count($filename);$i++){
+          $f_name = $_FILES['pdf_file']['name'][$i];
+          $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
+          $query_file = mysqli_query($conn, $insert_file);
+          move_uploaded_file($file_tmp[$i], "./pdf/" . $filename[$i]);
+        }
 
-
-
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-        $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-
-        if ($run_insert_report) {
-
-          $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-          $run_sent_report = mysqli_query($conn, $sent_report);
-
-          if ($run_sent_report) {
-            echo "<script>alert('Success')</script>";
+        $sql_get_users = "SELECT * FROM users where user_type = '2'";
+        $query_get_users = mysqli_query($conn, $sql_get_users);
+        while($rows = mysqli_fetch_array($query_get_users)){
+          $emails = $rows['email'];
+          $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          $run_insert_report = mysqli_query($conn, $insert_report);
+  
+  
+  
+          if ($run_insert_report) {
+          
+  
+            $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+            VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+            $run_sent_report = mysqli_query($conn, $sent_report);
+  
+            if ($run_sent_report) {
+              echo "<script>alert('Success')</script>";
+            }
+          } else {
+            echo "error" . $conn->error;
           }
-        } else {
-          echo "error" . $conn->error;
         }
       }
     } else {
@@ -505,14 +515,14 @@ if (isset($_POST['send'])) {
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
 
-        $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
         $run_sent_report = mysqli_query($conn, $sent_report);
 
         if ($run_sent_report) {
@@ -605,12 +615,11 @@ if (isset($_POST['draft'])) {
 
 
 
-  //file upload 
-  if (isset($_FILES['pdf_file']['name'])) {
-    $file_name = $_FILES['pdf_file']['name'];
-    $file_tmp = $_FILES['pdf_file']['tmp_name'];
+ //file upload 
+if (isset($_FILES['pdf_file']['name'])) {
+  $filename = $_FILES['pdf_file']['name'];
+  $file_tmp = $_FILES['pdf_file']['tmp_name'];
 
-    move_uploaded_file($file_tmp, "./pdf/" . $file_name);
 
 
     $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
@@ -629,11 +638,16 @@ if (isset($_POST['draft'])) {
 
         //insert a query
 
+        for($i=0;$i<count($filename);$i++){
+          $f_name = $_FILES['pdf_file']['name'][$i];
+          $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
+          $query_file = mysqli_query($conn, $insert_file);
+          move_uploaded_file($file_tmp[$i], "./pdf/" . $filename[$i]);
+        }
 
 
-
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration', '2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
 
@@ -652,8 +666,8 @@ if (isset($_POST['draft'])) {
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','$file_name','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {

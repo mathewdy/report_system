@@ -242,6 +242,19 @@ $ranking = "ranking.php";
                                                                         } else {
                                                                           echo $rows['message'];
                                                                         }  ?>   </textarea disabled>
+                                                                        <?php
+																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
+																$query_files = mysqli_query($conn, $get_files);
+																if(mysqli_num_rows($query_files) > 0){
+																	while($rows = mysqli_fetch_array($query_files)){
+																		?>
+																	<a href="../users/files/<?php echo $rows['file_name'];?>" download><?php echo $rows['file_name'];?></a>
+																		<?php
+																	}
+																}else{
+																	echo "NO FILES ATTACHED";
+																}
+																?>
             
             <h1>Document</h1>
             <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {

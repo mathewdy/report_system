@@ -122,6 +122,7 @@ $user_id = $_SESSION['user_id'];
 
 											if (mysqli_num_rows($run_report_id) > 0) {
 												foreach ($run_report_id as $row) {
+													
 
 													?>
 													<!-- <input type="text" name="date_start" value="<?php echo $row['date_start']?>" readonly>  -->
@@ -171,11 +172,19 @@ $user_id = $_SESSION['user_id'];
 
 															</div>
 															<div class="col-lg-12">
-															<embed type="application/pdf" src="<?php if (empty($row['pdf_files'])) {
-																echo "";
-															} else {
-																echo "pdf/" . $row['pdf_files'];
-															} ?> " width="500" height="500">
+																<?php
+																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
+																$query_files = mysqli_query($conn, $get_files);
+																if(mysqli_num_rows($query_files) > 0){
+																	while($rows = mysqli_fetch_array($query_files)){
+																		?>
+																	<a href="../admin/pdf/<?php echo $rows['file_name'];?>" download><?php echo $rows['file_name'];?></a>
+																		<?php
+																	}
+																}else{
+																	echo "NO FILES ATTACHED";
+																}
+																?>
 															</div>
 														</div>
 													</div>
