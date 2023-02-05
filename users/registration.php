@@ -17,6 +17,8 @@ ob_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="../src/css/preloader.css">
     <link rel="stylesheet" href="../src/css/template.css">
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+
     <title>Document</title>
 </head>
 <style>
@@ -155,6 +157,8 @@ ob_start();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
     <script>
         $(window).on('load', function() {
             $('body').removeClass('d-none');
@@ -204,7 +208,13 @@ if (isset($_POST['register'])) {
     $run_validation = mysqli_query($conn, $query_validation);
 
     if (mysqli_num_rows($run_validation) > 0) {
-        echo "<script>alert('Email already taken') </script>";
+        echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Email Already Taken!',
+        })
+        </script>";
         exit();
     }
 
@@ -215,7 +225,14 @@ if (isset($_POST['register'])) {
     $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
 
     if (!in_array($file_extension, $allowed_extension)) {
-        echo "<script>alert('Image not added') </script>";
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Image Not Added!',
+        })
+        </script>";
         exit();
     } else {
         //validation
@@ -238,7 +255,7 @@ if (isset($_POST['register'])) {
 
 
                 if ($run_registration) {
-                    echo "Added";
+                    echo "<script>window.location.href='login.php?register-success'</script>";
 
                     //redirection sa login page
                 } else {
@@ -253,7 +270,13 @@ if (isset($_POST['register'])) {
             $run_validation = mysqli_query($conn, $query_validation);
 
             if (mysqli_num_rows($run_validation) > 0) {
-                echo "<script>alert('Email already taken') </script>";
+                echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Email Already Taken!',
+                })
+                </script>";
                 exit();
             }
 
@@ -262,9 +285,9 @@ if (isset($_POST['register'])) {
             $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "Images/" . $_FILES["image"]["name"]);
             if ($run_registration) {
-                echo "Added";
+                // echo "Added";
                 //redirection sa login page
-
+                echo "<script>window.location.href='login.php?register-success'</script>";
             } else {
                 echo "error" . $conn->error;
             }

@@ -24,6 +24,8 @@ $note_link = "add-note.php";
   <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+
 </head>
 <style>
   .focus {
@@ -196,6 +198,8 @@ $note_link = "add-note.php";
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
   <!-- <script src="../src/js/update.js"> </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
 </body>
 
 </html>
@@ -266,15 +270,28 @@ if (isset($_POST['update'])) {
     $filename = $_FILES['image']['name'];
     $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
     if (!in_array($file_extension, $allowed_extension)) {
-        echo "<script>alert('File not allowed'); </script>";
-        echo "<script>window.location.href='profile.php' </script>";
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Image Not Added!',
+        })
+        </script>";
+        // echo "<script>window.location.href='profile.php' </script>";
     } else {
         $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address',  password = '$hashed_password', barangay = '$barangay' , dilg_id = '$dilg_id', image =  '$update_filename' WHERE user_id = '$user_id2'";
         $run_update_2 = mysqli_query($conn, $query_update_2);
 
         if ($run_update_2) {
             move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
-            echo "<script>window.location.href='profile.php'</script>";
+            echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Report Sent',
+              })
+              </script>";
+            // echo "<script>window.location.href='profile.php'</script>";
         } else {
             echo "Error" . $conn->error;
         }

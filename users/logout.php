@@ -4,7 +4,7 @@ session_start();
 
 if(session_destroy()){
 unset($_SESSION['email']);
-header("Location: login.php");
+header("Location: login.php?opt-out");
 exit();
 }
 

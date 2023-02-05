@@ -15,6 +15,7 @@ include('../connection.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="../src/css/preloader.css">
     <link rel="stylesheet" href="../src/css/template.css">
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
     <title>Log In</title>
 </head>
 <style>
@@ -104,6 +105,7 @@ include('../connection.php');
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
     <script>
         $(window).on('load', function(){
             $('body').removeClass('d-none');
@@ -147,19 +149,47 @@ if (isset($_POST['login'])) {
                 
                 }
             }else{
-                echo "User not found" . $conn->error;
+                echo " <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'User Not Found!',
+                })
+                </script>";
             }
     
     
     
 
     }else{
-        echo "Domain not available";
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Domain Not Found!',
+        })
+        </script>";
     }
 
    
 }
-
+if(isset($_GET['opt-out'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Successfully Logged Out',
+    })
+    </script>";
+}
+if(isset($_GET['register-success'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Registration Success!',
+    })
+    </script>";
+}
 ob_end_flush();
 
 ?>

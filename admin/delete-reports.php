@@ -48,7 +48,7 @@ if (isset($_GET['rid'])) {
         $run_delete = mysqli_query($conn, $delete_reports);
         if ($run_delete) {
             echo "<script>alert('Sucessfuly Delete');
-        window.location = 'reports.php';</script>";
+        window.location = 'reports.php?deleted';</script>";
             exit();
         }
     }
