@@ -262,7 +262,17 @@ $ranking = "ranking.php";
 																}
 																?>
             <span class="d-flex justify-content-end">
-              <button type="submit" class="btn btn-primary switch" name="update" disabled>Update</button>
+            <div class="btn-group dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropleft
+                </button>
+                <div class="dropdown-menu">
+                  <!-- Dropdown menu links -->
+                  <a href="">Sample</a>
+                  <a href="">Sample 2</a>
+                  <!-- <button type="submit" class="btn btn-primary switch" name="update" disabled>Update</button> -->
+                </div>
+              </div>
             </span>
         </form>
       </div>
