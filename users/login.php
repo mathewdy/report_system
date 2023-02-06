@@ -78,10 +78,6 @@ include('../connection.php');
                                     <hr>
                                     <div class="col-lg-12 text-center">
                                         <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
-                                        <a class="text-decoration-none" href="registration.php">Register</a>
-                                    </div>
-                                    <div class="col-lg-12 text-center">
-                                        <a class="text-decoration-none" href="forgot-password.php">Forgot Password?</a>
                                     </div>
                                     </form>
                                 </div>

@@ -149,7 +149,7 @@ $ranking = "ranking.php";
             $sql = "SELECT *, EXTRACT(week FROM date_created) AS week,
                                 EXTRACT(MONTH FROM date_created) AS month
                                 FROM reports 
-                                WHERE duration = 'Weekly'  AND YEAR(date_created) = YEAR(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE())
+                                WHERE duration = 'Weekly' and to_user = '$email'  AND YEAR(date_created) = YEAR(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE())
                                 ORDER BY week, date_created ASC";
 
             $run = mysqli_query($conn, $sql);

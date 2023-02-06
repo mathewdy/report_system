@@ -149,7 +149,7 @@ $ranking = "ranking.php";
                     <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0; min-height: 35rem;">
                         <?php
 
-                        $sql = "SELECT * FROM reports WHERE duration = 'Bi-weekly'";
+                        $sql = "SELECT * FROM reports WHERE duration = 'Bi-weekly' and to_user = '$email'";
 
                         $run = mysqli_query($conn, $sql);
 

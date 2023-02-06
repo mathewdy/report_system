@@ -152,7 +152,7 @@ $ranking = "ranking.php";
                         $sql = "SELECT *, EXTRACT(Month FROM date_created) AS month,
                                         MONTHNAME(date_created) as monthname
                                         FROM reports 
-                                        WHERE   status = '1' AND YEAR(date_created) = YEAR(CURDATE())
+                                        WHERE  status = '1' and to_user = '$email' AND YEAR(date_created) = YEAR(CURDATE())
                                         ORDER BY month, date_created  ASC";
 
                         $run = mysqli_query($conn, $sql);

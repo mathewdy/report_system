@@ -162,7 +162,7 @@ if ($curQuarter == 1 || $curQuarter == 2) {
             $sql = "SELECT *, EXTRACT(Month FROM date_created) AS month,
                             MONTHNAME(date_created) as monthname
                             FROM reports 
-                            WHERE duration = 'semestral' AND YEAR(date_created) = YEAR(CURDATE())
+                            WHERE duration = 'semestral' and to_user = '$email' AND YEAR(date_created) = YEAR(CURDATE())
                             ORDER BY month, date_created  ASC";
 
             $run = mysqli_query($conn, $sql);

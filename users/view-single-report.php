@@ -131,9 +131,9 @@ $user_id = $_SESSION['user_id'];
 															<div class="col-lg-12 text-end">
 																<p>
                                                                     <?php 
-                                                                    $date_start =  date('F d, Y', strtotime($row['date_start']));
-																	$date_end = date('F d, Y', strtotime($row['date_end']));
-                                                                    echo $date_start . " - " . $date_end;
+                                                                    $date_start =  date('F d, Y h:i:s A', strtotime($row['date_start']));
+																	$date_end = date('F d, Y h:i:s A', strtotime($row['date_end']));
+                                                                    echo "Date sent: " . $date_start . " - " . $date_end;
                                                                     ?>
                                                                 </p>
 																<!-- papalitan ng format yung date  -->

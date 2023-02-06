@@ -13,7 +13,8 @@ $report_link = "add-report.php";
 $view_link = "reports.php";
 $draft_link = "draft.php";
 $note_link = "add-note.php";
-$ranking = "ranking.php"
+$ranking = "ranking.php";
+$registration = "registration.php";
 ?>
 
 
@@ -103,12 +104,12 @@ $ranking = "ranking.php"
             View Reports
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="<?php echo $draft_link ?>" class="nav-link text-white">
             <i class="bi bi-archive me-2"></i>
             Drafts
           </a>
-        </li>
+        </li> -->
         <!-- <li>
           <a href="<?php echo $note_link ?>" class="nav-link text-white">
             <i class="bi bi-stickies me-2"></i>
@@ -119,6 +120,12 @@ $ranking = "ranking.php"
           <a href="<?php echo $ranking ?>" class="nav-link text-white">
             <i class="bi bi-award me-2"></i>
             Ranking
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo $registration ?>" class="nav-link text-white">
+            <i class="bi bi-award me-2"></i>
+            Register Account
           </a>
         </li>
       </ul>

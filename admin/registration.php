@@ -4,6 +4,14 @@ include('../connection.php');
 session_start();
 ob_start();
 
+if(isset($_GET['register-success'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Registration Success!',
+    })
+    </script>";
+}
 
 ?>
 
@@ -102,7 +110,7 @@ ob_start();
                                         <div class="row">
                                             <div class="col-lg-12 mb-3">
                                             <select name="barangay" id=""  class="form-select">
-                                                <option value="" selected disabled  class="form-select">-Barangay-</option>
+                                                <option value="xx" selected="true" disabled="disabled" hidden class="form-select">-Barangay-</option>
                                                 <?php
 
                                                     $query_barangay = "SELECT * FROM barangay";
@@ -143,7 +151,7 @@ ob_start();
                                     <hr class="featurette-divider">
                                     <div class="col-lg-12 text-center">
                                         <input class="btn btn-md mb-1 btn-primary w-100" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" type="submit" name="register" value="Register">
-                                        <a class="text-decoration-none" href="login.php">Log In</a>
+                                        <a class="text-decoration-none" href="index.php">Cancel</a>
                                     </div>
                                 </div>
                             </form>
@@ -170,7 +178,7 @@ ob_start();
 </html>
 
 <?php
-if (isset($_POST['register'])) {
+if (isset($_POST['register'])){
 
     //year month date
     date_default_timezone_set("Asia/Manila");
@@ -199,7 +207,7 @@ if (isset($_POST['register'])) {
     $address = $_POST['address'];
     $address = mysqli_escape_string($conn, $address);
 
-    $barangay = ucfirst($_POST['barangay']);
+    $barangay = $_POST['barangay'];
     $barangay = mysqli_escape_string($conn, $barangay);
 
     $barangay_id = ucfirst($_POST['barangay_id']);
@@ -255,7 +263,7 @@ if (isset($_POST['register'])) {
 
 
                 if ($run_registration) {
-                    echo "<script>window.location.href='login.php?register-success'</script>";
+                    echo "<script>window.location.href='registration.php?register-success'</script>";
 
                     //redirection sa login page
                 } else {
@@ -287,7 +295,7 @@ if (isset($_POST['register'])) {
             if ($run_registration) {
                 // echo "Added";
                 //redirection sa login page
-                echo "<script>window.location.href='login.php?register-success'</script>";
+                echo "<script>window.location.href='registration.php?register-success'</script>";
             } else {
                 echo "error" . $conn->error;
             }
