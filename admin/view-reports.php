@@ -201,9 +201,9 @@ $ranking = "ranking.php";
           }
           ?>
           <?php 
-                                                                    $date_start =  date('F d, Y', strtotime($rows['date_start']));
-																	$date_end = date('F d, Y', strtotime($rows['date_end']));
-                                                                    echo $date_start . " - " . $date_end;
+                                                                    $date_start =  date('F d, Y h:i:s A', strtotime($rows['date_start']));
+																	$date_end = date('F d, Y h:i:s A', strtotime($rows['date_end']));
+                                                                    echo "Date sent:  " . $date_start . " - " . $date_end;
                                                                     ?>
                                                                     <br>
           <label for="">From:</label>
@@ -247,6 +247,7 @@ $ranking = "ranking.php";
                                                                         } else {
                                                                           echo $rows['message'];
                                                                         }  ?>   </textarea disabled>
+                                <small>Files attached:</small>
                                                                         <?php
 																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
 																$query_files = mysqli_query($conn, $get_files);
@@ -260,13 +261,6 @@ $ranking = "ranking.php";
 																	echo "NO FILES ATTACHED";
 																}
 																?>
-            
-            <h1>Document</h1>
-            <embed type="application/pdf" src="<?php if (empty($rows['pdf_files'])) {
-                                                  echo "";
-                                                } else {
-                                                  echo "pdf/" . $rows['pdf_files'];
-                                                } ?> " width="500" height="500" > 
             <span class="d-flex justify-content-end">
               <button type="submit" class="btn btn-primary switch" name="update" disabled>Update</button>
             </span>
