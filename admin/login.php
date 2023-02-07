@@ -85,6 +85,7 @@ include('../connection.php');
                                         </div>
                                     </form>
                                     <a href="register.php" class="text-center">Create new account</a>
+                                    <a href="../users/login.php"  class="text-center">Log In Barangay User</a>
                                 </div>
                             </div>
                         </div>
@@ -119,15 +120,27 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$username'";
+    $query = "SELECT email,password,user_type , email_status FROM users WHERE email = '$username'";
     $result = mysqli_query($conn, $query);
 
-    if(strpos($username,"@dilg.com") !== false){
-        $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$username'";
-        $result = mysqli_query($conn, $query);
+
 
         if (mysqli_num_rows($result) > 0) {
             foreach ($result as $row) {
+
+                if($row['email_status'] == '0'){
+                    echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please Verify your email address to login ',
+                        })
+                        </script>
+                        ";
+                        exit();
+                }
+
     
                 if ($row['user_type'] == '2') {
                     echo "
@@ -138,12 +151,12 @@ if (isset($_POST['login'])) {
                             text: 'User Not Available',
                         })
                         </script>";
+                        exit();
                 } else {
     
                     if (password_verify($password, $row['password'])) {
                         //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['username'] = $username;
-                        $_SESSION['user_id'] = $row['user_id'];
+                        $_SESSION['email'] = $username;
                         header("location: index.php");
                         die();
                     }
@@ -159,17 +172,6 @@ if (isset($_POST['login'])) {
                 })
                 </script>";
         }
-
-    }else{
-        echo "
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Domain Not Available!',
-        })
-        </script>";
-    }
 
 
 

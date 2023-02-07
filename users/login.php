@@ -79,6 +79,7 @@ include('../connection.php');
                                     <div class="col-lg-12 text-center">
                                         <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
                                     </div>
+                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a>
                                     </form>
                                 </div>
                             </div>
@@ -121,52 +122,61 @@ if (isset($_POST['login'])) {
 
 
 
-    if(strpos($email,"@dilg.com") !== false){
-        $query = "SELECT email,password,user_type,user_id FROM users WHERE email = '$email'";
-        $result = mysqli_query($conn,$query);
-    
-    
-        if(mysqli_num_rows($result) > 0){
-                foreach($result as $row){
-    
-                    if($row['user_type'] == '1'){
-                        echo "<script>alert('User unavailable'); </script>";
-                    }else{
-    
-                    if (password_verify($password, $row['password'])){ 
-                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                            $_SESSION['email'] = $row['email'];
-                            $_SESSION['user_id'] = $row['user_id'];
-                            header("location: home.php");
-                        die();
-                    }   
-                    
-                    }
-                
+    $query = "SELECT email,password,user_type , email_status FROM users WHERE email = '$username'";
+    $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            foreach ($result as $row) {
+
+                if($row['email_status'] == '0'){
+                    echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please Verify your email address to login ',
+                        })
+                        </script>
+                        ";
+                        exit();
                 }
-            }else{
-                echo " <script>
+
+    
+                if ($row['user_type'] == '2') {
+                    echo "
+                        <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'User Not Available',
+                        })
+                        </script>";
+                        exit();
+                } else {
+    
+                    if (password_verify($password, $row['password'])) {
+                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                        $_SESSION['username'] = $username;
+                        $_SESSION['user_id'] = $row['user_id'];
+                        header("location: index.php");
+                        die();
+                    }
+                }
+            }
+        } else {
+            echo "
+                <script>
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'User Not Found!',
                 })
                 </script>";
-            }
-    
-    
-    
+        }
 
-    }else{
-        echo "
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Domain Not Found!',
-        })
-        </script>";
-    }
+
+
+
 
    
 }

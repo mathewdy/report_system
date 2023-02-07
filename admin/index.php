@@ -6,7 +6,8 @@ include('session.php');
 include('images.php');
 include('edit-notes.php');
 
-$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
+
 
 $report_link = "add-report.php";
 $view_link = "reports.php";
@@ -99,7 +100,7 @@ $registration = "registration.php";
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <?php   
-        $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+        $sql_admin = "SELECT * FROM users WHERE email = '$email'";
         $query_admin = mysqli_query($conn, $sql_admin);
         $admin_row = mysqli_fetch_array($query_admin);
         ?>
@@ -133,7 +134,7 @@ $registration = "registration.php";
 
         <?php
 
-        $query_data = "SELECT * FROM `notes` WHERE user_id = '$user_id'";
+        $query_data = "SELECT * FROM `notes` WHERE email = '$email'";
         $run_query_data = mysqli_query($conn, $query_data);
 
         if (mysqli_num_rows($run_query_data) > 0) {
@@ -288,7 +289,7 @@ $registration = "registration.php";
             {
               calendar.fullCalendar('refetchEvents');
               alert("Added Successfully");
-              window.location.replace("calendar.php");
+              window.location.replace("index.php");
             }
             })
           }
@@ -336,14 +337,14 @@ $registration = "registration.php";
           {
             var id = event.id;
             $.ajax({
-            url:"delete.php",
+            url:"delete-calendar.php",
             type:"POST",
             data:{id:id},
             success:function()
             {
               calendar.fullCalendar('refetchEvents');
               alert("Event Removed");
-              window.location.href='calendar.php';
+              window.location.href='index.php';
             }
             })
           }
