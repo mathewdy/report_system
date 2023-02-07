@@ -281,7 +281,7 @@ $registration = "registration.php";
             var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
             var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
             $.ajax({
-            url:"insert.php",
+            url:"insert-calendar.php",
             type:"POST",
             data:{title:title, start:start, end:end},
             success:function(data)
@@ -302,7 +302,7 @@ $registration = "registration.php";
           var title = event.title;
           var id = event.id;
           $.ajax({
-            url:"update.php",
+            url:"update-calendar.php",
             type:"POST",
             data:{title:title, start:start, end:end, id:id},
             success:function(){
@@ -319,7 +319,7 @@ $registration = "registration.php";
           var title = event.title;
           var id = event.id;
           $.ajax({
-            url:"update.php",
+            url:"update-calendar.php",
             type:"POST",
             data:{title:title, start:start, end:end, id:id},
             success:function()
@@ -436,3 +436,4 @@ $registration = "registration.php";
 </body>
 
 </html>
+
