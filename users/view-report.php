@@ -3,7 +3,11 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
-$barangay = $_SESSION['barangay'];
+$sql_info = "SELECT * FROM users WHERE email = '$email'";
+$query_info = mysqli_query($conn, $sql_info);
+$rows = mysqli_fetch_array($query_info);
+$barangay = $rows['barangay'];
+// $barangay = $_SESSION['barangay'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,7 +131,7 @@ $barangay = $_SESSION['barangay'];
 											<tbody>
 												<?php
 
-												$query_reports = "SELECT * FROM reports WHERE barangay = '$email'";
+												$query_reports = "SELECT * FROM reports WHERE to_user  = '$email'";
 												$run_reports = mysqli_query($conn,$query_reports);
 
 												if (mysqli_num_rows($run_reports) > 0) {
@@ -154,7 +158,7 @@ $barangay = $_SESSION['barangay'];
 													?>
 													</td>
 													<td>
-													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&barangay=<?php echo $row['barnagay']?>">View Report</a>
+													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>">View Report</a>
 													</td>
 												</tr>
 												<?php

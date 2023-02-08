@@ -4,7 +4,7 @@ session_start();
 ob_start();
 
 $email = $_SESSION['email'];
-$user_id = $_SESSION['user_id'];
+// $user_id = $_SESSION['user_id'];
 
 // dapat magawa ko tong realtime sa add-reports
 require '../vendor/autoload.php';
@@ -34,11 +34,11 @@ require '../vendor/autoload.php';
 	}
 </style>
 <body>
-	<div class="preload-wrapper">
+	<!-- <div class="preload-wrapper">
     	<div class="spinner-grow text-info" role="status">
         	<span class="sr-only">Loading...</span>
     	</div>
-    </div>
+    </div> -->
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -87,7 +87,7 @@ require '../vendor/autoload.php';
                             </a>
 							<?php
 
-							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE email = '$email'";
 							$run_image = mysqli_query($conn,$query_image);
 
 							if(mysqli_num_rows($run_image) > 0) {
@@ -144,7 +144,7 @@ require '../vendor/autoload.php';
 														<tr class="border-bottom border-secondary">
 															<td><?php echo $row['report_id'] ?></td>
 															<td><?php echo $row['to_user'] ?></td>
-															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>&to_user=<?php echo $row['to_user']?>"><?php echo $row['subject'] ?></a></td>
+															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>"><?php echo $row['subject'] ?></a></td>
 															<td>
 																<?php
 																$date = date_create($row['date_created']);

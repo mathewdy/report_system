@@ -4,9 +4,9 @@ date_default_timezone_set('Asia/Manila');
 include('images.php');
 
 
+$email = $_SESSION['email'];
 
-
-$user_id = $_SESSION['user_id'];
+// $user_id = $_SESSION['user_id'];
 
 
 $report_link = "add-report.php";
@@ -41,11 +41,11 @@ $registration = "registration.php";
   }
 </style>
 <body>
-  <div class="preload-wrapper">
+  <!-- <div class="preload-wrapper">
       <div class="spinner-border text-info" role="status">
           <span class="visually-hidden">Loading...</span>
       </div>
-  </div>
+  </div> -->
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -95,7 +95,7 @@ $registration = "registration.php";
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <?php   
-        $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+        $sql_admin = "SELECT * FROM users WHERE email = '$email'";
         $query_admin = mysqli_query($conn, $sql_admin);
         $admin_row = mysqli_fetch_array($query_admin);
         ?>
@@ -133,7 +133,7 @@ $registration = "registration.php";
         <tbody>
             <?php
 
-            $sql = "SELECT * FROM barangay LEFT JOIN ( SELECT to_user, COUNT(*) AS count FROM reports WHERE status = '1' GROUP BY to_user ) count ON count.to_user = barangay.brgy  ORDER BY count DESC ";
+            $sql = "SELECT * FROM barangay LEFT JOIN ( SELECT from_user, COUNT(*) AS count FROM sent WHERE status = '1' GROUP BY from_user ) count ON count.from_user = barangay.brgy  ORDER BY count DESC ";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {

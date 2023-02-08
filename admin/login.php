@@ -86,6 +86,7 @@ include('../connection.php');
                                     </form>
                                     <a href="register.php" class="text-center">Create new account</a>
                                     <a href="../users/login.php"  class="text-center">Log In Barangay User</a>
+                                    <span>Forgot Your password? Click <a href="forgot_password.php">here.</a></span>
                                 </div>
                             </div>
                         </div>

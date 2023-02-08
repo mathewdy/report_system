@@ -4,8 +4,9 @@ date_default_timezone_set('Asia/Manila');
 include('../connection.php');
 include('images.php');
 include('session.php');
+$email = $_SESSION['email'];
 
-$user_id = $_SESSION['user_id'];
+// $user_id = $_SESSION['user_id'];
 
 
 if (isset($_GET['rid'])) {
@@ -149,7 +150,7 @@ $registration = "registration.php";
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <?php
-          $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+          $sql_admin = "SELECT * FROM users WHERE email = '$email'";
           $query_admin = mysqli_query($conn, $sql_admin);
           $admin_row = mysqli_fetch_array($query_admin);
           ?>
@@ -178,7 +179,7 @@ $registration = "registration.php";
       <div class="card shadow p-5" style="border: none; min-height: 35rem;">
         <!-- query of db -->
         <?php
-        $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
+        $query_data = "SELECT * FROM `sent` WHERE report_id = '$report_id'";
         $run_query_data = mysqli_query($conn, $query_data);
         $rows = mysqli_fetch_array($run_query_data);
         ?>

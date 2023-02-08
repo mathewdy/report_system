@@ -3,7 +3,7 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
-$barangay = $_SESSION['barangay'];
+// $barangay = $_SESSION['barangay'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,10 +114,10 @@ $barangay = $_SESSION['barangay'];
 								<div class="row">
 									<div class="col-lg-12">
 										<?php
-										if(isset($_GET['report_id']) && isset($_GET['barangay'])) {
-											$barangay = $_GET['barangay'];
+										if(isset($_GET['report_id'])) {
+											// $barangay = $_GET['barangay'];
 											$report_id = $_GET['report_id'];
-											$query_report = "SELECT * FROM sent WHERE report_id = '$report_id' AND barangay = '$barangay'";
+											$query_report = "SELECT * FROM sent WHERE report_id = '$report_id'";
 											$run_report_id = mysqli_query($conn, $query_report);
 
 											if (mysqli_num_rows($run_report_id) > 0) {
@@ -169,6 +169,7 @@ $barangay = $_SESSION['barangay'];
 
 															</div>
 															<div class="col-lg-12">
+															<span>Attached files: </span>
 																<?php
 																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
 																$query_files = mysqli_query($conn, $get_files);

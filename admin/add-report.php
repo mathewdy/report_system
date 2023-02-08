@@ -76,7 +76,7 @@ $registration = "registration.php";
   <?php
   // database query 
 
-  $query = "SELECT * FROM users WHERE user_id = '$user_id'";
+  $query = "SELECT * FROM users WHERE email = '$email'";
   $run_query_data = mysqli_query($conn, $query);
   $rows = mysqli_fetch_array($run_query_data);
 
@@ -143,7 +143,7 @@ $registration = "registration.php";
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <?php
-          $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+          $sql_admin = "SELECT * FROM users WHERE email = '$email'";
           $query_admin = mysqli_query($conn, $sql_admin);
           $admin_row = mysqli_fetch_array($query_admin);
           ?>
@@ -428,9 +428,9 @@ if (isset($_FILES['pdf_file']['name'])) {
         $query_get_users = mysqli_query($conn, $sql_get_users);
         while($rows = mysqli_fetch_array($query_get_users)){
           $emails = $rows['email'];
-          $brgy = $rows['barangay'];
-          $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          // $brgy = $rows['barangay'];
+          $insert_report = "INSERT INTO `reports`( `report_id`, `from_user`, `to_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$report_id','$from','$emails','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);
   
   
@@ -438,8 +438,8 @@ if (isset($_FILES['pdf_file']['name'])) {
           if ($run_insert_report) {
           
   
-            $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-            VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+            $sent_report = "INSERT INTO `sent`(`report_id`, `from_user`, `to_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+            VALUES ('$report_id','$from','$emails','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
             $run_sent_report = mysqli_query($conn, $sent_report);
   
             if ($run_sent_report) {
@@ -462,14 +462,14 @@ if (isset($_FILES['pdf_file']['name'])) {
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`report_id`, `from_user`, `to_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$report_id','$from','$emails','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {
 
-        $sent_report = "INSERT INTO `sent`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$user_id','$report_id','$from','$emails','$brgy','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        $sent_report = "INSERT INTO `sent`(`report_id`, `from_user`, `to_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$report_id','$from','$emails','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
         $run_sent_report = mysqli_query($conn, $sent_report);
 
         if ($run_sent_report) {
@@ -598,8 +598,8 @@ if (isset($_FILES['pdf_file']['name'])) {
         }
 
 
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration', '2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+        VALUES ('$user_id','$report_id','$from','$to','$subject','$opr','$statement','$duration', '2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
         $run_insert_report = mysqli_query($conn, $insert_report);
 
 
@@ -622,8 +622,8 @@ if (isset($_FILES['pdf_file']['name'])) {
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+      VALUES ('$user_id','$report_id','$from','$to','$subject','$opr','$statement','$duration','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
       $run_insert_report = mysqli_query($conn, $insert_report);
 
       if ($run_insert_report) {

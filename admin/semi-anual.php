@@ -7,8 +7,8 @@ include('session.php');
 $curMonth = date("m", time());
 $curQuarter = ceil($curMonth / 3);
 
-$email = $_SESSION['username'];
-$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
+// $user_id = $_SESSION['user_id'];
 
 
 $report_link = "add-report.php";
@@ -107,7 +107,7 @@ if ($curQuarter == 1 || $curQuarter == 2) {
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <?php
-          $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+          $sql_admin = "SELECT * FROM users WHERE email = '$email'";
           $query_admin = mysqli_query($conn, $sql_admin);
           $admin_row = mysqli_fetch_array($query_admin);
           ?>
