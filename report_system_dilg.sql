@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2023 at 11:10 AM
+-- Generation Time: Feb 08, 2023 at 12:03 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -185,11 +185,9 @@ INSERT INTO `opr` (`id`, `name`) VALUES
 
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `report_id` varchar(50) NOT NULL,
-  `from_user` varchar(50) NOT NULL,
   `to_user` varchar(50) NOT NULL,
-  `barangay` varchar(10000) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
   `subject` varchar(50) NOT NULL,
   `opr` varchar(100) NOT NULL,
   `message` longtext NOT NULL,
@@ -205,6 +203,14 @@ CREATE TABLE `reports` (
   `date_updated` date NOT NULL,
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(226, '123', '', 'canlubang', 'tite', 'sample opr', 'sample text', '21', '', 0, 0, '2023-02-08 11:52:37', '2023-02-08 11:52:37', 0, '0000-00-00', '00:00:00', '0000-00-00', '00:00:00'),
+(227, '', '', '', '', '', '', '', '', 0, 0, '2023-02-08 11:52:37', '2023-02-08 11:52:37', 0, '0000-00-00', '00:00:00', '0000-00-00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -346,8 +352,7 @@ ALTER TABLE `opr`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`),
-  ADD KEY `to_user` (`to_user`);
+  ADD KEY `status` (`status`);
 
 --
 -- Indexes for table `report_type`
@@ -412,7 +417,7 @@ ALTER TABLE `opr`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
 -- AUTO_INCREMENT for table `sent`
@@ -435,12 +440,6 @@ ALTER TABLE `user_type`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `reports`
---
-ALTER TABLE `reports`
-  ADD CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`status`) REFERENCES `report_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`

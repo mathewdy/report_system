@@ -3,7 +3,7 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
-$user_id = $_SESSION['user_id'];
+$barangay = $_SESSION['barangay'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +26,11 @@ $user_id = $_SESSION['user_id'];
 	}
 </style>
 <body>
-	<div class="preload-wrapper">
+	<!-- <div class="preload-wrapper">
     	<div class="spinner-grow text-info" role="status">
         	<span class="sr-only">Loading...</span>
     	</div>
-    </div>
+    </div> -->
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -79,14 +79,15 @@ $user_id = $_SESSION['user_id'];
                             </a>
 							<?php
 
-							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE email = '$email'";
 							$run_image = mysqli_query($conn,$query_image);
 
 							if(mysqli_num_rows($run_image) > 0) {
 							foreach($run_image as $row_image){
 								?>
 								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                	<img src="<?php echo "Images/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+                                	<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+                                	
 								</a>
 
 								<?php
@@ -126,7 +127,7 @@ $user_id = $_SESSION['user_id'];
 											<tbody>
 												<?php
 
-												$query_reports = "SELECT * FROM reports WHERE to_user = '$email'";
+												$query_reports = "SELECT * FROM reports WHERE barangay = '$email'";
 												$run_reports = mysqli_query($conn,$query_reports);
 
 												if (mysqli_num_rows($run_reports) > 0) {
@@ -153,7 +154,7 @@ $user_id = $_SESSION['user_id'];
 													?>
 													</td>
 													<td>
-													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&to_user=<?php echo $row['to_user']?>">View Report</a>
+													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>&barangay=<?php echo $row['barnagay']?>">View Report</a>
 													</td>
 												</tr>
 												<?php

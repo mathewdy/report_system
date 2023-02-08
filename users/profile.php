@@ -87,7 +87,7 @@ $email = $_SESSION['email'];
 							foreach($run_image as $row_image){
 								?>
 								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                  <img src="<?php echo "Images/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+								  <img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
 								</a>
 
 								<?php
@@ -113,7 +113,7 @@ $email = $_SESSION['email'];
 						<div class="col-xl-12 col-xxl-12 d-flex">
 							<div class="w-100">
 								<?php
-									$query = "SELECT * FROM users WHERE user_id = '$user_id'";
+									$query = "SELECT * FROM users WHERE email = '$email'";
 									$run = mysqli_query($conn,$query);
 
 									if(mysqli_num_rows($run) > 0){

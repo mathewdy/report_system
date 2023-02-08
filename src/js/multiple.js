@@ -1,20 +1,28 @@
- $(document).ready(function(){
-      
-    $('#search_data').tokenfield({
+$(document).ready(function(){
+    $('.brgy').tokenfield({
         autocomplete :{
-            source: function(request, response)
-            {
-                jQuery.get('fetch.php', {
-                    query : request.term
-                }, function(data){
-                    data = JSON.parse(data);
-                    response(data);
-                });
-            },
-            delay: 100
+            source: function(data, response){
+                $.ajax({
+                    url: 'brgy.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                    name: data.term
+                    },
+                    success: function(res){
+                    // response(res)
+                    var usr = $.map(res, function(name){
+                        return{
+                        label: name,
+                        value: name
+                        }
+                    }) 
+                    var results = $.ui.autocomplete.filter(usr, data.term)
+                    response(results)
+                    console.log(results)
+                    }
+                })
+            }
         }
     });
-
-    
-
-  });
+});

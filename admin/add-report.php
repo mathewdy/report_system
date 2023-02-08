@@ -7,7 +7,7 @@ include('session.php');
 include('images.php');
 
 error_reporting(E_ERROR | E_PARSE);
-$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
 
 $report_link = "add-report.php";
 $view_link = "reports.php";
@@ -15,6 +15,16 @@ $draft_link = "draft.php";
 $note_link = "add-note.php";
 $ranking = "ranking.php";
 $registration = "registration.php";
+
+
+
+//let me know if may bug sa pag log in 
+
+//mula sa barangay papunta sa DILG 
+// mag pull kayo sa database
+// to_user == BARANGAY
+// from_user == DILG ADMIN
+// so ayusin mo na lang query sa may INSERT sa baba, apat yun ikaw na bahala sundan mo na lang yung structure sa DB
 ?>
 
 

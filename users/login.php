@@ -122,7 +122,7 @@ if (isset($_POST['login'])) {
 
 
 
-    $query = "SELECT email,password,user_type , email_status FROM users WHERE email = '$username'";
+    $query = "SELECT email,password,user_type ,barangay, email_status FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
 
         if (mysqli_num_rows($result) > 0) {
@@ -142,7 +142,7 @@ if (isset($_POST['login'])) {
                 }
 
     
-                if ($row['user_type'] == '2') {
+                if ($row['user_type'] == '1') {
                     echo "
                         <script>
                         Swal.fire({
@@ -156,9 +156,9 @@ if (isset($_POST['login'])) {
     
                     if (password_verify($password, $row['password'])) {
                         //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['username'] = $username;
-                        $_SESSION['user_id'] = $row['user_id'];
-                        header("location: index.php");
+                        $_SESSION['email'] = $email;
+                        $_SESSION['barangay'] = $row['barangay'];
+                        header("location: home.php");
                         die();
                     }
                 }

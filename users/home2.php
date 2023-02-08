@@ -3,7 +3,7 @@ include('../connection.php');
 session_start();
 ob_start();
 $email = $_SESSION['email'];
-$barangay = $_SESSION['barangay'];
+$user_id = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +26,11 @@ $barangay = $_SESSION['barangay'];
 	}
 </style>
 <body>
-	<!-- <div class="preload-wrapper">
+	<div class="preload-wrapper">
     	<div class="spinner-grow text-info" role="status">
         	<span class="sr-only">Loading...</span>
     	</div>
-    </div> -->
+    </div>
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -47,7 +47,7 @@ $barangay = $_SESSION['barangay'];
                             <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
                         </a>
 					</li>
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="view-report.php">
                             <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
                         </a>
@@ -57,7 +57,7 @@ $barangay = $_SESSION['barangay'];
                             <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
                         </a>
 					</li>
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="sent-reports.php">
                             <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
                         </a>
@@ -79,14 +79,14 @@ $barangay = $_SESSION['barangay'];
                             </a>
 							<?php
 
-							$query_image = "SELECT first_name, last_name, image FROM users WHERE email = '$email'";
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
 							$run_image = mysqli_query($conn,$query_image);
 
 							if(mysqli_num_rows($run_image) > 0) {
 							foreach($run_image as $row_image){
 								?>
 								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                	<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+                                	<img src="<?php echo "Images/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
 								</a>
 
 								<?php
@@ -114,28 +114,21 @@ $barangay = $_SESSION['barangay'];
 								<div class="row">
 									<div class="col-lg-12">
 										<?php
-										if(isset($_GET['report_id']) && isset($_GET['barangay'])) {
-											$barangay = $_GET['barangay'];
+										if(isset($_GET['report_id']) && isset($_GET['to_user'])) {
+											$email = $_GET['to_user'];
 											$report_id = $_GET['report_id'];
-											$query_report = "SELECT * FROM sent WHERE report_id = '$report_id' AND barangay = '$barangay'";
+											$query_report = "SELECT * FROM sent WHERE report_id = '$report_id' AND to_user = '$email'";
 											$run_report_id = mysqli_query($conn, $query_report);
 
 											if (mysqli_num_rows($run_report_id) > 0) {
 												foreach ($run_report_id as $row) {
-													
 
 													?>
 													<!-- <input type="text" name="date_start" value="<?php echo $row['date_start']?>" readonly>  -->
 													<div class="card p-5">
 														<div class="row">
 															<div class="col-lg-12 text-end">
-																<p>
-                                                                    <?php 
-                                                                    $date_start =  date('F d, Y h:i:s A', strtotime($row['date_start']));
-																	$date_end = date('F d, Y h:i:s A', strtotime($row['date_end']));
-                                                                    echo "Date sent: " . $date_start . " - " . $date_end;
-                                                                    ?>
-                                                                </p>
+																<p><?= $row['date_start'].' - '. $row['date_end']?></p>
 																<!-- papalitan ng format yung date  -->
 																<!-- dapat F d, Y yung format para maging February 2, 2023 - February 5, 2023 (sample yan)-->
 															</div>
@@ -145,6 +138,10 @@ $barangay = $_SESSION['barangay'];
 																	<div class="col-lg-12 d-flex align-items-center" >
 																		<label for="">From:</label>
 																		<input type="text" class="form-control ms-2" style="border: none; outline: none; background: none;" name="from" value="<?php echo $row['from_user'];?> " readonly>
+																	</div>
+																	<div class="col-lg-12 d-flex align-items-center">
+																		<label for="">To:</label>
+																		<input type="text" class="form-control ms-2" style="border: none; outline: none; background: none;" name="to" value="<?php echo $row['to_user']?>" readonly>
 																	</div>
 																</div>
 															</div>
@@ -169,19 +166,11 @@ $barangay = $_SESSION['barangay'];
 
 															</div>
 															<div class="col-lg-12">
-																<?php
-																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
-																$query_files = mysqli_query($conn, $get_files);
-																if(mysqli_num_rows($query_files) > 0){
-																	while($rows = mysqli_fetch_array($query_files)){
-																		?>
-																	<a href="../admin/pdf/<?php echo $rows['file_name'];?>" download><?php echo $rows['file_name'];?></a>
-																		<?php
-																	}
-																}else{
-																	echo "NO FILES ATTACHED";
-																}
-																?>
+															<embed type="application/pdf" src="<?php if (empty($row['pdf_files'])) {
+																echo "";
+															} else {
+																echo "pdf/" . $row['pdf_files'];
+															} ?> " width="500" height="500">
 															</div>
 														</div>
 													</div>
