@@ -21,6 +21,7 @@ $email = $_SESSION['email'];
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+
 	<title>DILG</title>
 </head>
 
@@ -74,64 +75,69 @@ $email = $_SESSION['email'];
                 </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-					<li>
+						<!-- template alert -->
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+							<?php
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$run_number_notif = mysqli_query($conn,$query_number_notif);
+								$num_of_notifs = mysqli_num_rows($run_number_notif);
 
-						<?php
+							?>
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator"><?php echo $num_of_notifs?></span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									<?= $num_of_notifs?> New Notifications
+								</div>
+								<div class="list-group">
+									<?php
+										// query ko naman lahat ngsinend sakin na info
+										// from_user, subject,date, time
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$run_reports = mysqli_query($conn,$query_reports);
 
-						$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
-						$run_number_notif = mysqli_query($conn,$query_number_notif);
-						$num_of_notifs = mysqli_num_rows($run_number_notif);
+										if(mysqli_num_rows($run_reports) > 0){
+											foreach($run_reports as $row_reports){
+												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_created']));
+												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
+												$newTime = date("G:i A", strtotime($row_reports['time_created']));
+												?>
+												<a class="list-group-item">
+													<div class="row g-0 align-items-center">
+														<div class="col-2">
+															<i class="text-success" data-feather="mail"></i>
+														</div>
+														<div class="col-10">
+															<div class="text-dark">
+																<?php 
+																	if($row_reports['from_user'] == "1"){
+																		echo "DILG Admin";
+																	}	
+																?>
+															</div>
+															<div class="text-muted small mt-1 d-flex justify-content-between">
+																<p class="p-0 m-0"><?php echo $row_reports['subject']?></p>
+																<p class="p-0 m-0"><?= $newDate .' '.$newTime?></p>
+															</div>
+															<!-- <div class="text-muted small mt-1"></div> -->
+														</div>
+													</div>
+												</a>
+												<?php
+											}
+										}
 
-						?>
-						<span id="NumNotifs" class="badge bg-primary"><?php echo $num_of_notifs?></span>
 
-						<!---riri ikaw na mag patong neto-->
-						<!----pati ajax ng notification--->
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-								Dropdown button
-							</button>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Another action</a></li>
-								<li><a class="dropdown-item" href="#">Something else here</a></li>
-							</ul>
-						</div>
-
-
-						<?php
-						
-
-						// query ko naman lahat ngsinend sakin na info
-						// from_user, subject,date, time
-						$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
-						$run_reports = mysqli_query($conn,$query_reports);
-
-						if(mysqli_num_rows($run_reports) > 0){
-							foreach($run_reports as $row_reports){
-								?>
-									<p>
-										<?php if($row_reports['from_user'] == "1"){
-												echo "DILG Admin";
-											}	
 										?>
-									</p>
-									<p>
-										<?php echo $row_reports['subject']?>
-									</p>
-									<p><?php echo $row_reports['date_created']?></p>
-									<p><?php echo $row_reports['time_created']?></p>
-								<?php
-							}
-						}
-						
-						
-						?>
-
-							
-							<!-- <div class="container">
-							<a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"><span class="badge bg-secondary">4</span></i></a>
-							</div> -->
+								</div>
+								<!-- <div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div> -->
+							</div>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
@@ -162,7 +168,6 @@ $email = $_SESSION['email'];
 								<a class="dropdown-item" href="logout.php">Log out</a>
 							</div>
 						</li>
-						
 					</ul>
 				</div>
 			</nav>
@@ -320,12 +325,11 @@ $email = $_SESSION['email'];
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="../src/js/template-2.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <script src="../src/js/preload.js"></script>
 
 <!--pusher-RYAN--->
@@ -359,43 +363,100 @@ channel.bind('my-event', function(data) {
 <?php
 $query = $conn->query("SELECT * FROM events ORDER BY id");
 ?>
-<script>
-	$(document).ready(function() {
-		var calendar = $('#calendar').fullCalendar({
-		editable:true,
-		header:{
-		left:'prev,next today',
-		center:'title',
-		right:'month,agendaWeek,agendaDay'
-		},
-		events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
-		selectable:true,
-		selectHelper:true,
-		select: function(start, end, allDay)
-		{
-		var title = prompt("Enter Event Title");
-		if(title)
-		{
-			var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-			var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-			$.ajax({
-			url:"insert.php",
-			type:"POST",
-			data:{title:title, start:start, end:end},
-			success:function(data)
-			{
-			calendar.fullCalendar('refetchEvents');
-			alert("Added Successfully");
-			window.location.replace("calendar.php");
-			}
-			})
-		}
-		},
-		editable:true,
-
-		});
-	});
-</script>
+ <?php
+    $query = $conn->query("SELECT * FROM events ORDER BY id");
+    ?>
+      <script>
+        $(document).ready(function() {
+        var calendar = $('#calendar').fullCalendar({
+          editable:true,
+          header:{
+          left:'prev,next today',
+          center:'title',
+          right:'month,agendaWeek,agendaDay'
+          },
+          events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
+          selectable:true,
+          selectHelper:true,
+          select: function(start, end, allDay)
+          {
+          var title = prompt("Enter Event Title");
+          if(title)
+          {
+            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+            $.ajax({
+            url:"insert-calendar.php",
+            type:"POST",
+            data:{title:title, start:start, end:end},
+            success:function(data)
+            {
+              calendar.fullCalendar('refetchEvents');
+              alert("Added Successfully");
+              window.location.replace("index.php");
+            }
+            })
+          }
+          },
+    
+          editable:true,
+          eventResize:function(event)
+          {
+          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+          var title = event.title;
+          var id = event.id;
+          $.ajax({
+            url:"update-calendar.php",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function(){
+            calendar.fullCalendar('refetchEvents');
+            alert('Event Update');
+            }
+          })
+          },
+    
+          eventDrop:function(event)
+          {
+          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+          var title = event.title;
+          var id = event.id;
+          $.ajax({
+            url:"update-calendar.php",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function()
+            {
+            calendar.fullCalendar('refetchEvents');
+            alert("Event Updated");
+            }
+          });
+          },
+    
+          eventClick:function(event)
+          {
+          if(confirm("Are you sure you want to remove it?"))
+          {
+            var id = event.id;
+            $.ajax({
+            url:"delete-calendar.php",
+            type:"POST",
+            data:{id:id},
+            success:function()
+            {
+              calendar.fullCalendar('refetchEvents');
+              alert("Event Removed");
+              window.location.href='index.php';
+            }
+            })
+          }
+          },
+    
+        });
+      });
+    </script>
 <script>
 	$(document).ready(function(){
 		$('.edit').click(function(){

@@ -82,6 +82,69 @@ require '../vendor/autoload.php';
                 </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
+					<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+							<?php
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$run_number_notif = mysqli_query($conn,$query_number_notif);
+								$num_of_notifs = mysqli_num_rows($run_number_notif);
+
+							?>
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator"><?php echo $num_of_notifs?></span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									<?= $num_of_notifs?> New Notifications
+								</div>
+								<div class="list-group">
+									<?php
+										// query ko naman lahat ngsinend sakin na info
+										// from_user, subject,date, time
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$run_reports = mysqli_query($conn,$query_reports);
+
+										if(mysqli_num_rows($run_reports) > 0){
+											foreach($run_reports as $row_reports){
+												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_created']));
+												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
+												$newTime = date("G:i A", strtotime($row_reports['time_created']));
+												?>
+												<a class="list-group-item">
+													<div class="row g-0 align-items-center">
+														<div class="col-2">
+															<i class="text-success" data-feather="mail"></i>
+														</div>
+														<div class="col-10">
+															<div class="text-dark">
+																<?php 
+																	if($row_reports['from_user'] == "1"){
+																		echo "DILG Admin";
+																	}	
+																?>
+															</div>
+															<div class="text-muted small mt-1 d-flex justify-content-between">
+																<p class="p-0 m-0"><?php echo $row_reports['subject']?></p>
+																<p class="p-0 m-0"><?= $newDate .' '.$newTime?></p>
+															</div>
+															<!-- <div class="text-muted small mt-1"></div> -->
+														</div>
+													</div>
+												</a>
+												<?php
+											}
+										}
+
+
+										?>
+								</div>
+								<!-- <div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div> -->
+							</div>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
@@ -197,25 +260,32 @@ require '../vendor/autoload.php';
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 <script src="../src/js/preload.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
 <script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
 
-    var pusher = new Pusher('ac61d56134893cb6bd8b', {
-        cluster: 'ap1'
-    });
+// Enable pusher logging - don't include this in production
+// Pusher.logToConsole = true;
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-        // alert(JSON.stringify(data));
-        $.ajax({
-            url: "sent-reports1.php",
-            success: function(result) {
-                $("#result_sent").html(result);
-            }
-        });
-    });
+// var pusher = new Pusher('b66888c27162a9de31eb', {
+//     cluster: 'ap1'
+// });
+
+// var channel = pusher.subscribe('my-channel');
+// channel.bind('my-event', function(data) {
+//     // alert(JSON.stringify(data));
+//     //gawing ajax
+    
+//     $.ajax({url: "number-notifs.php", success: function(result){
+//         $("#NumNotifs").html(result);
+//     }});
+// 	$.ajax({url: "notification-reports.php", success: function(result){
+//         $("#all-report").html(result);
+//     }});
+    
+// });
 </script>
 </body>
 
