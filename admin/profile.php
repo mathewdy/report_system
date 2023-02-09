@@ -1,209 +1,305 @@
 <?php
-
-include('../connection.php');
 session_start();
-ob_start();
+date_default_timezone_set('Asia/Manila');
+include('../connection.php');
+include('session.php');
+// include('edit-notes.php');
+
+// $user_id = $_SESSION['user_id'];
 $email = $_SESSION['email'];
+$barangay = $_SESSION['barangay'];
 
-$report_link = "add-report.php";
-$view_link = "reports.php";
-$draft_link = "draft.php";
-$note_link = "add-note.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="../src/css/template-2.css" rel="stylesheet">
+	<link href="../src/css/preloader.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
 
+	<title>DILG</title>
 </head>
-<style>
-  .focus {
-    border: none;
-  }
-  body{
-    overflow-x: hidden;
-  }
-  .active{
-    background: rgba(255, 255, 255, 0.3) !important;
-  }
-</style>
+
 <body>
-  <main class="d-flex">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <img src="../src/img/dilg.png" height="80" alt="">
-        <span class="fs-4 ps-3">DILG</span>
-        <span class="fs-4"></span>
-      </a>
-      <hr>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="index.php" class="nav-link text-white active">
-            <i class="bi bi-house-door me-2"></i>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo $report_link ?>" class="nav-link text-white">
-            <i class="bi bi-clipboard me-2"></i>
-            New Report
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo $view_link ?>" class="nav-link text-white" aria-current="page">
-            <i class="bi bi-book-half me-2"></i>
-            View Reports
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo $draft_link ?>" class="nav-link text-white">
-            <i class="bi bi-archive me-2"></i>
-            Drafts
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo $note_link ?>" class="nav-link text-white">
-            <i class="bi bi-stickies me-2"></i>
-            Notes
-          </a>
-        </li>
-      </ul>
-      <hr>
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <?php   
-        $sql_admin = "SELECT * FROM users WHERE email = '$email'";
-        $query_admin = mysqli_query($conn, $sql_admin);
-        $admin_row = mysqli_fetch_array($query_admin);
-        ?>
-          <img src="<?php if (empty($admin_row['image'])) {
-                      echo '../src/img/avatar.svg';
-                    } else {
-                      echo 'admins/' . $admin_row['image'];
-                    } ?>" alt="" width="32" height="32" class="rounded-circle me-2">
-            <?= $admin_row['first_name'] .' '. $admin_row['last_name']?>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
-        </ul>
-      </div>
+    <div class="preload-wrapper">
+    	<div class="text-light" role="status">
+        	<span class="sr-only"><img src="../src/img/dilg.png" height="200px" alt=""></span>
+    	</div>
     </div>
-    <div class="container-fluid bg-light p-0">
-        <nav class="navbar bg-dark navbar-dark">
-        <div class="container">
-          <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
-        </div>
-      </nav>
-      <div class="row w-100">
-        <div class="col-lg-12 p-5 pt-2">
-            <div class="card shadow p-5" style="border-radius: 0;border: none; min-height: 18rem;">
-            <p class="text-muted h3">Edit Profile</p>
-            <hr class="featurette-divider">
-                <?php
+	<div class="wrapper">
+  <nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+					<img src="../src/img/dilg.png" height="50" alt="">
+					<span class="ms-3 align-middle">DILG</span>
+				</a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="index.php">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+                        </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="add-report.php">
+                            <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
+                        </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="reports.php">
+                            <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Reports</span>
+                        </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ranking.php">
+              <i class="align-middle" data-feather="award"></i> <span class="align-middle">Ranking</span>
+            </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="register.php">
+              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">New Account</span>
+            </a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 
-                $query = "SELECT * FROM users WHERE email = '$email'";
-                $run = mysqli_query($conn, $query);
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="align-self-center text-dark" data-feather="menu"></i>
+                </a>
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<!-- template alert -->
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+							<?php
+								  $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1' ";
+                                  // WHERE to_user = '1'
+                                  $run_notification_num = mysqli_query($conn,$query_notification_num);
+                                  $num_of_notifs = mysqli_num_rows($run_notification_num);
 
-                if (mysqli_num_rows($run) > 0) {
-                    foreach ($run as $row) {
-                ?>
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <img class="card-img-top" src="<?php echo "admins/" . $row['image'] ?>" alt="Profile Image" width="100px" height="100px" style="height: 200px; width: 200px;">
-                                    <input type="hidden" name="old_image" value="<?php echo $row['image'] ?>">
-                                    <input type="file" class="form-control"name="image">
-                                </div>
-                                <div class="col-lg-7">
-                                    <span class="mb-2">
-                                        <label for="">Email</label>
-                                        <input type="email" class="form-control mb-3" name="email" value="<?php echo $row['email'] ?>">
-                                    </span>
-                                    <span class="mb-2">
-                                  <label for="">Password</label>
-                                  <input type="password" class="form-control mb-3"  name="password" id="" >
-                                              
-                                    </span>
-                                    <span class="mb-2">
-                                    <label for="">First Name</label>
-                                    <input type="text" name="first_name" class="form-control mb-3" value="<?php echo $row['first_name'] ?>">
-
-                                    </span>
-                                    <span class="mb-2">
-                                    <label for="">Middle Name</label>
-                                    <input type="text" name="middle_name" class="form-control mb-3" value="<?php echo $row['middle_name'] ?>">
-
-                                    </span>
-                                    <span class="mb-2">
-                                    <label for="">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control mb-3" value="<?php echo $row['last_name'] ?>">
-
-                                    </span>
-                                    <span class="mb-2">
-                                    <label for="">Date of Birth</label>
-                                    <input type="date" name="date_of_birth" class="form-control mb-3" value="<?php echo $row['date_of_birth'] ?>" id="">
-
-                                    </span>
-                                    
-                                    <span class="mb-2">
-                                    <label for="">Barangay</label>
-                                    <input type="text" name="barangay" class="form-control mb-3" value="<?php echo $row['barangay'] ?>">
-                                    </span>
-                                    
-                                    <span class="d-flex justify-content-end">
-                                    <input type="submit" class="btn btn-md btn-success" name="update" value="Update">
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-
-
-                <?php
-                    }
-                }
+							?>
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator"><?php echo $num_of_notifs?></span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									<?= $num_of_notifs?> New Notifications
+								</div>
+								<div class="list-group">
+									<?php
+                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+                                        $run_reports = mysqli_query($conn,$query_reports);
+										if(mysqli_num_rows($run_reports) > 0){
+											foreach($run_reports as $row_reports){
+												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_created']));
+												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
+												$newTime = date("G:i A", strtotime($row_reports['time_created']));
+												?>
+												<a class="list-group-item">
+													<div class="row g-0 align-items-center">
+														<div class="col-2">
+															<i class="text-success" data-feather="mail"></i>
+														</div>
+														<div class="col-10">
+															<div class="text-dark">
+                                                            <?php echo $row_reports['from_user']?>
+															</div>
+															<div class="text-muted small mt-1 d-flex justify-content-between">
+																<p class="p-0 m-0"><?php echo $row_reports['subject']?></p>
+																<p class="p-0 m-0"><?= $newDate .' '.$newTime?></p>
+															</div>
+															<!-- <div class="text-muted small mt-1"></div> -->
+														</div>
+													</div>
+												</a>
+												<?php
+											}
+										}
 
 
-                ?>
+										?>
+								</div>
+								<!-- <div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div> -->
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+							<?php
+
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE email = '$email'";
+							$run_image = mysqli_query($conn,$query_image);
+
+							if(mysqli_num_rows($run_image) > 0) {
+							foreach($run_image as $row_image){
+								?>
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                	<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+								</a>
+
+								<?php
+							}
+							}
 
 
-            </div>
-        </div>
-      </div>
-    </div>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-  <!-- <script src="../src/js/update.js"> </script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+							?>
+                            </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="profile.php"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout.php">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+					<div class="row">
+						<div class="col-xl-12 col-xxl-12 d-flex">
+							<div class="w-100">
+								<?php
+									$query = "SELECT * FROM users WHERE email = '$email'";
+									$run = mysqli_query($conn,$query);
+
+									if(mysqli_num_rows($run) > 0){
+										foreach($run as $row){
+								?>
+								<form action="" method="POST" enctype="multipart/form-data">
+									<div class="row">
+								
+										<div class="col-lg-5">
+											<div class="card p-5">
+												<img class="card-img-top mb-3" src="<?php echo "../admin/admins/" . $row['image']?>" alt="Profile Image" style="max-height: 350px; width: 500px;">
+												<input type="hidden" name="old_image" value="<?php echo $row ['image']?>">
+												<input type="file" class="form-control" name="image">
+
+											</div>
+											
+										</div>
+										<div class="col-lg-7">
+											<div class="card p-5">
+												<label for="">Email</label>
+												<input type="email" class="form-control" name="email" value="<?php echo $row['email']?>">
+												<br>
+												<label for="">Password</label>					
+												<input type="password" class="form-control" name="password" id="" value="<?php echo $row['password']?>">
+												<br>
+												<label for="">First Name</label>											
+												<input type="text" class="form-control" name="first_name" value="<?php echo $row['first_name']?>">
+												<br>
+												<label for="">Middle Name</label>										
+												<input type="text" class="form-control" name="middle_name" value="<?php echo $row['middle_name']?>">
+												<br>
+												<label for="">Last Name</label>									
+												<input type="text" class="form-control" name="last_name" value="<?php echo $row['last_name']?>">
+												<br>
+												<label for="">Date of Birth</label>
+												<input type="date" class="form-control" name="date_of_birth" value="<?php echo $row['date_of_birth']?>" id="">
+												<br>
+												<!-- <label for="">Address</label>
+												<input type="text" class="form-control" name="address" value="<?php echo $row['address']?>">
+												<br> -->
+												<label for="">Barangay</label>
+												<input type="text" class="form-control" name="barangay" value="<?php echo $row['barangay']?>">
+												<br>
+												<!-- <label for="">Barangay ID</label>
+												<input type="text" class="form-control" name="barangay_id" value="<?php echo $row['barangay_id']?>">
+												<br> -->
+												<span class="text-end">
+													<input type="submit" class="btn btn-success" name="update" value="Update">
+												</span>
+
+											</div>
+										</div>
+									
+									</form>
+
+
+									<?php
+													}
+												}
+
+
+												?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-end">
+							<p class="mb-0 text-muted">
+								<strong>DILG</strong> &copy; 2023
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="../src/js/template-2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="../src/js/preload.js"></script>
+<script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+<!--pusher-RYAN--->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b66888c27162a9de31eb', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    //gawing ajax
+    
+    $.ajax({url: "number-notifs.php", success: function(result){
+        $("#NumNotifs").html(result);
+    }});
+	$.ajax({url: "notification-reports.php", success: function(result){
+        $("#all-report").html(result);
+    }});
+    
+});
+</script>
 
 </body>
 
 </html>
-
-
-
-
-
-
 <?php
 
-if (isset($_POST['update'])) {
+if(isset($_POST['update'])){
 
 
     //year month date
@@ -217,76 +313,79 @@ if (isset($_POST['update'])) {
     $middle_name = ucfirst($_POST['middle_name']);
     $last_name = ucfirst($_POST['last_name']);
     $date_of_birth = ucfirst($_POST['date_of_birth']);
+    $address = $_POST['address'];
     $barangay = $_POST['barangay'];
+    $barangay_id = $_POST['barangay_id'];
 
-    $email = mysqli_escape_string($conn, $email);
-    $password = mysqli_escape_string($conn, $password);
-    $first_name = mysqli_escape_string($conn, $first_name);
-    $middle_name = mysqli_escape_string($conn, $middle_name);
-    $last_name = mysqli_escape_string($conn, $last_name);
-    $barangay = mysqli_escape_string($conn, $barangay);
+    $email = mysqli_escape_string($conn,$email);
+    $password = mysqli_escape_string($conn,$password);
+    $first_name = mysqli_escape_string($conn,$first_name);
+    $middle_name = mysqli_escape_string($conn,$middle_name);
+    $last_name = mysqli_escape_string($conn,$last_name);
+    $address = mysqli_escape_string($conn,$address);
+    $barangay = mysqli_escape_string($conn,$barangay);
+    $barangay_id = mysqli_escape_string($conn,$barangay_id);
 
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     //images
 
     $new_image = $_FILES['image']['name'];
     $old_image = $_POST['old_image'];
 
-    if ($new_image != '') {
+    if($new_image != ''){
         $update_filename = $_FILES['image']['name'];
-    } else {
+    }else{
         $update_filename = $old_image;
     }
 
-    if (empty($new_image)) {
-        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', password = '$hashed_password',  barangay = '$barangay'  WHERE email = '$email'";
-        $run_update_1 = mysqli_query($conn, $query_update_1);
+    if(empty($new_image)){
+        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id' WHERE email = '$email'";
+        $run_update_1 = mysqli_query($conn,$query_update_1);
 
-        if ($run_update_1) {
-          echo "<script>
-          Swal.fire({
-              icon: 'success',
-              title: 'Updated Profile',
-          })
-          </script>";
+        if($run_update_1){
+            echo "Updated";
             echo "<script>window.location.href='profile.php'</script>";
-        } else {
+        }else{
             echo "error" . $conn->error;
         }
     }
+        $allowed_extension = array('gif','png','jpg','jpeg', 'PNG', 'GIF', 'JPG', 'JPEG');
+        $filename = $_FILES['image']['name'];
+        $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
+        if(!in_array($file_extension,$allowed_extension)){
+			echo "
+			<script>
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'File Not Allowed!',
+			})
+			</script>";
+            echo "<script>window.location.href='profile.php' </script>";
+        }else{
+            $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id', image =  '$update_filename' WHERE email = '$email'";
+            $run_update_2 = mysqli_query($conn,$query_update_2);
+    
+            if($run_update_2){
+                move_uploaded_file($_FILES["image"]["tmp_name"], "Images/".$_FILES["image"]["name"]);
+                echo "<script>
+					Swal.fire({
+						icon: 'success',
+						title: 'Updated Successfully',
+						text: 'Your record has been updated'
+					})
+					</script>";
+				echo "<script>window.location.href='profile.php'</script>";
 
-    $allowed_extension = array('gif', 'png', 'jpg', 'jpeg', 'PNG', 'GIF', 'JPG', 'JPEG');
-    $filename = $_FILES['image']['name'];
-    $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
-    if (!in_array($file_extension, $allowed_extension)) {
-        echo "
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Image Not Added!',
-        })
-        </script>";
-        // echo "<script>window.location.href='profile.php' </script>";
-    } else {
-        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name',  password = '$hashed_password', barangay = '$barangay', image =  '$update_filename' WHERE email = '$email'";
-        $run_update_2 = mysqli_query($conn, $query_update_2);
-
-        if ($run_update_2) {
-            move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
-            echo "<script>
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Updated Image',
-              })
-              </script>";
-            echo "<script>window.location.href='profile.php'</script>";
-        } else {
-            echo "Error" . $conn->error;
+    
+            }else{
+                echo "Error" .$conn->error;
+            }
         }
-    }
+    
+        
+
+   
 }
 
 

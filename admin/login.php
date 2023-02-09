@@ -166,6 +166,7 @@ if (isset($_POST['login'])) {
                     if (password_verify($password, $row['password'])) {
                         //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
                         $_SESSION['email'] = $username;
+                        $_SESSION['barangay'] = $row['barangay'];
                         header("location: index.php");
                         die();
                     }

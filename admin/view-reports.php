@@ -192,14 +192,6 @@ $registration = "registration.php";
           if ($status == 3 || $status == 2) {
           ?>
             <!-- burahin mo tong comment pag ngawa mo na  -->
-            <!-- tapos etong switch is lakihn mo onti -->
-            <div class="form-check form-switch mb-5">
-              <input class="form-check-input" type="checkbox" role="switch" id="constraint_checkbox">
-              <p>Toggle Edit</p>
-            </div>
-            <div>
-              <!-- RYAN IBABA MO NALANG TONG UPDATE NA BUTTON -->
-            </div>
 
             <!-- <input type="file" name="files[]" class="form-control" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable> -->
 
@@ -218,12 +210,12 @@ $registration = "registration.php";
                                                                               echo "";
                                                                             } else {
                                                                               echo $rows['from_user'];
-                                                                            } ?> " disabled>
+                                                                            } ?> " readonly>
           <br>
           <label for="">To:</label>
           <input type="text" name="to" class="switch form-control" value="<?php if($rows['to_user'] == '1'){
             echo "DILG Admin";
-          } ?>" disabled>
+          } ?>" readonly>
           <br>
           
           <label for="">Subject:</label>
@@ -231,7 +223,7 @@ $registration = "registration.php";
                                                                                   echo "";
                                                                                 } else {
                                                                                   echo $rows['subject'];
-                                                                                } ?>" disabled>
+                                                                                } ?>" readonly>
 
           <br>
           <label for="">OPR</label>
@@ -239,13 +231,13 @@ $registration = "registration.php";
                                                                               echo "";
                                                                             } else {
                                                                               echo $rows['opr'];
-                                                                            } ?> " disabled>
+                                                                            } ?> " readonly>
 
-          <textarea id="tiny" name="statement" class="switch" disabled> <?php if (empty($rows['message'])) {
+          <textarea id="tiny" name="statement" class="switch" readonly> <?php if (empty($rows['message'])) {
                                                                           echo "";
                                                                         } else {
                                                                           echo $rows['message'];
-                                                                        }  ?>   </textarea disabled>
+                                                                        }  ?>   </textarea readonly>
                                 <small>Files attached:</small>
                                                                         <?php
 																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
@@ -276,7 +268,7 @@ $registration = "registration.php";
 
   <script src="../src/js/table.click.js"></script>
   <script src="../src/js/preload.js"></script>
-  <script src="../src/js/switch.js"> </script>
+  <!-- <script src="../src/js/switch.js"> </script> -->
   <script>
     tinymce.init({
     selector: 'textarea#tiny',
