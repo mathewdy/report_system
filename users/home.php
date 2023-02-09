@@ -357,6 +357,22 @@ $barangay = $_SESSION['barangay'];
 
     });
 </script>
+<script>
+	$(document).ready(function(){
+		$('.edit').click(function(){
+			var note = $(this).data('id');
+			$.ajax({
+				url: 'edit-modal.php',
+				type: 'post',
+				data: {note: note},
+				success: function(response){
+					$('.notes').html(response);
+					$('#editNote').modal('show');
+				}
+			});
+		});
+	});
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>

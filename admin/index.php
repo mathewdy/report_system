@@ -464,7 +464,22 @@ $registration = "registration.php";
         });
       });
     </script>
- 
+ <script>
+	$(document).ready(function(){
+		$('.edit').click(function(){
+			var note = $(this).data('id');
+			$.ajax({
+				url: 'edit-modal.php',
+				type: 'post',
+				data: {note: note},
+				success: function(response){
+					$('.notes').html(response);
+					$('#editNote').modal('show');
+				}
+			});
+		});
+	});
+</script>
 </body>
 
 </html>
