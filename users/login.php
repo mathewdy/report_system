@@ -26,27 +26,11 @@ if($current_year == $next_year){
     <title>Log In</title>
 </head>
 <style>
-    .bg{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-    }
-    .blob{
-        position: fixed;
-        top: -150%;
-        transform: rotate(-120deg);
-        right: -70%;
-        z-index: -2;
-    }
     body{
         overflow-x: hidden;
         background: url(../src/img/hall.jpg);
         background-repeat: no-repeat;
         background-size: cover;
-    }
-    .avatar{
-        height: 100px;
     }
     .overlay{
         width: 100%;
@@ -114,45 +98,6 @@ if($current_year == $next_year){
                 
             </div>
         </nav>
-        <main class="content">
-            <div class="container-fluid pt-5 ">
-                <div class="row d-flex justify-content-center align-items-center">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-6 card" style="border: none; background: none;">
-                                <img class="card-img-top" src="../src/img/illustration.svg" alt="">
-                                <!-- <div class="card-img-overlay d-flex">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text">Last updated 3 mins ago</p>
-                                </div> -->
-                            </div>
-                            <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                                <div class="outer row card p-5 shadow" style="border: none;">
-                                    <img class="card-img-top avatar" src="../src/img/avatar.svg" alt="">
-                                    <p class="h5 text-center">Welcome!</p>
-                                    <form action="" method="POST">
-                                    <div class="col-lg-12 mb-4">
-                                        <label for="">Email</label>
-                                        <input type="text" class="form-control" name="email" maxlength="25" required>
-                                    </div>
-                                    <div class="col-lg-12 mb-4">
-                                        <label>Password</label>
-                                        <input type="password" class="form-control" name="password" maxlength="50" required>
-                                    </div>
-                                    <hr>
-                                    <div class="col-lg-12 text-center">
-                                        <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
-                                    </div>
-                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>   
-                    </div>
-                </div>
-            </div>
-        </main>
         <!-- <footer class="footer shadow">
             <div class="row">
                 <div class="col-lg-12 text-center">
