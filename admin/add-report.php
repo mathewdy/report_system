@@ -211,7 +211,8 @@ $registration = "registration.php";
                 <textarea id="tiny" name="statement"> </textarea>
               </div>
 
-              <input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"/>
+              <input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" >
+              <!-- accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"/> -->
 
               <span class="d-flex justify-content-end align-items-center mt-3">
                 <input type="submit" class="btn btn-primary btn-md" name="send" value="Submit">

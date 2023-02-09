@@ -167,7 +167,8 @@ $barangay = $_SESSION['barangay'];
 												<textarea id="tiny" name="statement"> </textarea>
 											</div>
 											<div class="col-lg-12 mb-2">
-                      <input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"/>
+                      <input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" />
+                      <!-- accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" -->
 											</div>
 											<div class="col-lg-12 text-end">
                         <a href="home.php" class="btn btn-danger btn-md">Cancel</a>
