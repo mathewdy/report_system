@@ -195,6 +195,14 @@ if(isset($_GET['opt-out'])){
 //     })
 //     </script>";
 // }
+if(isset($_GET['rst-out'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Password has been reset!',
+    })
+    </script>";
+}
 
 
 ob_end_flush();

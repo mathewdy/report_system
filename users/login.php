@@ -253,6 +253,15 @@ if(isset($_GET['rst-out'])){
         title: 'Password has been reset!',
     })
     </script>";
+    
+}
+if(isset($_GET['registered'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Registered!',
+    })
+    </script>";
 }
 ob_end_flush();
 
