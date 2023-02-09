@@ -58,7 +58,7 @@ $registration = "registration.php";
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="../src/img/dilg.png" height="80" alt="">
         <span class="fs-4 ps-3">DILG</span>
       </a>

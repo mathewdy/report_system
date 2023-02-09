@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2023 at 07:48 AM
+-- Generation Time: Feb 07, 2023 at 10:46 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -105,6 +105,14 @@ CREATE TABLE `events` (
   `end_event` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `start_event`, `end_event`) VALUES
+(28, 'fasdf', '2023-02-03 00:00:00', '2023-02-04 00:00:00'),
+(30, 'hahaasdasd', '2023-02-06 00:00:00', '2023-02-12 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -119,31 +127,6 @@ CREATE TABLE `files` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `files`
---
-
-INSERT INTO `files` (`id`, `report_id`, `file_name`, `uploaded_on`, `status`) VALUES
-(110, 'RID00002', 'Group-8-POS-Autosaved.xlsx', '', ''),
-(111, 'RID00002', 'SP101assign.docx', '', ''),
-(112, 'RID00002', 'OBE.pdf', '', ''),
-(113, 'RID00002', 'CHECKLIST OF REQUIREMENTS (1).xls', '', ''),
-(114, 'RID00002', 'SYSTEG_final (1).pdf', '', ''),
-(115, 'RID00002', '8f76b2ee-6c1e-4812-92a1-9288ea58e968 (1).docx', '', ''),
-(116, 'RID00002', 'resume-1 (2) (1).pdf', '', ''),
-(117, 'RID00002', 'resume-1 (2).docx', '', ''),
-(118, 'RID00002', 'resume-1 (2).pdf', '', ''),
-(119, 'RID00003', 'Group-8-POS-Autosaved.xlsx', '', ''),
-(120, 'RID00003', 'SP101assign.docx', '', ''),
-(121, 'RID00003', 'OBE.pdf', '', ''),
-(122, 'RID00003', 'CHECKLIST OF REQUIREMENTS (1).xls', '', ''),
-(123, 'RID00003', 'SYSTEG_final (1).pdf', '', ''),
-(124, 'RID00003', '8f76b2ee-6c1e-4812-92a1-9288ea58e968 (1).docx', '', ''),
-(125, 'RID00003', 'resume-1 (2) (1).pdf', '', ''),
-(126, 'RID00003', 'resume-1 (2).docx', '', ''),
-(127, 'RID00003', 'resume-1 (2).pdf', '', ''),
-(128, 'RID00003', 'resume.docx', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -152,7 +135,7 @@ INSERT INTO `files` (`id`, `report_id`, `file_name`, `uploaded_on`, `status`) VA
 
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
   `content` varchar(50) NOT NULL,
   `date_created` date NOT NULL,
   `time_created` time NOT NULL,
@@ -202,9 +185,11 @@ INSERT INTO `opr` (`id`, `name`) VALUES
 
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
   `report_id` varchar(50) NOT NULL,
-  `to_user` varchar(50) NOT NULL,
   `from_user` varchar(50) NOT NULL,
+  `to_user` varchar(50) NOT NULL,
+  `barangay` varchar(10000) NOT NULL,
   `subject` varchar(50) NOT NULL,
   `opr` varchar(100) NOT NULL,
   `message` longtext NOT NULL,
@@ -220,15 +205,6 @@ CREATE TABLE `reports` (
   `date_updated` date NOT NULL,
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(238, 'RID00001', 'Laguerta', '1', 'sadasdas', 'BUILDING', '<p>tite&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 02:33:00', '2023-02-11 02:33:00', 2, '2023-02-09', '02:33:56', '2023-02-09', '02:33:56'),
-(239, 'RID00002', '1', 'Laguerta', 'apiofsufoasd', 'l hag asfdfasdfasdf', '<p>asdasdfasfasfasd</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 07:43:00', '2023-02-09 07:43:00', 0, '2023-02-09', '07:43:27', '2023-02-09', '07:43:27'),
-(240, 'RID00003', 'Laguerta', '1', 'fADCA', 'GAD', '<p>HAHAHAHA</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 02:47:00', '2023-02-23 02:47:00', 14, '2023-02-09', '02:47:22', '2023-02-09', '02:47:22');
 
 -- --------------------------------------------------------
 
@@ -259,15 +235,17 @@ INSERT INTO `report_type` (`id`, `report_type`) VALUES
 
 CREATE TABLE `sent` (
   `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
   `report_id` varchar(50) NOT NULL,
-  `to_user` varchar(50) NOT NULL,
   `from_user` varchar(50) NOT NULL,
+  `to_user` varchar(50) NOT NULL,
+  `barangay` varchar(10000) NOT NULL,
   `subject` varchar(50) NOT NULL,
   `opr` varchar(100) NOT NULL,
   `message` longtext NOT NULL,
   `duration` varchar(50) NOT NULL,
-  `status` int(225) NOT NULL,
   `pdf_files` blob NOT NULL,
+  `status` int(225) NOT NULL,
   `notif_status` int(11) NOT NULL,
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
@@ -278,15 +256,6 @@ CREATE TABLE `sent` (
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `sent`
---
-
-INSERT INTO `sent` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `pdf_files`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(107, 'RID00001', 'Laguerta', '1', 'sadasdas', 'BUILDING', '<p>tite&nbsp;</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 02:33:00', '2023-02-11 02:33:00', 2, '2023-02-09', '02:33:56', '2023-02-09', '02:33:56'),
-(108, 'RID00002', '1', 'Laguerta', 'apiofsufoasd', 'l hag asfdfasdfasdf', '<p>asdasdfasfasfasd</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 07:43:00', '2023-02-09 07:43:00', 0, '2023-02-09', '07:43:27', '2023-02-09', '07:43:27'),
-(109, 'RID00003', 'Laguerta', '1', 'fADCA', 'GAD', '<p>HAHAHAHA</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 02:47:00', '2023-02-23 02:47:00', 14, '2023-02-09', '02:47:22', '2023-02-09', '02:47:22');
-
 -- --------------------------------------------------------
 
 --
@@ -296,6 +265,7 @@ INSERT INTO `sent` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`,
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `user_type` int(50) NOT NULL,
+  `user_status` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `email_status` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -314,9 +284,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_type`, `email`, `email_status`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `barangay`, `v_token`, `image`, `date_time_created`, `date_time_updated`) VALUES
-(78, 2, 'cmdyzxcvbnm123@gmail.com', 1, '$2y$10$HhthlN007DCw4.18z1Ii1uuwdxPZMdryvWfAWi7WsNuRlMrHKLf2.', 'Logan', 'Nathaniel', 'Nathaniel', '2013-11-04', 'Laguerta', '53e7ab8c4c1583ba6b78fb7e3efefa33', 0x32303232303533315f3134303032392e6a7067, '2023-02-07 05:58:20', '2023-02-07 05:58:20'),
-(79, 1, 'mathewdalisay@gmail.com', 1, '$2y$10$wEvDCMYZloehbYwPoYZaIuShw6GxH3i5.Z0bUBHAgwJAxkSuqSjxu', 'Owen', 'Prescott123', 'Prescott333', '1997-08-20', 'Lecheria', 'cb58eeb6b09e829037770ff0184d7b3a', 0x6a6765726d732e6a7067, '2023-02-07 05:58:59', '2023-02-07 05:58:59');
+INSERT INTO `users` (`id`, `user_type`, `user_status`, `email`, `email_status`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `barangay`, `v_token`, `image`, `date_time_created`, `date_time_updated`) VALUES
+(72, 1, 'ADM00001', 'mathewdalisay@gmail.com', 1, '$2y$10$35h/3fTrrUgey9fcV.gCseRnEPo6/gzKWX2hb67skRPPwjdVbt91e', 'Cora', 'Griffith', 'Griffith', '2007-06-19', 'Kay-Anlog', 'ac470563fb6f7f9e4401d89b8bb3ace9', 0x3332393633393837305f3531353238383136303637353139365f333238383439353037353834393035303036345f6e2e6a7067, '2023-02-07 03:43:11', '2023-02-07 03:43:11'),
+(75, 2, 'Barangay User', 'cmdyzxcvbnm123@gmail.com', 1, '$2y$10$6sIsTLHGYIfFnsB0M6rRDe9KgJtu07CMQorq0paBsoQ6GftLTfj1O', 'Lana', 'Merritt', 'Merritt', '2012-03-16', 'Halang', '8e22a7d7598ba951174fcb72173f93c7', 0x32303232303533315f3132313633382e6a7067, '2023-02-07 04:49:48', '2023-02-07 04:49:48');
 
 -- --------------------------------------------------------
 
@@ -377,7 +347,8 @@ ALTER TABLE `opr`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `status` (`status`);
+  ADD KEY `status` (`status`),
+  ADD KEY `to_user` (`to_user`);
 
 --
 -- Indexes for table `report_type`
@@ -396,7 +367,8 @@ ALTER TABLE `sent`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_type` (`user_type`);
+  ADD KEY `user_type` (`user_type`,`user_status`),
+  ADD KEY `user_id` (`user_status`);
 
 --
 -- Indexes for table `user_type`
@@ -418,19 +390,19 @@ ALTER TABLE `barangay`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `opr`
@@ -442,19 +414,19 @@ ALTER TABLE `opr`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
 
 --
 -- AUTO_INCREMENT for table `sent`
 --
 ALTER TABLE `sent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `user_type`
@@ -465,6 +437,12 @@ ALTER TABLE `user_type`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `reports`
+--
+ALTER TABLE `reports`
+  ADD CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`status`) REFERENCES `report_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`

@@ -65,6 +65,8 @@ $email = $_SESSION['email'];
 			</div>
 		</nav>
 
+	
+
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
@@ -72,6 +74,65 @@ $email = $_SESSION['email'];
                 </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
+					<li>
+
+						<?php
+
+						$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+						$run_number_notif = mysqli_query($conn,$query_number_notif);
+						$num_of_notifs = mysqli_num_rows($run_number_notif);
+
+						?>
+						<span id="NumNotifs" class="badge bg-primary"><?php echo $num_of_notifs?></span>
+
+						<!---riri ikaw na mag patong neto-->
+						<!----pati ajax ng notification--->
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+								Dropdown button
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</div>
+
+
+						<?php
+						
+
+						// query ko naman lahat ngsinend sakin na info
+						// from_user, subject,date, time
+						$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+						$run_reports = mysqli_query($conn,$query_reports);
+
+						if(mysqli_num_rows($run_reports) > 0){
+							foreach($run_reports as $row_reports){
+								?>
+									<p>
+										<?php if($row_reports['from_user'] == "1"){
+												echo "DILG Admin";
+											}	
+										?>
+									</p>
+									<p>
+										<?php echo $row_reports['subject']?>
+									</p>
+									<p><?php echo $row_reports['date_created']?></p>
+									<p><?php echo $row_reports['time_created']?></p>
+								<?php
+							}
+						}
+						
+						
+						?>
+
+							
+							<!-- <div class="container">
+							<a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"><span class="badge bg-secondary">4</span></i></a>
+							</div> -->
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
@@ -101,9 +162,12 @@ $email = $_SESSION['email'];
 								<a class="dropdown-item" href="logout.php">Log out</a>
 							</div>
 						</li>
+						
 					</ul>
 				</div>
 			</nav>
+
+			
 
 			<main class="content">
 				<div class="container-fluid p-0">
@@ -263,7 +327,36 @@ $email = $_SESSION['email'];
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <script src="../src/js/preload.js"></script>
-	<?php
+
+<!--pusher-RYAN--->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b66888c27162a9de31eb', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    //gawing ajax
+    
+    $.ajax({url: "number-notifs.php", success: function(result){
+        $("#NumNotifs").html(result);
+    }});
+	$.ajax({url: "notification-reports.php", success: function(result){
+        $("#all-report").html(result);
+    }});
+    
+});
+</script>
+
+<?php
 $query = $conn->query("SELECT * FROM events ORDER BY id");
 ?>
 <script>

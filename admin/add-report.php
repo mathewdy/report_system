@@ -88,7 +88,7 @@ $registration = "registration.php";
       </div>
     </div>
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="../src/img/dilg.png" height="80" alt="">
         <span class="fs-4 ps-3">DILG</span>
       </a>
@@ -234,6 +234,32 @@ $registration = "registration.php";
   <script src="../src/js/multiple.js"></script>
   <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
 
+
+<!----pusher to ryan--->
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b66888c27162a9de31eb', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    //gawing ajax
+    
+    $.ajax({url: "demo_test.txt", success: function(result){
+        $("#div1").html(result);
+    }});
+    
+});
+</script>
+
+<!----end of pusher--->
+
   <script>
     $('#search_data').tokenfield({
       autocomplete: {
@@ -317,13 +343,28 @@ $registration = "registration.php";
 
     });
   </script>
+
+
 </body>
 
 </html>
 
 <?php
+require '../vendor/autoload.php';
 
 if (isset($_POST['send'])) {
+
+   // pusher to
+   $options = array(
+    'cluster' => 'ap1',
+    'useTLS' => true
+  );
+  $pusher = new Pusher\Pusher(
+    'b66888c27162a9de31eb',
+    'f78b15853c11ffe40959',
+    '1544749',
+    $options
+  );
 
   $time = date("h:i:s", time());
   $date = date('y-m-d');
@@ -445,8 +486,11 @@ if (isset($_FILES['pdf_file']['name'])) {
             $sent_report = "INSERT INTO `sent`(`report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
             VALUES ('$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
             $run_sent_report = mysqli_query($conn, $sent_report);
+            
   
             if ($run_sent_report) {
+              $data['message'] = "";
+              $pusher->trigger('my-channel', 'my-event', $data);
               echo "<script>
               Swal.fire({
                   icon: 'success',
@@ -477,6 +521,8 @@ if (isset($_FILES['pdf_file']['name'])) {
               $run_sent_report = mysqli_query($conn, $sent_report);
       
               if ($run_sent_report) {
+              $data['message'] = "";
+              $pusher->trigger('my-channel', 'my-event', $data);
                 echo "<script>
                     Swal.fire({
                         icon: 'success',
@@ -497,154 +543,154 @@ if (isset($_FILES['pdf_file']['name'])) {
 
 
 
-if (isset($_POST['draft'])) {
+// if (isset($_POST['draft'])) {
 
-  $time = date("h:i:s", time());
-  $date = date('y-m-d');
-
-
-  $from = $_POST['from'];
-  $from = mysqli_escape_string($conn, $from);
-
-  $to = $_POST['to'];
-  $to = mysqli_escape_string($conn, $to);
-
-  $subject = $_POST['subject'];
-  $subject = mysqli_escape_string($conn, $subject);
-
-  $opr = $_POST['opr'];
-  $opr = mysqli_escape_string($conn, $opr);
-
-  $statement = $_POST['statement'];
-  $statement = mysqli_escape_string($conn, $statement);
+//   $time = date("h:i:s", time());
+//   $date = date('y-m-d');
 
 
-  $brgy = $_POST['brgy'];
-  $brgy = mysqli_escape_string($conn, $brgy);
+//   $from = $_POST['from'];
+//   $from = mysqli_escape_string($conn, $from);
+
+//   $to = $_POST['to'];
+//   $to = mysqli_escape_string($conn, $to);
+
+//   $subject = $_POST['subject'];
+//   $subject = mysqli_escape_string($conn, $subject);
+
+//   $opr = $_POST['opr'];
+//   $opr = mysqli_escape_string($conn, $opr);
+
+//   $statement = $_POST['statement'];
+//   $statement = mysqli_escape_string($conn, $statement);
 
 
-
-
-  $time = date("h:i:s", time());
-  $date = date('y-m-d');
-
-  $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
-  $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
-
-  $to = $_POST['to'];
-  $to = mysqli_escape_string($conn, $to);
-
-
-  $date_new_start = new DateTime($date_start);
-  $date_new_end = new DateTime($date_end);
-
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
+//   $brgy = $_POST['brgy'];
+//   $brgy = mysqli_escape_string($conn, $brgy);
 
 
 
 
+//   $time = date("h:i:s", time());
+//   $date = date('y-m-d');
+
+//   $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+//   $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+
+//   $to = $_POST['to'];
+//   $to = mysqli_escape_string($conn, $to);
 
 
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
+//   $date_new_start = new DateTime($date_start);
+//   $date_new_end = new DateTime($date_end);
 
-  if ($days == 1) {
-    $duration = "Daily";
-  } elseif ($days == 7) {
-    $duration = "Weekly";
-  } elseif (
-    $days > 2 || $days <= 14
-  ) {
-    $duration = "Bi-weekly";
-  } elseif ($days == 30) {
-    $duration = "Monthly";
-  } elseif ($days == 90) {
-    $duration = "Quarterly";
-  } elseif ($days >= 180) {
-    $duration = "Semestral";
-  } elseif ($days == 365) {
-    $duration = "Annualy";
-  }
+//   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+//   $days = intval($diff);
 
 
 
 
 
 
- //file upload 
-if (isset($_FILES['pdf_file']['name'])) {
-  $filename = $_FILES['pdf_file']['name'];
-  $file_tmp = $_FILES['pdf_file']['tmp_name'];
+//   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+//   $days = intval($diff);
 
-
-
-    $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
-    $run_validate_report = mysqli_query($conn, $validate_report);
-
-
-    if (mysqli_num_rows($run_validate_report) > 0) {
-
-      foreach ($run_validate_report as $row) {
-        $report_id = $row['report_id'];
-        $get_number = str_replace("RID", "", $report_id);
-        $id_increment = $get_number + 1;
-        $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
-
-        $report_id = "RID" . $get_string;
-
-        //insert a query
-
-        for($i=0;$i<count($filename);$i++){
-          $f_name = $_FILES['pdf_file']['name'][$i];
-          $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
-          $query_file = mysqli_query($conn, $insert_file);
-          move_uploaded_file($file_tmp[$i], "./pdf/" . $filename[$i]);
-        }
-
-
-        $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-        VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration', '2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-        $run_insert_report = mysqli_query($conn, $insert_report);
-
-
-
-        if ($run_insert_report) {
-          echo "<script>
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Saved to drafts',
-              })
-              </script>";
-        } else {
-          echo "error" . $conn->error;
-        }
-      }
-    } else {
-
-      $report_id = "RID00001";
+//   if ($days == 1) {
+//     $duration = "Daily";
+//   } elseif ($days == 7) {
+//     $duration = "Weekly";
+//   } elseif (
+//     $days > 2 || $days <= 14
+//   ) {
+//     $duration = "Bi-weekly";
+//   } elseif ($days == 30) {
+//     $duration = "Monthly";
+//   } elseif ($days == 90) {
+//     $duration = "Quarterly";
+//   } elseif ($days >= 180) {
+//     $duration = "Semestral";
+//   } elseif ($days == 365) {
+//     $duration = "Annualy";
+//   }
 
 
 
 
-      $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-      VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
-      $run_insert_report = mysqli_query($conn, $insert_report);
 
-      if ($run_insert_report) {
 
-        echo "<script>
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Saved to drafts',
-              })
-              </script>";
-      } else {
-        echo "error" . $conn->error;
-      }
-    }
-  }
-}
+//  //file upload 
+// if (isset($_FILES['pdf_file']['name'])) {
+//   $filename = $_FILES['pdf_file']['name'];
+//   $file_tmp = $_FILES['pdf_file']['tmp_name'];
+
+
+
+//     $validate_report = "SELECT * FROM reports ORDER BY report_id DESC LIMIT 1";
+//     $run_validate_report = mysqli_query($conn, $validate_report);
+
+
+//     if (mysqli_num_rows($run_validate_report) > 0) {
+
+//       foreach ($run_validate_report as $row) {
+//         $report_id = $row['report_id'];
+//         $get_number = str_replace("RID", "", $report_id);
+//         $id_increment = $get_number + 1;
+//         $get_string  = str_pad($id_increment, 5, 0, STR_PAD_LEFT);
+
+//         $report_id = "RID" . $get_string;
+
+//         //insert a query
+
+//         for($i=0;$i<count($filename);$i++){
+//           $f_name = $_FILES['pdf_file']['name'][$i];
+//           $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
+//           $query_file = mysqli_query($conn, $insert_file);
+//           move_uploaded_file($file_tmp[$i], "./pdf/" . $filename[$i]);
+//         }
+
+
+//         $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+//         VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration', '2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+//         $run_insert_report = mysqli_query($conn, $insert_report);
+
+
+
+//         if ($run_insert_report) {
+//           echo "<script>
+//               Swal.fire({
+//                   icon: 'success',
+//                   title: 'Saved to drafts',
+//               })
+//               </script>";
+//         } else {
+//           echo "error" . $conn->error;
+//         }
+//       }
+//     } else {
+
+//       $report_id = "RID00001";
+
+
+
+
+//       $insert_report = "INSERT INTO `reports`(`user_id`, `report_id`, `from_user`, `to_user`, `barangay`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+//       VALUES ('$user_id','$report_id','$from','$to','$brgy','$subject','$opr','$statement','$duration','2','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+//       $run_insert_report = mysqli_query($conn, $insert_report);
+
+//       if ($run_insert_report) {
+
+//         echo "<script>
+//               Swal.fire({
+//                   icon: 'success',
+//                   title: 'Saved to drafts',
+//               })
+//               </script>";
+//       } else {
+//         echo "error" . $conn->error;
+//       }
+//     }
+//   }
+// }
 
 
 

@@ -52,7 +52,7 @@ $registration = "registration.php";
   </div>
   <main class="d-flex">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <img src="../src/img/dilg.png" height="80" alt="">
         <span class="fs-4 ps-3">DILG</span>
         <span class="fs-4"></span>
@@ -121,10 +121,57 @@ $registration = "registration.php";
       </div>
     </div>
     <div class="container-fluid bg-light p-0">
+    <?php
+
+// query ko naman lahat ngsinend sakin na info
+    // from_user, subject,date, time
+    $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+    $run_reports = mysqli_query($conn,$query_reports);
+
+    if(mysqli_num_rows($run_reports) > 0){
+      foreach($run_reports as $row_reports){
+        ?>
+          <p>
+            <?php echo $row_reports['from_user']?>
+          </p>
+          <p>
+            <?php echo $row_reports['subject']?>
+          </p>
+          <p><?php echo $row_reports['date_created']?></p>
+          <p><?php echo $row_reports['time_created']?></p>
+        <?php
+      }
+    }
+    
+
+
+
+?>
     <nav class="navbar bg-dark navbar-dark">
-        <div class="container">
-          <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"></i></a>
+
+
+        <?php
+
+          $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1' ";
+          // WHERE to_user = '1'
+          $run_notification_num = mysqli_query($conn,$query_notification_num);
+          $num_of_notifs = mysqli_num_rows($run_notification_num);
+        ?>
+
+        <div class="dropdown">
+          <span id="NumNotifs" class="badge bg-primary"><?php echo $num_of_notifs?></span>
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button 
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+          </ul>
         </div>
+
+        
+        <!-- <div class="container">
+          <a class="navbar-brand ms-auto" href="#"><i class="bi bi-bell-fill"><span class="badge bg-secondary">4</span></i></a>
+        </div> -->
       </nav>
       <div class="row p-5">
         <div class="col-lg-12">
@@ -259,6 +306,38 @@ $registration = "registration.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+
+
+<!---pusher to ryan---->
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b66888c27162a9de31eb', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    //gawing ajax
+    
+    $.ajax({url: "number-notifs.php", success: function(result){
+        $("#NumNotifs").html(result);
+    }});
+    
+});
+</script>
+
+
+<!-----end of pusher---->
+
+
+
+
   <?php
     $query = $conn->query("SELECT * FROM events ORDER BY id");
     ?>
