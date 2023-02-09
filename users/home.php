@@ -44,12 +44,12 @@ $barangay = $_SESSION['barangay'];
 					<li class="sidebar-header">
 						Pages
 					</li>
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="home.php">
                             <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
                         </a>
 					</li>
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="view-report.php">
                             <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
                         </a>
