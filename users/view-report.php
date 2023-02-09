@@ -141,7 +141,9 @@ $barangay = $rows['barangay'];
 												?>
 												<tr class="border-bottom border-secondary">
 													<td><?php echo $no ?></td>
-													<td><?php echo $row['from_user'] ?></td>
+													<td><?php if( $row['from_user'] == '1' ){
+														echo "DILG Admin";
+													}?></td>
 													<td style="width: 50%;"><?php echo $row['subject'] ?></td>
 													<td>
 													<?php if ($row['status'] == 1) {
@@ -158,7 +160,7 @@ $barangay = $rows['barangay'];
 													?>
 													</td>
 													<td>
-													<a href="view-single-report.php?report_id=<?php echo $row['report_id']?>">View Report</a>
+													<a href="view-inbox-report.php?report_id=<?php echo $row['report_id']?>">View Report</a>
 													</td>
 												</tr>
 												<?php

@@ -220,19 +220,11 @@ $registration = "registration.php";
                                                                             } ?> " disabled>
           <br>
           <label for="">To:</label>
-          <input type="text" name="to" class="switch form-control" value="<?php if (empty($rows['to_user'])) {
-                                                                            echo "";
-                                                                          } else {
-                                                                            echo $rows['to_user'];
-                                                                          } ?> " disabled>
+          <input type="text" name="to" class="switch form-control" value="<?php if($rows['to_user'] == '1'){
+            echo "DILG Admin";
+          } ?>" disabled>
           <br>
-          <label for="">Barangay</label>
-          <input type="text" name="brgy" class="switch form-control" value="<?php if (empty($rows['barangay'])) {
-                                                                              echo "";
-                                                                            } else {
-                                                                              echo $rows['barangay'];
-                                                                            } ?> " disabled>
-          <br>
+          
           <label for="">Subject:</label>
           <input type="text" name="subject" class="switch form-control" value="<?php if (empty($rows['subject'])) {
                                                                                   echo "";
