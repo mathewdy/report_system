@@ -151,8 +151,8 @@ $email = $_SESSION['email'];
 															<div class="col-lg-6">
 																<div class="row">
 																	<div class="col-lg-12 d-flex align-items-center">
-																		<label for="">Barangay:</label>
-																		<input type="text" class="form-control ms-2" style="border: none; outline: none; background: none;" name="brgy" value="<?php echo $row['barangay']?> " readonly>
+																		<label for="">To:</label>
+																		<input type="text" class="form-control ms-2" style="border: none; outline: none; background: none;" name="brgy" value="<?php if($row['to_user'] == '1'){ echo "DILG Admin"; } ?> " readonly>
 																	</div>
 																	<div class="col-lg-12 d-flex align-items-center">
 																		<label for="">Subject:</label>
@@ -250,6 +250,7 @@ $email = $_SESSION['email'];
 <script>
     tinymce.init({
       selector: 'textarea#tiny',
+	  readonly: true,
       // width: 2000,
       height: 300,
       resize: false,

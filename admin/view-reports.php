@@ -187,8 +187,6 @@ $registration = "registration.php";
         <form action="" method="POST" enctype="multipart/form-data">
 
           <?php
-
-
           $status = $rows['status'];
 
           if ($status == 3 || $status == 2) {
@@ -209,10 +207,10 @@ $registration = "registration.php";
           }
           ?>
           <?php 
-                                                                    $date_start =  date('F d, Y h:i:s A', strtotime($rows['date_start']));
-																	$date_end = date('F d, Y h:i:s A', strtotime($rows['date_end']));
-                                                                    echo "Date sent:  " . $date_start . " - " . $date_end;
-                                                                    ?>
+            $date_start =  date('F d, Y h:i:s A', strtotime($rows['date_start']));
+            $date_end = date('F d, Y h:i:s A', strtotime($rows['date_end']));
+            echo "Date sent:  " . $date_start . " - " . $date_end;
+          ?>
                                                                     <br>
           <label for="">From:</label>
           <input type="text" name="from" class="switch form-control" value="<?php if (empty($rows['from_user'])) {

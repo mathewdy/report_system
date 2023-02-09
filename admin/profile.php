@@ -3,7 +3,7 @@
 include('../connection.php');
 session_start();
 ob_start();
-$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
 
 $report_link = "add-report.php";
 $view_link = "reports.php";
@@ -83,7 +83,7 @@ $note_link = "add-note.php";
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <?php   
-        $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+        $sql_admin = "SELECT * FROM users WHERE email = '$email'";
         $query_admin = mysqli_query($conn, $sql_admin);
         $admin_row = mysqli_fetch_array($query_admin);
         ?>
@@ -116,7 +116,7 @@ $note_link = "add-note.php";
             <hr class="featurette-divider">
                 <?php
 
-                $query = "SELECT * FROM users WHERE user_id = '$user_id'";
+                $query = "SELECT * FROM users WHERE email = '$email'";
                 $run = mysqli_query($conn, $query);
 
                 if (mysqli_num_rows($run) > 0) {
@@ -135,9 +135,9 @@ $note_link = "add-note.php";
                                         <input type="email" class="form-control mb-3" name="email" value="<?php echo $row['email'] ?>">
                                     </span>
                                     <span class="mb-2">
-                            <label for="">Password</label>
-                            <input type="password" class="form-control mb-3"  name="password" id="" >
-                                        
+                                  <label for="">Password</label>
+                                  <input type="password" class="form-control mb-3"  name="password" id="" >
+                                              
                                     </span>
                                     <span class="mb-2">
                                     <label for="">First Name</label>
@@ -159,23 +159,15 @@ $note_link = "add-note.php";
                                     <input type="date" name="date_of_birth" class="form-control mb-3" value="<?php echo $row['date_of_birth'] ?>" id="">
 
                                     </span>
-                                    <span class="mb-2">
-                                    <label for="">Address</label>
-                                    <input type="text" name="address" class="form-control mb-3" value="<?php echo $row['address'] ?>">
-
-                                    </span>
+                                    
                                     <span class="mb-2">
                                     <label for="">Barangay</label>
                                     <input type="text" name="barangay" class="form-control mb-3" value="<?php echo $row['barangay'] ?>">
                                     </span>
-                                    <span class="mb-2">
-                                    <label for="">DILG ID</label>
-                                    <input type="text" name="dilg_id" class="form-control mb-3" value="<?php echo $row['dilg_id'] ?>">
-                                    </span>
+                                    
                                     <span class="d-flex justify-content-end">
                                     <input type="submit" class="btn btn-md btn-success" name="update" value="Update">
                                     </span>
-                                    <input type="hidden" name="user_id" value="<?php echo $row['user_id']?>">
                                 </div>
                             </div>
                         </form>
@@ -225,20 +217,14 @@ if (isset($_POST['update'])) {
     $middle_name = ucfirst($_POST['middle_name']);
     $last_name = ucfirst($_POST['last_name']);
     $date_of_birth = ucfirst($_POST['date_of_birth']);
-    $address = $_POST['address'];
     $barangay = $_POST['barangay'];
-    $dilg_id = $_POST['dilg_id'];
 
     $email = mysqli_escape_string($conn, $email);
     $password = mysqli_escape_string($conn, $password);
     $first_name = mysqli_escape_string($conn, $first_name);
     $middle_name = mysqli_escape_string($conn, $middle_name);
     $last_name = mysqli_escape_string($conn, $last_name);
-    $address = mysqli_escape_string($conn, $address);
     $barangay = mysqli_escape_string($conn, $barangay);
-    $dilg_id = mysqli_escape_string($conn, $dilg_id);
-
-    $user_id2 = $_POST['user_id'];
 
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -255,11 +241,16 @@ if (isset($_POST['update'])) {
     }
 
     if (empty($new_image)) {
-        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', password = '$hashed_password', address = '$address', barangay = '$barangay' , barangay_id = '$dilg_id' WHERE user_id = '$user_id2'";
+        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', password = '$hashed_password',  barangay = '$barangay'  WHERE email = '$email'";
         $run_update_1 = mysqli_query($conn, $query_update_1);
 
         if ($run_update_1) {
-            echo "Updated";
+          echo "<script>
+          Swal.fire({
+              icon: 'success',
+              title: 'Updated Profile',
+          })
+          </script>";
             echo "<script>window.location.href='profile.php'</script>";
         } else {
             echo "error" . $conn->error;
@@ -280,7 +271,7 @@ if (isset($_POST['update'])) {
         </script>";
         // echo "<script>window.location.href='profile.php' </script>";
     } else {
-        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address',  password = '$hashed_password', barangay = '$barangay' , dilg_id = '$dilg_id', image =  '$update_filename' WHERE user_id = '$user_id2'";
+        $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name',  password = '$hashed_password', barangay = '$barangay', image =  '$update_filename' WHERE email = '$email'";
         $run_update_2 = mysqli_query($conn, $query_update_2);
 
         if ($run_update_2) {
@@ -288,10 +279,10 @@ if (isset($_POST['update'])) {
             echo "<script>
               Swal.fire({
                   icon: 'success',
-                  title: 'Report Sent',
+                  title: 'Updated Image',
               })
               </script>";
-            // echo "<script>window.location.href='profile.php'</script>";
+            echo "<script>window.location.href='profile.php'</script>";
         } else {
             echo "Error" . $conn->error;
         }

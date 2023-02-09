@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2023 at 12:03 PM
+-- Generation Time: Feb 09, 2023 at 07:48 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -105,14 +105,6 @@ CREATE TABLE `events` (
   `end_event` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `start_event`, `end_event`) VALUES
-(28, 'fasdf', '2023-02-03 00:00:00', '2023-02-04 00:00:00'),
-(30, 'hahaasdasd', '2023-02-06 00:00:00', '2023-02-12 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -126,6 +118,31 @@ CREATE TABLE `files` (
   `uploaded_on` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`id`, `report_id`, `file_name`, `uploaded_on`, `status`) VALUES
+(110, 'RID00002', 'Group-8-POS-Autosaved.xlsx', '', ''),
+(111, 'RID00002', 'SP101assign.docx', '', ''),
+(112, 'RID00002', 'OBE.pdf', '', ''),
+(113, 'RID00002', 'CHECKLIST OF REQUIREMENTS (1).xls', '', ''),
+(114, 'RID00002', 'SYSTEG_final (1).pdf', '', ''),
+(115, 'RID00002', '8f76b2ee-6c1e-4812-92a1-9288ea58e968 (1).docx', '', ''),
+(116, 'RID00002', 'resume-1 (2) (1).pdf', '', ''),
+(117, 'RID00002', 'resume-1 (2).docx', '', ''),
+(118, 'RID00002', 'resume-1 (2).pdf', '', ''),
+(119, 'RID00003', 'Group-8-POS-Autosaved.xlsx', '', ''),
+(120, 'RID00003', 'SP101assign.docx', '', ''),
+(121, 'RID00003', 'OBE.pdf', '', ''),
+(122, 'RID00003', 'CHECKLIST OF REQUIREMENTS (1).xls', '', ''),
+(123, 'RID00003', 'SYSTEG_final (1).pdf', '', ''),
+(124, 'RID00003', '8f76b2ee-6c1e-4812-92a1-9288ea58e968 (1).docx', '', ''),
+(125, 'RID00003', 'resume-1 (2) (1).pdf', '', ''),
+(126, 'RID00003', 'resume-1 (2).docx', '', ''),
+(127, 'RID00003', 'resume-1 (2).pdf', '', ''),
+(128, 'RID00003', 'resume.docx', '', '');
 
 -- --------------------------------------------------------
 
@@ -209,8 +226,9 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `pdf_files`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
-(226, '123', '', 'canlubang', 'tite', 'sample opr', 'sample text', '21', '', 0, 0, '2023-02-08 11:52:37', '2023-02-08 11:52:37', 0, '0000-00-00', '00:00:00', '0000-00-00', '00:00:00'),
-(227, '', '', '', '', '', '', '', '', 0, 0, '2023-02-08 11:52:37', '2023-02-08 11:52:37', 0, '0000-00-00', '00:00:00', '0000-00-00', '00:00:00');
+(238, 'RID00001', 'Laguerta', '1', 'sadasdas', 'BUILDING', '<p>tite&nbsp;</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 02:33:00', '2023-02-11 02:33:00', 2, '2023-02-09', '02:33:56', '2023-02-09', '02:33:56'),
+(239, 'RID00002', '1', 'Laguerta', 'apiofsufoasd', 'l hag asfdfasdfasdf', '<p>asdasdfasfasfasd</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 07:43:00', '2023-02-09 07:43:00', 0, '2023-02-09', '07:43:27', '2023-02-09', '07:43:27'),
+(240, 'RID00003', 'Laguerta', '1', 'fADCA', 'GAD', '<p>HAHAHAHA</p>', 'Bi-weekly', '', 3, 0, '2023-02-09 02:47:00', '2023-02-23 02:47:00', 14, '2023-02-09', '02:47:22', '2023-02-09', '02:47:22');
 
 -- --------------------------------------------------------
 
@@ -241,17 +259,15 @@ INSERT INTO `report_type` (`id`, `report_type`) VALUES
 
 CREATE TABLE `sent` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(50) NOT NULL,
   `report_id` varchar(50) NOT NULL,
-  `from_user` varchar(50) NOT NULL,
   `to_user` varchar(50) NOT NULL,
-  `barangay` varchar(10000) NOT NULL,
+  `from_user` varchar(50) NOT NULL,
   `subject` varchar(50) NOT NULL,
   `opr` varchar(100) NOT NULL,
   `message` longtext NOT NULL,
   `duration` varchar(50) NOT NULL,
-  `pdf_files` blob NOT NULL,
   `status` int(225) NOT NULL,
+  `pdf_files` blob NOT NULL,
   `notif_status` int(11) NOT NULL,
   `date_start` datetime NOT NULL,
   `date_end` datetime NOT NULL,
@@ -261,6 +277,15 @@ CREATE TABLE `sent` (
   `date_updated` date NOT NULL,
   `time_updated` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sent`
+--
+
+INSERT INTO `sent` (`id`, `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `pdf_files`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) VALUES
+(107, 'RID00001', 'Laguerta', '1', 'sadasdas', 'BUILDING', '<p>tite&nbsp;</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 02:33:00', '2023-02-11 02:33:00', 2, '2023-02-09', '02:33:56', '2023-02-09', '02:33:56'),
+(108, 'RID00002', '1', 'Laguerta', 'apiofsufoasd', 'l hag asfdfasdfasdf', '<p>asdasdfasfasfasd</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 07:43:00', '2023-02-09 07:43:00', 0, '2023-02-09', '07:43:27', '2023-02-09', '07:43:27'),
+(109, 'RID00003', 'Laguerta', '1', 'fADCA', 'GAD', '<p>HAHAHAHA</p>', 'Bi-weekly', 3, '', 0, '2023-02-09 02:47:00', '2023-02-23 02:47:00', 14, '2023-02-09', '02:47:22', '2023-02-09', '02:47:22');
 
 -- --------------------------------------------------------
 
@@ -291,7 +316,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_type`, `email`, `email_status`, `password`, `first_name`, `middle_name`, `last_name`, `date_of_birth`, `barangay`, `v_token`, `image`, `date_time_created`, `date_time_updated`) VALUES
 (78, 2, 'cmdyzxcvbnm123@gmail.com', 1, '$2y$10$HhthlN007DCw4.18z1Ii1uuwdxPZMdryvWfAWi7WsNuRlMrHKLf2.', 'Logan', 'Nathaniel', 'Nathaniel', '2013-11-04', 'Laguerta', '53e7ab8c4c1583ba6b78fb7e3efefa33', 0x32303232303533315f3134303032392e6a7067, '2023-02-07 05:58:20', '2023-02-07 05:58:20'),
-(79, 1, 'mathewdalisay@gmail.com', 1, '$2y$10$bTmpgJ7IZ1Z1nblbUqfqUO2gpQNkWCdmmzJD.zWoMDl2a4vB53R9.', 'Owen', 'Prescott', 'Prescott', '1997-08-20', 'Lecheria', 'cb58eeb6b09e829037770ff0184d7b3a', 0x32303232303532335f3136343435362e6a7067, '2023-02-07 05:58:59', '2023-02-07 05:58:59');
+(79, 1, 'mathewdalisay@gmail.com', 1, '$2y$10$wEvDCMYZloehbYwPoYZaIuShw6GxH3i5.Z0bUBHAgwJAxkSuqSjxu', 'Owen', 'Prescott123', 'Prescott333', '1997-08-20', 'Lecheria', 'cb58eeb6b09e829037770ff0184d7b3a', 0x6a6765726d732e6a7067, '2023-02-07 05:58:59', '2023-02-07 05:58:59');
 
 -- --------------------------------------------------------
 
@@ -393,19 +418,19 @@ ALTER TABLE `barangay`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `opr`
@@ -417,13 +442,13 @@ ALTER TABLE `opr`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
 -- AUTO_INCREMENT for table `sent`
 --
 ALTER TABLE `sent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `users`

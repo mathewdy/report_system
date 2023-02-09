@@ -166,7 +166,7 @@ $registration = "registration.php";
               <tbody>
                 <?php
 
-                $sql = "SELECT * FROM reports WHERE to_user LIKE '%$email%'";
+                $sql = "SELECT * FROM reports WHERE to_user LIKE '1'";
                 $run = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($run) > 0) {
