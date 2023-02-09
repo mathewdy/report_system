@@ -124,6 +124,7 @@ $registration = "registration.php";
             Notes
           </a>
         </li> -->
+        
         <li>
           <a href="<?php echo $ranking ?>" class="nav-link text-white">
             <i class="bi bi-award me-2"></i>
