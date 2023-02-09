@@ -11,7 +11,7 @@ $email = $_SESSION['email'];
 $year = date('Y');
 $report_link = "add-report.php";
 $view_link = "reports.php";
-$draft_link = "draft.php";
+// $draft_link = "draft.php";
 $note_link = "add-note.php";
 $ranking = "ranking.php";
 
@@ -75,12 +75,6 @@ $ranking = "ranking.php";
                     <a href="<?php echo $view_link ?>" class="nav-link text-white active" aria-current="page">
                         <i class="bi bi-book-half me-2"></i>
                         View Reports
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $draft_link ?>" class="nav-link text-white">
-                        <i class="bi bi-archive me-2"></i>
-                        Drafts
                     </a>
                 </li>
                 <li>

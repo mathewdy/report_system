@@ -5,13 +5,13 @@ include('../connection.php');
 include('session.php');
 include 'images.php';
 
-$email = $_SESSION['username'];
-$user_id = $_SESSION['user_id'];
+$email = $_SESSION['email'];
+// $user_id = $_SESSION['user_id'];
 
 
 $report_link = "add-report.php";
 $view_link = "reports.php";
-$draft_link = "draft.php";
+// $draft_link = "draft.php";
 $note_link = "add-note.php";
 $ranking = "ranking.php";
 
@@ -48,11 +48,11 @@ $ranking = "ranking.php";
 </style>
 
 <body>
-    <div class="preload-wrapper">
+    <!-- <div class="preload-wrapper">
         <div class="spinner-border text-info" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-    </div>
+    </div> -->
     <main class="d-flex">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -80,12 +80,6 @@ $ranking = "ranking.php";
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $draft_link ?>" class="nav-link text-white">
-                        <i class="bi bi-archive me-2"></i>
-                        Drafts
-                    </a>
-                </li>
-                <li>
                     <a href="<?php echo $ranking ?>" class="nav-link text-white">
                         <i class="bi bi-award me-2"></i>
                         Ranking
@@ -96,7 +90,7 @@ $ranking = "ranking.php";
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <?php
-                    $sql_admin = "SELECT * FROM users WHERE user_id = '$user_id'";
+                    $sql_admin = "SELECT * FROM users WHERE email = '$email'";
                     $query_admin = mysqli_query($conn, $sql_admin);
                     $admin_row = mysqli_fetch_array($query_admin);
                     ?>

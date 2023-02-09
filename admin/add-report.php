@@ -468,7 +468,7 @@ if (isset($_FILES['pdf_file']['name'])) {
           $f_name = $_FILES['pdf_file']['name'][$i];
           $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
           $query_file = mysqli_query($conn, $insert_file);
-          move_uploaded_file($file_tmp[$i], "./pdf/" . $filename[$i]);
+          move_uploaded_file($file_tmp[$i], "pdf/" . $filename[$i]);
         }
 
         $sql_get_users = "SELECT * FROM users where user_type = '2'";

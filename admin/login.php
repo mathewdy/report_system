@@ -44,11 +44,11 @@ include('../connection.php');
 </style>
 
 <body class="d-none">
-    <div class="preload-wrapper">
+    <!-- <div class="preload-wrapper">
         <div class="spinner-border text-info" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-    </div>
+    </div> -->
     <img class="bg" src="../src/img/bg.svg" alt="">
     <img class="blob" src="../src/img/blob.svg" alt="">
 
