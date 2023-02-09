@@ -78,7 +78,7 @@ if(isset($_POST['submit'])){
     
 
 
-    $sql_get_info = "SELECT * FROM users where user_type = '1' and email = '$email'";
+    $sql_get_info = "SELECT * FROM users where user_type = '2' and email = '$email'";
     $query = mysqli_query($conn, $sql_get_info);
     if(mysqli_num_rows($query) > 0){
         $rows = mysqli_fetch_array($query);

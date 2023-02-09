@@ -79,7 +79,8 @@ include('../connection.php');
                                     <div class="col-lg-12 text-center">
                                         <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
                                     </div>
-                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a>
+                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a><br>
+                                    <span>Forgot Your password? Click <a href="forgot_password.php">here.</a></span>
                                     </form>
                                 </div>
                             </div>
@@ -188,11 +189,11 @@ if(isset($_GET['opt-out'])){
     })
     </script>";
 }
-if(isset($_GET['register-success'])){
+if(isset($_GET['rst-out'])){
     echo "<script>
     Swal.fire({
         icon: 'success',
-        title: 'Registration Success!',
+        title: 'Password has been reset!',
     })
     </script>";
 }

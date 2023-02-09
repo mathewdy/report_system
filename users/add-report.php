@@ -1,5 +1,6 @@
 <?php
 include('../connection.php');
+date_default_timezone_set('Asia/Manila');
 session_start();
 ob_start();
 $email = $_SESSION['email'];

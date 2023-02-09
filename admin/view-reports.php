@@ -179,7 +179,7 @@ $registration = "registration.php";
       <div class="card shadow p-5" style="border: none; min-height: 35rem;">
         <!-- query of db -->
         <?php
-        $query_data = "SELECT * FROM `sent` WHERE report_id = '$report_id'";
+        $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
         $run_query_data = mysqli_query($conn, $query_data);
         $rows = mysqli_fetch_array($run_query_data);
         ?>
@@ -209,7 +209,8 @@ $registration = "registration.php";
           <?php 
             $date_start =  date('F d, Y h:i:s A', strtotime($rows['date_start']));
             $date_end = date('F d, Y h:i:s A', strtotime($rows['date_end']));
-            echo "Date sent:  " . $date_start . " - " . $date_end;
+            $date_submitted = strtotime($rows['date_start']);
+            echo "Date sent:  " . $date_start;
           ?>
                                                                     <br>
           <label for="">From:</label>
@@ -260,17 +261,9 @@ $registration = "registration.php";
 																}
 																?>
             <span class="d-flex justify-content-end">
-            <div class="btn-group dropleft">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropleft
+            <button type="submit" class="btn btn-primary" name="submit">
+                  Acknowledge
                 </button>
-                <div class="dropdown-menu">
-                  <!-- Dropdown menu links -->
-                  <a href="">Sample</a>
-                  <a href="">Sample 2</a>
-                  <!-- <button type="submit" class="btn btn-primary switch" name="update" disabled>Update</button> -->
-                </div>
-              </div>
             </span>
         </form>
       </div>
@@ -310,7 +303,7 @@ $registration = "registration.php";
 </html>
 
 <?php
-if (isset($_POST['update'])) {
+if (isset($_POST['submit'])) {
 
   $time = date("h:i:s", time());
   $date = date('y-m-d');
@@ -332,8 +325,8 @@ if (isset($_POST['update'])) {
   $statement = mysqli_escape_string($conn, $statement);
 
 
-  $brgy = $_POST['brgy'];
-  $brgy = mysqli_escape_string($conn, $brgy);
+  // $brgy = $_POST['brgy'];
+  // $brgy = mysqli_escape_string($conn, $brgy);
 
 
 
@@ -373,14 +366,82 @@ if (isset($_POST['update'])) {
     $duration = "Annualy";
   }
 
-  $acknowledge_report = "UPDATE reports SET status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE report_id = '$report_id'";
-  $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
+  $check_opr = "SELECT * FROM reports WHERE opr = '$opr' and to_user = '$from'";
+  $query_check_opr = mysqli_query($conn, $check_opr);
+  if(mysqli_num_rows($query_check_opr) > 0){
+    $rows = mysqli_fetch_array($query_check_opr);
+    $date_start = strtotime($rows['date_start']);
 
-  if($run_acknowledge_report){
-    echo "<script>Alert('Updated') </script>";
+    $daydiff = abs($date_submitted - $date_start);
+    $numberdays = $daydiff/86400;
+
+    if($date_submitted > $date_start){
+      // admin
+      $acknowledge_report = "UPDATE reports SET notif_status = '1', status = '4', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '1' and opr = '$opr'";
+      $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
+      if($run_acknowledge_report == true){
+        // user
+        $run_report = "UPDATE reports SET notif_status = '1', status = '4', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '$from' and opr = '$opr'";
+        $query_run_report = mysqli_query($conn,$run_report);
+        if($query_run_report == true){
+          echo "<script>alert('Report Updated')</script>";
+        }else{
+          echo $conn->error;
+        }
+      }else{
+        echo $conn->error;
+      }
+    }else{
+       // admin
+       $late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '1' and opr = '$opr'";
+       $run_late_report = mysqli_query($conn,$late_report);
+       if($run_late_report == true){
+         // user
+         $user_late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '$from' and opr = '$opr'";
+         $query_late_report = mysqli_query($conn,$user_late_report);
+         if($query_late_report == true){
+           echo "<script>alert('Report Updated')</script>";
+         }else{
+           echo $conn->error;
+         }
+       }else{
+         echo $conn->error;
+       }
+    }
   }else{
-    echo "error" . $conn->error;
+    echo $conn->error;
   }
+
+//  $startTimeStamp = strtotime("2011-07-01");
+//  $endTimeStamp = strtotime("2011-07-17");
+ 
+//  $datePassReport = strtotime("2011-07-01");
+//  $timePass = abs($datePassReport - $startTimeStamp);
+//  $numberdays = $timePass/86400;
+//  echo "user pass report date: " . intval($numberdays) . "<br>";
+
+//  $timeDiff = abs($endTimeStamp - $startTimeStamp);
+ 
+//  $numberDays = $timeDiff/86400;  // 86400 seconds in one day
+ 
+//  // and you might want to convert to integer
+//  $numberDays = intval($numberDays);
+//  echo "Date range: " . $numberDays . "<br>";
+
+//  if($numberdays > $numberDays){
+//     echo "late";
+//  }else{
+//     echo "complete";
+//  }
+
+  // $acknowledge_report = "UPDATE reports SET status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE report_id = '$report_id'";
+  // $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
+
+//   if($run_acknowledge_report){
+//     echo "<script>Alert('Updated') </script>";
+//   }else{
+//     echo "error" . $conn->error;
+//   }
 
 
   // // $insert_report = "UPDATE `reports` SET `from_user`='$from',`to_user`='$to',`barangay`='$brgy',`subject`='$subject',`opr`='$opr',`message`='$statement',`duration`='$duration',`status`='$status',`notif_status`='0',`date_start`='$date_start',`date_end`='$date_end',`deadline`='$days',`date_updated`='$date',`time_updated`='$time' WHERE report_id = '$report_id' ";
