@@ -187,13 +187,15 @@ if(isset($_GET['opt-out'])){
     })
     </script>";
 }
-if(isset($_GET['rst-out'])){
-    echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Password has been reset!',
-    })
-    </script>";
-}
+// if(isset($_GET['register-success'])){
+//     echo "<script>
+//     Swal.fire({
+//         icon: 'success',
+//         title: 'Registration Success!',
+//     })
+//     </script>";
+// }
+
+
 ob_end_flush();
 ?>

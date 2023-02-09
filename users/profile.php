@@ -5,8 +5,9 @@ include('../connection.php');
 include('session.php');
 // include('edit-notes.php');
 
-$user_id = $_SESSION['user_id'];
+// $user_id = $_SESSION['user_id'];
 $email = $_SESSION['email'];
+$barangay = $_SESSION['barangay'];
 
 ?>
 <!DOCTYPE html>
@@ -27,11 +28,11 @@ $email = $_SESSION['email'];
 </head>
 
 <body>
-<div class="preload-wrapper">
+	<!-- <div class="preload-wrapper">
       <div class="spinner-border text-info" role="status">
         <span class="sr-only">Loading...</span>
       </div>
-    </div>
+    </div> -->
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -74,13 +75,76 @@ $email = $_SESSION['email'];
                 </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
+					<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+							<?php
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$run_number_notif = mysqli_query($conn,$query_number_notif);
+								$num_of_notifs = mysqli_num_rows($run_number_notif);
+
+							?>
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator"><?php echo $num_of_notifs?></span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									<?= $num_of_notifs?> New Notifications
+								</div>
+								<div class="list-group">
+									<?php
+										// query ko naman lahat ngsinend sakin na info
+										// from_user, subject,date, time
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$run_reports = mysqli_query($conn,$query_reports);
+
+										if(mysqli_num_rows($run_reports) > 0){
+											foreach($run_reports as $row_reports){
+												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_created']));
+												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
+												$newTime = date("G:i A", strtotime($row_reports['time_created']));
+												?>
+												<a class="list-group-item">
+													<div class="row g-0 align-items-center">
+														<div class="col-2">
+															<i class="text-success" data-feather="mail"></i>
+														</div>
+														<div class="col-10">
+															<div class="text-dark">
+																<?php 
+																	if($row_reports['from_user'] == "1"){
+																		echo "DILG Admin";
+																	}	
+																?>
+															</div>
+															<div class="text-muted small mt-1 d-flex justify-content-between">
+																<p class="p-0 m-0"><?php echo $row_reports['subject']?></p>
+																<p class="p-0 m-0"><?= $newDate .' '.$newTime?></p>
+															</div>
+															<!-- <div class="text-muted small mt-1"></div> -->
+														</div>
+													</div>
+												</a>
+												<?php
+											}
+										}
+
+
+										?>
+								</div>
+								<!-- <div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div> -->
+							</div>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
 							<?php
 
-							$query_image = "SELECT first_name, last_name, image FROM users WHERE user_id = '$user_id'";
+							$query_image = "SELECT first_name, last_name, image FROM users WHERE email = '$email'";
 							$run_image = mysqli_query($conn,$query_image);
 
 							if(mysqli_num_rows($run_image) > 0) {
@@ -124,9 +188,9 @@ $email = $_SESSION['email'];
 								
 										<div class="col-lg-5">
 											<div class="card p-5">
-												<img class="card-img-top" src="<?php echo "Images/" . $row['image']?>" alt="Profile Image" style="max-height: 350px; width: 500px;">
+												<img class="card-img-top mb-3" src="<?php echo "../admin/admins/" . $row['image']?>" alt="Profile Image" style="max-height: 350px; width: 500px;">
 												<input type="hidden" name="old_image" value="<?php echo $row ['image']?>">
-												<input type="file" name="image">
+												<input type="file" class="form-control" name="image">
 
 											</div>
 											
@@ -151,15 +215,15 @@ $email = $_SESSION['email'];
 												<label for="">Date of Birth</label>
 												<input type="date" class="form-control" name="date_of_birth" value="<?php echo $row['date_of_birth']?>" id="">
 												<br>
-												<label for="">Address</label>
+												<!-- <label for="">Address</label>
 												<input type="text" class="form-control" name="address" value="<?php echo $row['address']?>">
-												<br>
+												<br> -->
 												<label for="">Barangay</label>
 												<input type="text" class="form-control" name="barangay" value="<?php echo $row['barangay']?>">
 												<br>
-												<label for="">Barangay ID</label>
+												<!-- <label for="">Barangay ID</label>
 												<input type="text" class="form-control" name="barangay_id" value="<?php echo $row['barangay_id']?>">
-												<br>
+												<br> -->
 												<span class="text-end">
 													<input type="submit" class="btn btn-success" name="update" value="Update">
 												</span>
@@ -202,7 +266,33 @@ $email = $_SESSION['email'];
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="../src/js/preload.js"></script>
 <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+<!--pusher-RYAN--->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b66888c27162a9de31eb', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+    // alert(JSON.stringify(data));
+    //gawing ajax
+    
+    $.ajax({url: "number-notifs.php", success: function(result){
+        $("#NumNotifs").html(result);
+    }});
+	$.ajax({url: "notification-reports.php", success: function(result){
+        $("#all-report").html(result);
+    }});
+    
+});
+</script>
 
 </body>
 

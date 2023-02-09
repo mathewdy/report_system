@@ -34,9 +34,39 @@ include('../connection.php');
     }
     body{
         overflow-x: hidden;
+        background: url(../src/img/hall.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
     }
     .avatar{
         height: 100px;
+    }
+    .overlay{
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color: rgba(153, 0, 0,0.3); */
+        background-color: rgba(0, 0, 0,0.4);
+        /* background: rgb(0,0,0);
+        background: linear-gradient(90deg, rgba(0,0,0,0.6416316526610644) 0%, rgba(153,0,0,0.5323879551820728) 100%, rgba(121,9,9,1) 100%); */
+        z-index: -2;
+    }
+    .main{
+        z-index: 4 !important;
+    }
+    label{
+        font-family:Verdana, Geneva, Tahoma, sans-serif !important;
+        font-size: 12px;
+    }
+    input{
+        outline: cadetblue !important;
+        border: 2px solid cadetblue;
+    }
+    input:focus{
+        outline: cadetblue;
     }
 </style>
 <body class="d-none">
@@ -45,10 +75,38 @@ include('../connection.php');
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <img class="bg" src="../src/img/bg.svg" alt="">
-    <img class="blob" src="../src/img/blob.svg" alt="">
-
+    <div class="overlay"></div>
     <div class="main">
+        <nav class="navbar bg-body-tertiary ">
+            <div class="container border-bottom border-secondary">
+                <a class="navbar-brand d-flex flex-row align-items-center">
+                    <img src="../src/img/dilg.png" style="height: 100px;" alt="">
+                    <span class="ms-3">
+                        <p class="p-0 m-0" style="font-weight: 600; font-family:'Times New Roman', Times, serif;">REPUBLIC OF THE PHILIPPINES</p>
+                        <hr class="p-0 m-0">
+                        <p class="text-light p-0 m-0" style="font-weight: 550; font-family:Arial, Helvetica, sans-serif;font-size: 14px;">Department of the Interior and Local Government</p>
+                    </span>
+                    
+                </a>
+                <span>
+                    <form class="d-flex align-items-end" method="POST">
+                        <span class="d-flex flex-column">
+                            <label for="" class="text-white">Email</label>
+                            <input type="text" class="" name="email" maxlength="25" required>
+                        </span>
+                        <span class="d-flex flex-column ms-2">
+                            <label class="text-white">Password</label>
+                            <input type="password" class="" name="password" maxlength="50" required>
+                        </span>
+                        <span class="ms-2">
+                            <input type="submit" class="btn btn-sm w-100 btn-primary" style="border-radius: 0;" name="login" value="Log In">
+                        </span>
+                    </form>
+                    <a href="forgot-password.php" class="link-light" style="font-size: 13px;">Forgot Password?</a>
+                </span>
+                
+            </div>
+        </nav>
         <main class="content">
             <div class="container-fluid pt-5 ">
                 <div class="row d-flex justify-content-center align-items-center">
@@ -79,8 +137,7 @@ include('../connection.php');
                                     <div class="col-lg-12 text-center">
                                         <input type="submit" class="btn btn-md w-100 btn-primary" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" name="login" value="Log In">
                                     </div>
-                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a><br>
-                                    <span>Forgot Your password? Click <a href="forgot_password.php">here.</a></span>
+                                    <a href="../admin/login.php" class="text-center">Log In DILG Admin</a>
                                     </form>
                                 </div>
                             </div>
