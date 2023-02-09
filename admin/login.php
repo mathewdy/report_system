@@ -187,6 +187,14 @@ if(isset($_GET['opt-out'])){
     })
     </script>";
 }
+if(isset($_GET['registered'])){
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Registered!',
+    })
+    </script>";
+}
 // if(isset($_GET['register-success'])){
 //     echo "<script>
 //     Swal.fire({

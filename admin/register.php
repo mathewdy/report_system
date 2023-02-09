@@ -3,8 +3,6 @@ include('../connection.php');
 date_default_timezone_set('Asia/Manila');
 session_start();
 ob_start();
-
-
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -13,17 +11,16 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require '../vendor/autoload.php';
-
+require ("PHPMailer.php");
+require("SMTP.php");
+require("Exception.php");
 function sendMail($email,$first_name,$last_name,$vkey){
-    require ("PHPMailer.php");
-    require("SMTP.php");
-    require("Exception.php");
-
+              
     $mail = new PHPMailer(true);
 
     try {
         //Server settings
-       
+    
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -43,18 +40,16 @@ function sendMail($email,$first_name,$last_name,$vkey){
         $mail->Body = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
         <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
         </span>";
-       
+    
     
         $mail->send();
-        echo "sent";
+        // echo "sent";
         return true;
     } catch (Exception $e) {
         return false;
     }
     
 }
-
-echo NULL;
 
 ?>
 <!DOCTYPE html>
@@ -136,7 +131,7 @@ echo NULL;
                                             </div>
                                             <div class="col-lg-12 mb-3">
                                                 <label for="">Date of Birth</label>
-                                                <input type="date" class="form-control form-control-sm" name="date_of_birth" id="">
+                                                <input type="date" class="form-control form-control-sm" max="2002-12-31" name="date_of_birth" id="">
 
                                             </div>
                                         </div>
@@ -279,6 +274,7 @@ if (isset($_POST['register'])) {
         //validation
         //generate user_id 
 
+            echo NULL;
 
             $query_registration = "INSERT INTO users (user_type,email,password,first_name,middle_name,last_name,date_of_birth,barangay,v_token,image,date_time_created,date_time_updated) 
             VALUES ('$user_type','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$barangay', '$vkey', '$image', '$date $time' , '$date $time')";
@@ -286,17 +282,9 @@ if (isset($_POST['register'])) {
             move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
 
                 if ($run_registration) {
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sucess',
-                            text: 'Please check your junk / spam mails',
-                        })
-                        </script>
-                        ";
-                        echo "<script>window.location.href='login.php'</script>";
-        
+                    // sendMail($email,$first_name,$last_name,$vkey);
+                    echo "<script>window.location.href='login.php?registered' </script>";
+                        // echo "<script></script>";
                     //redirection sa login page
                 } else {
                     echo "error insert_admin" . $conn->error;
