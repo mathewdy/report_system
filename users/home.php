@@ -1,12 +1,11 @@
 <?php
-session_start();
-date_default_timezone_set('Asia/Manila');
 include('../connection.php');
-include('session.php');
-// include('edit-notes.php');
-$barangay = $_SESSION['barangay'];
+session_start();
+ob_start();
 $email = $_SESSION['email'];
+$barangay = $_SESSION['barangay'];
 
+// $user_id = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +20,13 @@ $email = $_SESSION['email'];
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-
 	<title>DILG</title>
 </head>
-
+<style>
+	td{
+		padding: 12px 0;
+	}
+</style>
 <body>
 	<!-- <div class="preload-wrapper">
     	<div class="spinner-grow text-info" role="status">
@@ -35,38 +37,36 @@ $email = $_SESSION['email'];
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">
-          <img src="../src/img/dilg.png" height="50" alt="">
-          <span class="ms-3 align-middle">DILG</span>
-        </a>
+					<img src="../src/img/dilg.png" height="50" alt="">
+					<span class="ms-3 align-middle">DILG</span>
+				</a>
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
 						Pages
 					</li>
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="home.php">
-              <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
-            </a>
-					</li>
 					<li class="sidebar-item">
+						<a class="sidebar-link" href="home.php">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Home</span>
+                        </a>
+					</li>
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="view-report.php">
-              <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
-            </a>
+                            <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
+                        </a>
 					</li>
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="add-report.php">
-              <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
-            </a>
+                            <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
+                        </a>
 					</li>
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sent-reports.php">
-              <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
-            </a>
+                            <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
+                        </a>
 					</li>
 				</ul>
 			</div>
 		</nav>
-
-	
 
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -152,7 +152,7 @@ $email = $_SESSION['email'];
 							foreach($run_image as $row_image){
 								?>
 								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                  				<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
+                                	<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
 								</a>
 
 								<?php
@@ -172,19 +172,19 @@ $email = $_SESSION['email'];
 				</div>
 			</nav>
 
-			
-
 			<main class="content">
 				<div class="container-fluid p-0">
 					<div class="row">
 						<div class="col-xl-12 col-xxl-12 d-flex">
 							<div class="w-100">
 								<div class="row">
-									<div class="col-lg-12 mb-5">
-										<div id="calendar"></div>
+									<div class="col-lg-12">
+										<div class="card p-3">
+											<div id="calendar"></div>
+										</div>
 									</div>
 									<!-- NOTES -->
-										<?php
+									<?php
 
 										$query_data = "SELECT * FROM `notes` WHERE email = '$email'";
 										$run_query_data = mysqli_query($conn, $query_data);
@@ -225,7 +225,7 @@ $email = $_SESSION['email'];
 
 
 										?>
-									<div class="col-lg-3">
+										<div class="col-lg-3">
 										<div class="card py-5" style="min-height: 20rem;">
 											<div class="card-body">
 												<p class="p-0 m-0 w-100 card-text"> 
@@ -243,10 +243,10 @@ $email = $_SESSION['email'];
 												<a class="btn btn-danger btn-sm" href="<?php echo ($delete_link) ?>">Delete</a>
 											</span>
 										</div>
-									</div>
+										</div>
 
-											 <!-- Modal -->
-											 <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<!-- Modal -->
+											<div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 													<div class="modal-header">
@@ -271,13 +271,13 @@ $email = $_SESSION['email'];
 										}
 										}
 										?>
-									<div class="col-lg-3">
+										<div class="col-lg-3">
 										<div class="card d-flex justify-content-center align-items-center" style="min-height: 20rem; border: 3px solid rgba(0, 0,0,0.2);">
 											<span>
 												<a href="" data-bs-toggle="modal" data-bs-target="#addNote"><i class="align-self-center text-primary" style="width: 150px; height: 150px" data-feather="plus-circle"></i></a>
 											</span>
 										</div>
-									</div>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -294,185 +294,44 @@ $email = $_SESSION['email'];
 							</p>
 						</div>
 					</div>
+					</div>
 				</div>
 			</footer>
 		</div>
-	</div>
-
-	<!-- Add Note Modal -->
-	<div class="modal fade" id="addNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Note</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-			<form action="add-notes.php" method="POST" enctype="multipart/form-data">
-				<div>
-					<textarea id="tiny" name="content"> </textarea>
+		<!-- Add Note Modal -->
+		<div class="modal fade" id="addNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Add Note</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<span class="d-flex justify-content-end mt-4">
-				<input type="submit" class="btn btn-primary py-1 mx-2" name="add" value="Add">
-				</span>
-			</form>
-          </div>
-          <div class=" modal-footer">
-            
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class="modal-body">
+					<form action="add-notes.php" method="POST" enctype="multipart/form-data">
+						<div>
+							<textarea id="tiny" name="content"> </textarea>
+						</div>
+						<span class="d-flex justify-content-end mt-4">
+						<input type="submit" class="btn btn-primary py-1 mx-2" name="add" value="Add">
+						</span>
+					</form>
+				</div>
+				<div class=" modal-footer">
+					
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="../src/js/template-2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <script src="../src/js/preload.js"></script>
-
 <!--pusher-RYAN--->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-
-<script>
-
-// Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
-
-var pusher = new Pusher('b66888c27162a9de31eb', {
-    cluster: 'ap1'
-});
-
-var channel = pusher.subscribe('my-channel');
-channel.bind('my-event', function(data) {
-    // alert(JSON.stringify(data));
-    //gawing ajax
-    
-    $.ajax({url: "number-notifs.php", success: function(result){
-        $("#NumNotifs").html(result);
-    }});
-	$.ajax({url: "notification-reports.php", success: function(result){
-        $("#all-report").html(result);
-    }});
-    
-});
-</script>
-
-<?php
-$query = $conn->query("SELECT * FROM events ORDER BY id");
-?>
- <?php
-    $query = $conn->query("SELECT * FROM events ORDER BY id");
-    ?>
-      <script>
-        $(document).ready(function() {
-        var calendar = $('#calendar').fullCalendar({
-          editable:true,
-          header:{
-          left:'prev,next today',
-          center:'title',
-          right:'month,agendaWeek,agendaDay'
-          },
-          events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
-          selectable:true,
-          selectHelper:true,
-          select: function(start, end, allDay)
-          {
-          var title = prompt("Enter Event Title");
-          if(title)
-          {
-            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-            $.ajax({
-            url:"insert-calendar.php",
-            type:"POST",
-            data:{title:title, start:start, end:end},
-            success:function(data)
-            {
-              calendar.fullCalendar('refetchEvents');
-              alert("Added Successfully");
-              window.location.replace("index.php");
-            }
-            })
-          }
-          },
-    
-          editable:true,
-          eventResize:function(event)
-          {
-          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-          var title = event.title;
-          var id = event.id;
-          $.ajax({
-            url:"update-calendar.php",
-            type:"POST",
-            data:{title:title, start:start, end:end, id:id},
-            success:function(){
-            calendar.fullCalendar('refetchEvents');
-            alert('Event Update');
-            }
-          })
-          },
-    
-          eventDrop:function(event)
-          {
-          var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-          var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-          var title = event.title;
-          var id = event.id;
-          $.ajax({
-            url:"update-calendar.php",
-            type:"POST",
-            data:{title:title, start:start, end:end, id:id},
-            success:function()
-            {
-            calendar.fullCalendar('refetchEvents');
-            alert("Event Updated");
-            }
-          });
-          },
-    
-          eventClick:function(event)
-          {
-          if(confirm("Are you sure you want to remove it?"))
-          {
-            var id = event.id;
-            $.ajax({
-            url:"delete-calendar.php",
-            type:"POST",
-            data:{id:id},
-            success:function()
-            {
-              calendar.fullCalendar('refetchEvents');
-              alert("Event Removed");
-              window.location.href='index.php';
-            }
-            })
-          }
-          },
-    
-        });
-      });
-    </script>
-<script>
-	$(document).ready(function(){
-		$('.edit').click(function(){
-			var note = $(this).data('id');
-			$.ajax({
-				url: 'edit-modal.php',
-				type: 'post',
-				data: {note: note},
-				success: function(response){
-					$('.notes').html(response);
-					$('#editNote').modal('show');
-				}
-			});
-		});
-	});
-</script>
 <script>
     tinymce.init({
       selector: 'textarea#tiny',
@@ -498,6 +357,32 @@ $query = $conn->query("SELECT * FROM events ORDER BY id");
 
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<?php
+	$query = $conn->query("SELECT * FROM events ORDER BY id");
+?>
+<script>
+$(document).ready(function() {
+    var calendar = $('#calendar').fullCalendar({
+		editable:true,
+		header:{
+		left:'prev,next today',
+		center:'title',
+		right:'month,agendaWeek,agendaDay'
+		},
+		events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
+		selectable:true,
+		selectHelper:true,
+		
+    });
+});
+</script>
 </body>
 
 </html>
+<?php
+ob_end_flush();
+
+?>
