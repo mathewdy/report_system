@@ -3,6 +3,13 @@ ob_start();
 session_start();
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
+$current_year = date('y-m-d');
+$current_year = strtotime($current_year);
+$next_year = strtotime('2024-01-01');
+if($current_year == $next_year){
+    $delete_data = "DELETE FROM reports";
+    $query_delete = mysqli_query($conn, $delete_data);
+}
 ?>
 
 <!DOCTYPE html>

@@ -133,12 +133,17 @@ $registration = "registration.php";
         <tbody>
             <?php
 
-            $sql = "SELECT * FROM barangay LEFT JOIN ( SELECT from_user, COUNT(*) AS count FROM sent WHERE status = '1' GROUP BY from_user ) count ON count.from_user = barangay.brgy  ORDER BY count DESC ";
+            // $sql = "SELECT *, barangay.brgy, reports.to_user, COUNT(*) as total_report FROM reports
+            // LEFT JOIN barangay on reports.to_user = barangay.brgy ORDER BY total_report ASC";
+            $sql = "SELECT *, COUNT(reports.to_user) as total_report FROM barangay
+            LEFT JOIN reports on barangay.brgy = reports.to_user 
+            WHERE reports.status = '1' OR reports.status = '4'";
             $run = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($run) > 0) {
                 $count = 0;
                 foreach ($run as $row) {
+                  // $total_report = count($row['to_user']);
 
                     $count++;
             ?>
@@ -146,7 +151,7 @@ $registration = "registration.php";
                     <tr>
                         <td><?php echo $count; ?></td>
                         <td><?php echo $row['brgy'] ?></td>
-                        <td><?php echo $row['count'] ?></td>
+                        <td><?php echo $row['total_report']?></td>
 
                     </tr>
 
