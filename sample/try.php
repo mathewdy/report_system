@@ -55,7 +55,7 @@ $date_end = date('Y-m-d h:i', strtotime("2011-10-17"));
     echo $duration = "Daily";
   } elseif ($days == 2 || $days <= 7) {
    echo $duration = "Weekly";
-  } elseif ($days == 8 || $days <= 14) {
+  } elseif ($days == 8 && $days <= 14) {
    echo $duration = "Bi-weekly";
   } elseif ($days == 30) {
    echo $duration = "Monthly";
