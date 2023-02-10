@@ -6,7 +6,7 @@ include('session.php');
 include('images.php');
 include('edit-notes.php');
 error_reporting(E_ERROR | E_PARSE);
-$today = date("Y-m-d H:i:s");
+$today = date("Y-m-d");
 
 $email = $_SESSION['email'];
 
@@ -216,11 +216,11 @@ $registration = "registration.php";
                                   <div class="row w-100">
                                       <div class="col-lg-6">
                                           <label for="">Date Start:</label>
-                                          <input type="datetime-local" min="<?= $today; ?>" class="form-control w-100" name="date_start" required>
+                                          <input type="datetime-local" id="date" class="form-control w-100 dateStart" name="date_start" required>
                                       </div>
                                       <div class="col-lg-6">
                                           <label for="">Date End:</label>
-                                          <input type="datetime-local" min="<?= $today; ?>" class="form-control w-100" name="date_end" required>
+                                          <input type="datetime-local" class="form-control w-100 dateEnd" name="date_end" required>
                                       </div>
                                   </div>
                               </span>
@@ -403,6 +403,13 @@ channel.bind('my-event', function(data) {
     });
 </script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+  var today = new Date().toISOString().slice(0, 16);
+  $('.dateStart')[0].min = today;
+  $('.dateEnd')[0].min = today;
+});
+</script>
 </body>
 
 </html>
