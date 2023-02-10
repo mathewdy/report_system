@@ -184,6 +184,38 @@ $registration = "registration.php";
         $rows = mysqli_fetch_array($run_query_data);
         ?>
 
+          <?php
+
+          $query_acknowledge = "SELECT status FROM reports WHERE report_id = '$report_id'";
+          $sql_ack = mysqli_query($conn,$query_acknowledge);
+          if(mysqli_num_rows($sql_ack) > 0){
+            foreach($sql_ack as $row_ack){
+              ?>
+
+                <?php
+
+                  if($row_ack['status'] == '1'){
+                     echo "<span class='text-success'>Acknowledged </span>";
+                  }else{
+                      ?>
+
+                        <button type="submit" class="btn btn-primary" name="submit">
+                          Acknowledge
+                        </button>
+
+                      <?php
+                  }
+
+                ?>
+                
+                </span>
+
+              <?php
+            }
+          }
+
+          ?>
+
         <form action="" method="POST" enctype="multipart/form-data">
 
           <?php
@@ -253,10 +285,9 @@ $registration = "registration.php";
 																}
 																?>
             <span class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" name="submit">
-                  Acknowledge
-                </button>
-            </span>
+
+           
+            
         </form>
       </div>
     </div>
