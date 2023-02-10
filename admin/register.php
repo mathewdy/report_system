@@ -186,7 +186,6 @@ function sendMail($email,$first_name,$last_name,$vkey){
                                     <hr class="featurette-divider">
                                     <div class="col-lg-12 text-center">
                                         <input class="btn btn-md mb-1 btn-primary w-100" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" type="submit" name="register" value="Register">
-                                        <a class="text-decoration-none" href="login.php">Log In</a>
                                     </div>
                                 </div>
                             </form>

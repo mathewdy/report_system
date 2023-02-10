@@ -205,7 +205,7 @@ $registration = "registration.php";
                                         <div class="row mt-4">
                                             <div class="col-lg-4">
                                             <ul class="nav flex-column">
-                                                <li class="nav-item">
+                                                <!-- <li class="nav-item">
                                                 <a class="nav-link text-secondary" href="daily.php">Daily</a>
                                                 </li>
                                                 <li class="nav-item">
@@ -222,10 +222,10 @@ $registration = "registration.php";
                                                 </li>
                                                 <li class="nav-item">
                                                 <a class="nav-link text-secondary" href="annualy.php">Annual</a>
-                                                </li>
+                                                </li> -->
                                             </ul>
                                             </div>
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-12">
                                             <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0;">
                                                 <table class="table table-bordered table-hover" id="data">
                                                 <thead>
@@ -234,6 +234,7 @@ $registration = "registration.php";
                                                     <th>From</th>
                                                     <th>Subject</th>
                                                     <th>Status</th>
+													<th>Duration</th>
                                                     <th>Actions</th>
                                                     </tr>
                                                 </thead>
@@ -289,6 +290,7 @@ $registration = "registration.php";
                                                         } else {
                                                             echo "<td> <p class='text-danger'> No Submssion </p>  </td>";
                                                         }  ?>
+														<td><?php echo $row['duration']?></td>
                                                         <td>
                                                             <a class='text-danger text-decoration-none' href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
                                                         </td>
