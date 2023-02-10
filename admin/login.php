@@ -90,6 +90,8 @@ include('../connection.php');
                         </span>
                     </form>
                     <a href="forgot-password.php" class="link-light" style="font-size: 13px;">Forgot Password?</a>
+                    <a href="../admin/login.php" class="link-light" style="font-size: 13px;">Login as admin</a>
+
                 </span>
                 
             </div>

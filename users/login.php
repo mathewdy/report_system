@@ -93,7 +93,8 @@ if($current_year == $next_year){
                             <input type="submit" class="btn btn-sm w-100 btn-primary" style="border-radius: 0;" name="login" value="Log In">
                         </span>
                     </form>
-                    <a href="forgot-password.php" class="link-light" style="font-size: 13px;">Forgot Password?</a>
+                    <a href="forgot_password.php" class="link-light" style="font-size: 13px;">Forgot Password?</a>
+                    <a href="../admin/login.php" class="link-light" style="font-size: 13px;">Login as admin</a>
                 </span>
                 
             </div>
