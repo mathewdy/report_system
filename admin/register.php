@@ -104,10 +104,7 @@ function sendMail($email,$first_name,$last_name,$vkey){
         <div class="row d-flex justify-content-center align-items-center pt-5">
             <div class="col-lg-10">
                 <div class="row shadow">
-                    <div class="col-lg-6 p-5 d-flex justify-content-center align-items-center" style="background: #7694D4;">
-                        <img class="card-img-top" src="../src/img/draw.svg" alt="">
-                    </div>
-                    <div class="col-lg-6 bg-white">
+                    <div class="col-lg-12 bg-white">
                         <div class="p-5">
                             <p class="h3 text-center text-muted mb-4">Registration</p>
                             <hr class="featurette-divider">
@@ -140,7 +137,7 @@ function sendMail($email,$first_name,$last_name,$vkey){
                                         <label for="">Barangay</label>
                                         <div class="row">
                                             <div class="col-lg-12 mb-3">
-                                            <select name="barangay" id=""  class="form-select">
+                                            <select name="barangay" id=""  class="form-select mb-3">
                                     <option value="" selected disabled  class="form-select">-Barangay-</option>
                                     <?php
 
@@ -168,27 +165,31 @@ function sendMail($email,$first_name,$last_name,$vkey){
                                                 <label for="">Email</label>
                                                 <input type="email" class="form-control form-control-sm" name="email">
                                             </div>
-                                            <div class="col-lg-12 mb-4">
+                                            <div class="col-lg-12 mb-3">
                                                 <label for="">Password</label>
                                                 <input type="password" class="form-control form-control-sm" name="password" id="">
                                             </div>
-                                            <div class="col-lg-12 mb-4">
-                                               <label for=""></label>
-                                               <select name="user_type" id=" " class="form-select">
-                                                    <option value="" selected disabled  class="form-select">-User Type-</option>
-                                                    <option value="1">DILG User</option>
-                                                    <option value="2">Barangay User</option>
-                                               </select>
-                                                
-                                            </div>
+                                            
                                         </div>
+                                        
                                     </div>
-                                    <hr class="featurette-divider">
-                                    <div class="col-lg-12 text-center">
-                                        <input class="btn btn-md mb-1 btn-primary w-100" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" type="submit" name="register" value="Register">
-                                        <a class="text-decoration-none" href="login.php">Log In</a>
-                                    </div>
+                                    
                                 </div>
+                                <div class="col-lg-12 d-flex flex-row justify-content-between align-items-end">
+                                                <span>
+                                                    <label for=""></label>
+                                                    <select name="user_type" id=" " class="form-select">
+                                                            <option value="" selected disabled  class="form-select">-User Type-</option>
+                                                            <option value="1">DILG User</option>
+                                                            <option value="2">Barangay User</option>
+                                                    </select>
+                                                </span>
+                                                <span>
+                                                    <input class="btn btn-md mb-1 btn-primary w-100" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" type="submit" name="register" value="Register">
+
+                                                </span>
+                                                <!-- <a class="text-decoration-none" href="login.php">Log In</a> -->
+                                            </div>
                             </form>
                         </div>
                     </div>
@@ -283,7 +284,7 @@ if (isset($_POST['register'])) {
 
                 if ($run_registration) {
                     // sendMail($email,$first_name,$last_name,$vkey);
-                    echo "<script>window.location.href='login.php?registered' </script>";
+                    echo "<script>window.location.href='index.php?registered' </script>";
                         // echo "<script></script>";
                     //redirection sa login page
                 } else {
