@@ -174,7 +174,7 @@ if (isset($_POST['login'])) {
                         //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
                         $_SESSION['email'] = $email;
                         $_SESSION['barangay'] = $row['barangay'];
-                        header("location: home.php");
+                        header("location: index.php");
                         die();
                     }
                 }

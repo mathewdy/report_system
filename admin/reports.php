@@ -333,7 +333,7 @@ $registration = "registration.php";
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="../src/js/preload.js"></script>
 <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
-
+<script src="../src/js/table.click.js"></script>
 
 <!----pusher to ryan--->
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>

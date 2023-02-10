@@ -28,8 +28,21 @@ $barangay = $_SESSION['barangay'];
 	<link href="../src/css/template-2.css" rel="stylesheet">
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
+	<link href="../src/css/template-2.css" rel="stylesheet">
+	<link href="../src/css/preloader.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
   <title>DILG</title>
 </head>
 <style>
@@ -225,7 +238,7 @@ $barangay = $_SESSION['barangay'];
 											</div>
 											<div class="col-lg-12 d-flex align-items-center mb-2">
 												<label for="">OPR:</label>
-												<input type="text" class="form-control w-100 ms-2" name="opr">
+												<input type="text" id="opr" class="form-control w-100 ms-2" name="opr">
 											</div>
 											<div class="col-lg-12">
 												<textarea id="tiny" name="statement"> </textarea>
@@ -263,18 +276,15 @@ $barangay = $_SESSION['barangay'];
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="../src/js/template-2.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
 <script src="../src/js/preload.js"></script>
 <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
 
-<!----dito yung i add kong script RIRI--->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
+<!----pusher to ryan--->
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script>
 
 // Enable pusher logging - don't include this in production
@@ -330,12 +340,12 @@ $barangay = $_SESSION['barangay'];
       },
     })
   </script>
-  <script>
-    $('#brgy').tokenfield({
+<script>
+    $('#opr').tokenfield({
       autocomplete: {
         source: function(data, response) {
           $.ajax({
-            url: 'brgy2.php',
+            url: 'opr.php',
             method: 'GET',
             dataType: 'json',
             data: {
