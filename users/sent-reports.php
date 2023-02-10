@@ -191,7 +191,7 @@ require '../vendor/autoload.php';
 													<th>Report ID:</th>
 													<th>To:</th>
 													<th>Subject:</th>
-													<th>Date:</th>
+													<th>Date & Time:</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -218,7 +218,7 @@ require '../vendor/autoload.php';
 															<td>
 																<?php
 																$date = date_create($row['date_created']);
-																echo date_format($date, "F d, Y");
+																echo date_format($date, "F d, Y") . " " . date("G:i A", strtotime($row['time_created']));
 																?>
 															</td>
 															<td><a href="delete-sent.php?report_id=<?php echo $row['report_id'] ?>">Delete</a></td>
