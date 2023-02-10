@@ -321,8 +321,6 @@ if (isset($_POST['submit'])) {
   // $brgy = mysqli_escape_string($conn, $brgy);
 
 
-  print_r($_POST);
-
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
@@ -376,7 +374,7 @@ if (isset($_POST['submit'])) {
         $query_run_report = mysqli_query($conn,$run_report);
         if($query_run_report == true){
           // echo "<script>alert('Report Updated')</script>";
-          echo "if updated";
+          // echo "if updated";
         }else{
           echo $conn->error;
         }
@@ -393,7 +391,7 @@ if (isset($_POST['submit'])) {
          $query_late_report = mysqli_query($conn,$user_late_report);
          if($query_late_report == true){
           //  echo "<script>alert('Report Updated')</script>";
-          echo "else updated";
+          // echo "else updated";
          }else{
            echo $conn->error;
          }
