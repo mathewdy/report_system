@@ -321,14 +321,14 @@ if (isset($_POST['submit'])) {
   // $brgy = mysqli_escape_string($conn, $brgy);
 
 
-
+  print_r($_POST);
 
   $time = date("h:i:s", time());
   $date = date('y-m-d');
 
   // $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
   // $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
-
+  $today = date("Y-m-d H:i:s");
 
   $date_new_start = new DateTime($date . " ".  $time);
   $date_new_end = new DateTime($date_end);
@@ -344,9 +344,7 @@ if (isset($_POST['submit'])) {
     $duration = "Daily";
   } elseif ($days == 7) {
     $duration = "Weekly";
-  } elseif (
-    $days > 2 || $days <= 14
-  ) {
+  } elseif ($days > 2 || $days <= 14) {
     $duration = "Bi-weekly";
   } elseif ($days == 30) {
     $duration = "Monthly";
@@ -358,6 +356,7 @@ if (isset($_POST['submit'])) {
     $duration = "Annualy";
   }
 
+  
   $check_opr = "SELECT * FROM reports WHERE opr = '$opr' and to_user = '$from'";
   $query_check_opr = mysqli_query($conn, $check_opr);
   if(mysqli_num_rows($query_check_opr) > 0){
@@ -369,14 +368,15 @@ if (isset($_POST['submit'])) {
 
     if($date_submitted > $date_start){
       // admin
-      $acknowledge_report = "UPDATE reports SET notif_status = '1', status = '4', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '1' and opr = '$opr'";
+      $acknowledge_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '1' and opr = '$opr'";
       $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
       if($run_acknowledge_report == true){
         // user
-        $run_report = "UPDATE reports SET notif_status = '1', status = '4', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '$from' and opr = '$opr'";
+        $run_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '$from' and opr = '$opr'";
         $query_run_report = mysqli_query($conn,$run_report);
         if($query_run_report == true){
-          echo "<script>alert('Report Updated')</script>";
+          // echo "<script>alert('Report Updated')</script>";
+          echo "if updated";
         }else{
           echo $conn->error;
         }
@@ -385,14 +385,15 @@ if (isset($_POST['submit'])) {
       }
     }else{
        // admin
-       $late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '1' and opr = '$opr'";
+       $late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '1' and opr = '$opr'";
        $run_late_report = mysqli_query($conn,$late_report);
        if($run_late_report == true){
          // user
-         $user_late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days' WHERE to_user = '$from' and opr = '$opr'";
+         $user_late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days',date_time_acknowledge ='$today' WHERE to_user = '$from' and opr = '$opr'";
          $query_late_report = mysqli_query($conn,$user_late_report);
          if($query_late_report == true){
-           echo "<script>alert('Report Updated')</script>";
+          //  echo "<script>alert('Report Updated')</script>";
+          echo "else updated";
          }else{
            echo $conn->error;
          }
