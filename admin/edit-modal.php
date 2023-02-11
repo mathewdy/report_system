@@ -14,7 +14,7 @@ $run_notes = mysqli_query($conn,$sql_notes);
 if(mysqli_num_rows($run_notes) > 0){
     foreach($run_notes as $row_notes){
 ?>
-    <input type="hidden" name="hidden" id="hidden">
+    <input type="hidden" name="hidden" id="hidden" value="<?= $note_id; ?>">
     <div class="mb-3">
     <label for="message-text" class="col-form-label">Contents:</label>
     <textarea class="form-control" id="tiny" name="tiny" placeholder="" > <?= $row_notes['content']?></textarea>

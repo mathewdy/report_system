@@ -97,11 +97,96 @@ include('../connection.php');
             </div>
         </nav>
         <main class="content">
-            <div class="container-fluid pt-5 ">
+            <div class="container-fluid pt-1">
                 <div class="row d-flex justify-content-center align-items-center">
-                    <div class="col-lg-12">
-                        <div class="row">
-                        </div>   
+                    <div class="col-lg-5">
+                        <div class="card p-5" style="border-radius: 0; background: rgba(255,255,255, 0.4);">
+                        <p class="h3 text-center mb-4">Create New Account</p>
+                            <hr class="featurette-divider">
+                            <form action="register.php" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                    <!-- <img class="card-img-top avatar" src="../src/img/avatar.svg" alt=""> -->
+
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">First Name</label>
+                                                <input type="text" class="form-control form-control-sm" name="first_name">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Middle Name</label>
+                                                <input type="text" class="form-control form-control-sm" name="middle_name">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Last Name</label>
+                                                <input type="text" class="form-control form-control-sm" name="last_name">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Date of Birth</label>
+                                                <input type="date" class="form-control form-control-sm" max="2002-12-31" name="date_of_birth" id="">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="">Barangay</label>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                            <select name="barangay" id=""  class="form-select py-1 mb-3">
+                                    <option value="" selected disabled  class="form-select">-Barangay-</option>
+                                    <?php
+
+                                        $query_barangay = "SELECT * FROM barangay";
+                                        $run_barangay = mysqli_query($conn,$query_barangay);
+
+                                        if(mysqli_num_rows($run_barangay) > 0){
+                                            foreach($run_barangay as $rows){
+                                                ?>
+
+                                                        <option value="<?php echo $rows['brgy']?>"><?php echo $rows['brgy']?></option>
+
+                                                <?php
+                                            }
+                                        }
+                                        
+
+                                    ?>
+                                    </select>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Image</label>
+                                                <input type="file" class="form-control form-control-sm" name="image" id="">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Email</label>
+                                                <input type="email" class="form-control form-control-sm" name="email">
+                                            </div>
+                                            <div class="col-lg-12 mb-3">
+                                                <label for="">Password</label>
+                                                <input type="password" class="form-control form-control-sm" name="password" id="">
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-12 d-flex flex-row justify-content-between align-items-end">
+                                    <span>
+                                        <label for=""></label>
+                                        <select name="user_type" id=" " class="form-select">
+                                                <option value="" selected disabled  class="form-select">-User Type-</option>
+                                                <option value="1">DILG User</option>
+                                                <option value="2">Barangay User</option>
+                                        </select>
+                                    </span>
+                                    <span>
+                                        <input class="btn btn-md mb-1 btn-primary w-100" style="background: #7694D4; outline:#7694D4; border: #7694D4; border-radius: 0;" type="submit" name="register" value="Register">
+
+                                    </span>
+                                    <!-- <a class="text-decoration-none" href="login.php">Log In</a> -->
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

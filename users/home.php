@@ -178,11 +178,6 @@ $barangay = $_SESSION['barangay'];
 						<div class="col-xl-12 col-xxl-12 d-flex">
 							<div class="w-100">
 								<div class="row">
-									<div class="col-lg-12">
-										<div class="card p-3">
-											<div id="calendar"></div>
-										</div>
-									</div>
 									<!-- NOTES -->
 									<?php
 
@@ -372,28 +367,6 @@ $barangay = $_SESSION['barangay'];
 			});
 		});
 	});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-<?php
-	$query = $conn->query("SELECT * FROM events ORDER BY id");
-?>
-<script>
-$(document).ready(function() {
-    var calendar = $('#calendar').fullCalendar({
-		editable:true,
-		header:{
-		left:'prev,next today',
-		center:'title',
-		right:'month,agendaWeek,agendaDay'
-		},
-		events: [<?php while ($row = $query ->fetch_object()) { ?>{ id : '<?php echo $row->id; ?>', title : '<?php echo $row->title; ?>', start : '<?php echo $row->start_event; ?>', end : '<?php echo $row->end_event; ?>', }, <?php } ?>],
-		selectable:true,
-		selectHelper:true,
-		
-    });
-});
 </script>
 </body>
 
