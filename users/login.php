@@ -139,18 +139,18 @@ if (isset($_POST['login'])) {
         if (mysqli_num_rows($result) > 0) {
             foreach ($result as $row) {
 
-                if($row['email_status'] == '0'){
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Please Verify your email address to login ',
-                        })
-                        </script>
-                        ";
-                        exit();
-                }
+                // if($row['email_status'] == '0'){
+                //     echo "
+                //         <script>
+                //         Swal.fire({
+                //             icon: 'error',
+                //             title: 'Oops...',
+                //             text: 'Please Verify your email address to login ',
+                //         })
+                //         </script>
+                //         ";
+                //         exit();
+                // }
 
     
                 if ($row['user_type'] == '1') {

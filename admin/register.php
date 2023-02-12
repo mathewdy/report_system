@@ -3,53 +3,53 @@ include('../connection.php');
 date_default_timezone_set('Asia/Manila');
 session_start();
 ob_start();
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+// //Import PHPMailer classes into the global namespace
+// //These must be at the top of your script, not inside a function
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
-require '../vendor/autoload.php';
-require ("PHPMailer.php");
-require("SMTP.php");
-require("Exception.php");
-function sendMail($email,$first_name,$last_name,$vkey){
+// //Load Composer's autoloader
+// require '../vendor/autoload.php';
+// require ("PHPMailer.php");
+// require("SMTP.php");
+// require("Exception.php");
+// function sendMail($email,$first_name,$last_name,$vkey){
               
-    $mail = new PHPMailer(true);
+//     $mail = new PHPMailer(true);
 
-    try {
-        //Server settings
+//     try {
+//         //Server settings
     
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'calamba.ccc@gmail.com';                     //SMTP username
-        $mail->Password   = 'buydgqnmohkheass';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+//         $mail->isSMTP();                                            //Send using SMTP
+//         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+//         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+//         $mail->Username   = 'calamba.ccc@gmail.com';                     //SMTP username
+//         $mail->Password   = 'buydgqnmohkheass';                               //SMTP password
+//         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+//         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
-        //Recipients
-        $mail->setFrom('calamba.ccc@gmail.com', 'dilg-ccc');
-        $mail->addAddress($email);     //Add a recipient
-        //Content
-        $mail->isHTML(true);
+//         //Recipients
+//         $mail->setFrom('calamba.ccc@gmail.com', 'dilg-ccc');
+//         $mail->addAddress($email);     //Add a recipient
+//         //Content
+//         $mail->isHTML(true);
         
-        //Set email format to HTML
-        $mail->Subject = 'Email Verification';
-        $mail->Body = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
-        <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
-        </span>";
+//         //Set email format to HTML
+//         $mail->Subject = 'Email Verification';
+//         $mail->Body = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
+//         <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
+//         </span>";
     
     
-        $mail->send();
-        // echo "sent";
-        return true;
-    } catch (Exception $e) {
-        return false;
-    }
+//         $mail->send();
+//         // echo "sent";
+//         return true;
+//     } catch (Exception $e) {
+//         return false;
+//     }
     
-}
+// }
 if (isset($_POST['register'])) {
 
     //year month date
@@ -78,6 +78,7 @@ if (isset($_POST['register'])) {
     $date_of_birth = date('Y-m-d', strtotime($_POST['date_of_birth']));
 
     $vkey = md5(rand());
+    $vkey = mysqli_escape_string($conn,$vkey);
 
 
     $barangay = ucfirst($_POST['barangay']);
@@ -89,6 +90,7 @@ if (isset($_POST['register'])) {
 
     if (mysqli_num_rows($run_validation) > 0) {
         echo "<script>alert('Email already taken') </script>";
+        echo "<script>window.location.href='login.php'</script>";
         exit();
     }
 
@@ -120,12 +122,13 @@ if (isset($_POST['register'])) {
 
             $query_registration = "INSERT INTO users (user_type,email,password,first_name,middle_name,last_name,date_of_birth,barangay,v_token,image,date_time_created,date_time_updated) 
             VALUES ('$user_type','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$barangay', '$vkey', '$image', '$date $time' , '$date $time')";
-            $run_registration = mysqli_query($conn, $query_registration) && sendMail($email,$first_name,$last_name,$vkey,$user_type);
+            $run_registration = mysqli_query($conn, $query_registration);
             move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
 
                 if ($run_registration) {
                     // sendMail($email,$first_name,$last_name,$vkey);
-                    echo "<script>window.location.href='index.php?registered' </script>";
+                    echo  "<script>alert('Account Created')</script>";
+                    echo "<script>window.location.href='login.php?register'; </script>";
                         // echo "<script></script>";
                     //redirection sa login page
                 } else {
