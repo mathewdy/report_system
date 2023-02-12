@@ -105,7 +105,7 @@ $barangay = $_SESSION['barangay'];
           <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
 								$num_of_notifs = mysqli_num_rows($run_number_notif);
 

@@ -184,6 +184,8 @@ $registration = "registration.php";
         $rows = mysqli_fetch_array($run_query_data);
         ?>
 
+                    
+        <form action="" method="POST" enctype="multipart/form-data">
           <?php
 
           $query_acknowledge = "SELECT status FROM reports WHERE report_id = '$report_id'";
@@ -198,7 +200,7 @@ $registration = "registration.php";
                      echo "<span class='text-success'>Acknowledged </span>";
                   }else{
                       ?>
-
+                        
                         <button type="submit" class="btn btn-primary" name="submit">
                           Acknowledge
                         </button>
@@ -216,7 +218,6 @@ $registration = "registration.php";
 
           ?>
 
-        <form action="" method="POST" enctype="multipart/form-data">
 
           <?php
           $status = $rows['status'];

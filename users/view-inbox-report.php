@@ -116,6 +116,9 @@ $email = $_SESSION['email'];
 											$query_report = "SELECT * FROM sent WHERE report_id = '$report_id'";
 											$run_report_id = mysqli_query($conn, $query_report);
 
+											$update_notif = "UPDATE reports SET notif_status = '1' WHERE report_id = '$report_id'";
+											$query_update_notif = mysqli_query($conn,$update_notif);
+
 											if (mysqli_num_rows($run_report_id) > 0) {
 												foreach ($run_report_id as $row) {
 													

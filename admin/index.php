@@ -74,11 +74,11 @@ $registration = "registration.php";
               <i class="align-middle" data-feather="award"></i> <span class="align-middle">Ranking</span>
             </a>
 					</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="register.php">
               <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">New Account</span>
             </a>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</nav>
@@ -94,7 +94,7 @@ $registration = "registration.php";
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								  $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1' ";
+								  $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1'  AND notif_status = '0'";
                                   // WHERE to_user = '1'
                                   $run_notification_num = mysqli_query($conn,$query_notification_num);
                                   $num_of_notifs = mysqli_num_rows($run_notification_num);
