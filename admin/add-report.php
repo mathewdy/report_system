@@ -475,24 +475,28 @@ if (isset($_POST['send'])) {
 
 
 
-
-
-  if ($days == 1 || $days == 0) {
-    $duration = "Daily";
-  } elseif ($days == 7) {
-    $duration = "Weekly";
-  } elseif ($days > 2 || $days <= 14) {
-    $duration = "Bi-weekly";
-  } elseif ($days == 30) {
-    $duration = "Monthly";
-  } elseif ($days == 90) {
-    $duration = "Quarterly";
-  } elseif ($days >= 180) {
-    $duration = "Semestral";
-  } elseif ($days == 365) {
-    $duration = "Annualy";
+  switch ($days) {
+    case "7":
+      $duration = "Weekly";
+      break;
+    case "14":
+      $duration = "Bi-Weekly";
+      break;
+    case "30":
+      $duration = "Monthly";
+      break;
+    case "90":
+      $duration = "Quarterly";
+      break;
+    case "180":
+      $duration = "Semestral";
+      break;
+    case "365":
+      $duration = "Annually";
+      break;
+    default:
+      $duration = "Daily";
   }
-
 
 
 
