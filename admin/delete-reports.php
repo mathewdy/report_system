@@ -8,22 +8,22 @@ include('session.php');
 
 if (isset($_GET['rid'])) {
     // Store the cipher method
-    $ciphering = "AES-128-CTR";
-    $options = 0;
-    // Non-NULL Initialization Vector for decryption
-    $decryption_iv = '1234567891011121';
+    // $ciphering = "AES-128-CTR";
+    // $options = 0;
+    // // Non-NULL Initialization Vector for decryption
+    // $decryption_iv = '1234567891011121';
 
-    // Store the decryption key
-    $decryption_key = "TeamAgnat";
+    // // Store the decryption key
+    // $decryption_key = "TeamAgnat";
 
-    // Use openssl_decrypt() function to decrypt the data
-    $report_id = openssl_decrypt(
-        $_GET['rid'],
-        $ciphering,
-        $decryption_key,
-        $options,
-        $decryption_iv
-    );
+    // // Use openssl_decrypt() function to decrypt the data
+    // $report_id = openssl_decrypt(
+    //     $_GET['rid'],
+    //     $ciphering,
+    //     $decryption_key,
+    //     $options,
+    //     $decryption_iv
+    // );
     // foreach ($_GET as $encrypting_lrn => $encrypt_lrn){
     //   $decrypt_lrn = $_GET[$encrypting_lrn] = base64_decode(urldecode($encrypt_lrn));
     //   $decrypted_lrn = ((($decrypt_lrn*987654)/56789)/12345678911);

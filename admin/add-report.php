@@ -117,9 +117,9 @@ $registration = "registration.php";
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
 								  $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1' AND notif_status = '0'";
-                                  // WHERE to_user = '1'
-                                  $run_notification_num = mysqli_query($conn,$query_notification_num);
-                                  $num_of_notifs = mysqli_num_rows($run_notification_num);
+                  // WHERE to_user = '1'
+                  $run_notification_num = mysqli_query($conn,$query_notification_num);
+                  $num_of_notifs = mysqli_num_rows($run_notification_num);
 
 							?>
 								<div class="position-relative">
@@ -333,7 +333,7 @@ channel.bind('my-event', function(data) {
             success: function(res) {
               // response(res)
               var usr = $.map(res, function(name) {
-                return {
+                return {  
                   label: name,
                   value: name
                 }

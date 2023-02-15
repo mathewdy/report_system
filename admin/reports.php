@@ -108,7 +108,7 @@ $registration = "registration.php";
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								  $query_notification_num = "SELECT * FROM `reports` WHERE to_user = '1' AND notif_status = '0' ";
+								  $query_notification_num = "SELECT * FROM reports  WHERE to_user = '1' AND notif_status = '0' ORDER BY report_id DESC ";
                                   // WHERE to_user = '1'
                                   $run_notification_num = mysqli_query($conn,$query_notification_num);
                                   $num_of_notifs = mysqli_num_rows($run_notification_num);
@@ -245,61 +245,37 @@ $registration = "registration.php";
                                                     $run = mysqli_query($conn, $sql);
 
                                                     if (mysqli_num_rows($run) > 0) {
-                                                    $count = 0;
+														$no = 0;
                                                     foreach ($run as $row) {
                                                         $report_id = $row['report_id'];
                                                         // Store the cipher method
-                                                        $ciphering = "AES-128-CTR";
+														$no++;
 
-                                                        // Use OpenSSl Encryption method
-                                                        $iv_length = openssl_cipher_iv_length($ciphering);
-                                                        $options = 0;
-
-                                                        // Non-NULL Initialization Vector for encryption
-                                                        $encryption_iv = '1234567891011121';
-
-                                                        // Store the encryption key
-                                                        $encryption_key = "TeamAgnat";
-
-                                                        // Use openssl_encrypt() function to encrypt the data
-                                                        $encryption = openssl_encrypt(
-                                                        $report_id,
-                                                        $ciphering,
-                                                        $encryption_key,
-                                                        $options,
-                                                        $encryption_iv
-                                                        );
-                                                        //   $encrypted_data = (($lrn*12345678911*56789)/987654);
-                                                        $view_link = "view-reports.php?rid=" . $encryption;
-                                                        $delete_link = "delete-reports.php?rid=" . $encryption;
-                                                        $count++;
-                                                    ?>
-
-                                                        <tr class="clickable-row" data-href="<?php echo $view_link ?>" style="cursor:pointer;">
-                                                        <td><?php echo $count; ?></td>
-                                                        <td><?php echo $row['from_user'] ?></td>
-                                                        <td><?php echo $row['subject'] ?></td>
-                                                        <?php if ($row['status'] == 1) {
-                                                            echo "<td> <p class='text-success'> Complete </p> </td>";
-                                                        } elseif ($row['status'] == 2) {
-                                                            echo "<td> <p class='text-danger'> No Submission </p> </td>";
-                                                        } elseif ($row['status'] == 3) {
-                                                            echo "<td><p class='text-warning'> Incomplete </p> </td>";
-                                                        } elseif ($row['status'] == 4) {
-                                                            echo "<td> <p class='text-primary'> Late </p> </td>";
-                                                        } else {
-                                                            echo "<td> <p class='text-danger'> No Submssion </p>  </td>";
-                                                        }  ?>
-														<td><?php echo $row['duration']?></td>
-                                                        <td>
-                                                            <a class='text-danger text-decoration-none' href="<?php echo $delete_link ?>" onClick="return confirm('Delete This report?')">Delete</a>
-                                                        </td>
+                                                        ?>
+														<tr class="clickable-row" data-href="view-reports.php?report_id=<?php echo $row['report_id']?>" style="cursor:pointer;">
+															<td><?php echo $no; ?></td>
+															<td><?php echo $row['from_user'] ?></td>
+															<td><?php echo $row['subject'] ?></td>
+															<?php if ($row['status'] == 1) {
+																echo "<td> <p class='text-success'> Complete </p> </td>";
+															} elseif ($row['status'] == 2) {
+																echo "<td> <p class='text-danger'> No Submission </p> </td>";
+															} elseif ($row['status'] == 3) {
+																echo "<td><p class='text-warning'> Incomplete </p> </td>";
+															} elseif ($row['status'] == 4) {
+																echo "<td> <p class='text-primary'> Late </p> </td>";
+															} else {
+																echo "<td> <p class='text-danger'> No Submssion </p>  </td>";
+															}  ?>
+															<td><?php echo $row['duration']?></td>
+															<td>
+																<a class='text-danger text-decoration-none' href="delete-reports.php?report_id=<?php echo $row['report_id']?>" onClick="return confirm('Delete This report?')">Delete</a>
+															</td>
                                                         </tr>
 
-
-
-                                                    <?php
-                                                    }
+														<?php
+                                           
+                                                    	}
                                                     }
 
                                                     ?>

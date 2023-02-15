@@ -177,119 +177,93 @@ $registration = "registration.php";
         </div>
       </nav>
       <div class="card shadow p-5" style="border: none; min-height: 35rem;">
-        <!-- query of db -->
-        <?php
-        $query_data = "SELECT * FROM `reports` WHERE report_id = '$report_id'";
-        $run_query_data = mysqli_query($conn, $query_data);
-        $rows = mysqli_fetch_array($run_query_data);
-        ?>
 
-                    
-        <form action="" method="POST" enctype="multipart/form-data">
-          <?php
+      <?php
 
-          $query_acknowledge = "SELECT status FROM reports WHERE report_id = '$report_id'";
-          $sql_ack = mysqli_query($conn,$query_acknowledge);
-          if(mysqli_num_rows($sql_ack) > 0){
-            foreach($sql_ack as $row_ack){
+
+        if(isset($_GET['report_id'])){
+
+          $report_id = $_GET['report_id'];
+
+          $sql_report = "SELECT * FROM reports WHERE report_id = '$report_id'";
+          $run_report = mysqli_query($conn,$sql_report);
+
+          if(mysqli_num_rows($run_report) > 0){
+            foreach($run_report as $row){
               ?>
 
-                <?php
+                  <form action="" method="POST" enctype="multipart/form-data">
 
-                  if($row_ack['status'] == '1'){
-                     echo "<span class='text-success'>Acknowledged </span>";
-                  }else{
-                      ?>
-                        
-                        <button type="submit" class="btn btn-primary" name="submit">
-                          Acknowledge
-                        </button>
+                    <label for="">Report ID: <?php echo $row['report_id']?> </label>
+                    <label for="">Date: <?php echo $row['date_created']?></label>
+                    <label for="">To: <?php echo $row['to_user']?></label>
+                    <label for="">From: <?php echo $row['from_user']?></label>
+                    <label for="">Subject: <?php echo $row['subject']?></label>
+                    <label for="">OPR: <?php echo $row['opr']?></label>
+                    <textarea name="message"  id="tiny">
+                      <?php echo $row['message']?> 
+                    </textarea>
 
-                      <?php
-                  }
+                    <?php
 
-                ?>
-                
-                </span>
 
+                      if($row['status'] == '1'){
+                        echo "<span>Acknowledged </span>";
+                      }else{
+                        ?>
+                          <input type="submit" name="submit" value="Acknowledge">
+                        <?php
+                      }
+
+                    ?>
+
+                    
+                  </form>
               <?php
+
             }
+
+
+                
+            }
+            $sql_file = "SELECT * FROM files WHERE report_id = '$report_id'";
+            $run_file = mysqli_query($conn,$sql_file);
+            if(mysqli_num_rows($run_file) > 0){
+              foreach($run_file as $row_file){
+                ?>
+                    <small>Files attached:</small>
+                    <a href="../users/files/<?php echo $row_file['file_name'];?>" download><?php echo $row_file['file_name'];?></a>
+
+                <?php
+              }
+
           }
-
           ?>
 
-
-          <?php
-          $status = $rows['status'];
-
-          if ($status == 3 || $status == 2) {
-          ?>
-            <!-- burahin mo tong comment pag ngawa mo na  -->
-
-            <!-- <input type="file" name="files[]" class="form-control" id="" accept="image/jpeg,image/gif,image/png,application/pdf,image" multiple disable> -->
-
-          <?php
-          }
-          ?>
-          <?php 
-            $date_start =  date('F d, Y h:i:s A', strtotime($rows['date_start']));
-            $date_end = date('F d, Y h:i:s A', strtotime($rows['date_end']));
-            $date_submitted = strtotime($rows['date_start']);
-            echo "Date sent:  " . $date_start;
-          ?>
-                                                                    <br>
-          <label for="">From:</label>
-          <input type="text" name="from" class="switch form-control" value="<?php if (empty($rows['from_user'])) {
-                                                                              echo "";
-                                                                            } else {
-                                                                              echo $rows['from_user'];
-                                                                            } ?> " readonly>
-          <br>
-          <label for="">To:</label>
-          <input type="text" name="to" class="switch form-control" value="<?php if($rows['to_user'] == '1'){
-            echo "DILG Admin";
-          } ?>" readonly>
-          <br>
           
-          <label for="">Subject:</label>
-          <input type="text" name="subject" class="switch form-control" value="<?php if (empty($rows['subject'])) {
-                                                                                  echo "";
-                                                                                } else {
-                                                                                  echo $rows['subject'];
-                                                                                } ?>" readonly>
+          <span class="d-flex justify-content-end">
 
-          <br>
-          <label for="">OPR</label>
-          <input type="text" name="opr" class="switch form-control" value="<?php if (empty($rows['opr'])) {
-                                                                              echo "";
-                                                                            } else {
-                                                                              echo $rows['opr'];
-                                                                            } ?> " readonly>
+          <?php
+        }
 
-          <textarea id="tiny" name="statement" class="switch" readonly> <?php if (empty($rows['message'])) {
-                                                                          echo "";
-                                                                        } else {
-                                                                          echo $rows['message'];
-                                                                        }  ?>   </textarea readonly>
-                                <small>Files attached:</small>
-                                                                        <?php
-																$get_files = "SELECT * FROM files WHERE report_id = '$report_id'";
-																$query_files = mysqli_query($conn, $get_files);
-																if(mysqli_num_rows($query_files) > 0){
-																	while($rows = mysqli_fetch_array($query_files)){
-																		?>
-																	<a href="../users/files/<?php echo $rows['file_name'];?>" download><?php echo $rows['file_name'];?></a>
-																		<?php
-																	}
-																}else{
-																	echo "NO FILES ATTACHED";
-																}
-																?>
-            <span class="d-flex justify-content-end">
+      ?>
 
+
+
+
+
+
+
+
+
+
+        <!-- query of db -->
+        
+                
+
+   
            
             
-        </form>
       </div>
     </div>
   </main>
