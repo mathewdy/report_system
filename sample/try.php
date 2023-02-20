@@ -1,13 +1,6 @@
-<!DOCTYPE html>
+
 <?php include('../connection.php');?>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
  <?php
 //  $startTimeStamp = strtotime("2011-07-01");
 //  $endTimeStamp = strtotime("2011-07-17");
@@ -32,13 +25,13 @@
 //  }
 
 
-    //  date_default_timezone_set('Asia/Manila');
-    //  $date_time_created = date('Y-m-d');
-    //  $date = 
+     date_default_timezone_set('Asia/Manila');
+     $date_time_created = date('Y-m-d');
+     $date = 
 
 
-$date_start = date('Y-m-d h:i', strtotime("2011-07-01"));
-$date_end = date('Y-m-d h:i', strtotime("2011-10-17"));
+$date_start = date('Y-m-d h:i', strtotime("2023-07-01"));
+$date_end = date('Y-m-d h:i', strtotime("2023-07-17"));
 
   $date_new_start = new DateTime($date_start);
   $date_new_end = new DateTime($date_end);
@@ -46,26 +39,40 @@ $date_end = date('Y-m-d h:i', strtotime("2011-10-17"));
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   echo $days = intval($diff);
 
-  // print_r($date_start);
-  // print_r($date_end);
+  print_r($date_start) . "<br>";
 
+  print_r($date_end);
 
+  $days = 157;
 
   if ($days == 1 || $days == 0) {
     echo $duration = "Daily";
-  } elseif ($days == 2 || $days <= 7) {
+  } elseif ($days >= 2 && $days <= 7) {
    echo $duration = "Weekly";
-  } elseif ($days == 8 && $days <= 14) {
+  } elseif ($days >= 8 && $days <= 14) {
    echo $duration = "Bi-weekly";
-  } elseif ($days == 30) {
-   echo $duration = "Monthly";
-  } elseif ($days == 90) {
+  } elseif ($days >= 15 && $days <= 29) {
+   echo $duration = "Bi-Weekly";
+  }elseif($days >= 30 && $days <= 31){
+    echo $duration = "Monthly";
+  }elseif($days >= 32 && $days <= 89){
+    echo $duration = 'Monthly';
+  }elseif ($days >= 90 && $days <= 179) {
    echo $duration = "Quarterly";
-  } elseif ($days >= 180) {
+  } elseif ($days >= 180 && $days <= 364) {
    echo $duration = "Semestral";
   } elseif ($days == 365) {
    echo $duration = "Annualy";
   }
+
+  // $sql = "INSERT INTO sample (duration) VALUES ('$duration') ";
+  // $run = mysqli_query($conn,$sql);
+
+  // if($run === TRUE){
+  //   echo "inserted";
+  // }else{
+  //   echo "error";
+  // }
  
  ?>
 </body>

@@ -78,7 +78,7 @@ $barangay = $_SESSION['barangay'];
 					<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
 								$num_of_notifs = mysqli_num_rows($run_number_notif);
 
@@ -96,7 +96,7 @@ $barangay = $_SESSION['barangay'];
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){
@@ -201,7 +201,7 @@ $barangay = $_SESSION['barangay'];
 												<input type="email" class="form-control" name="email" value="<?php echo $row['email']?>">
 												<br>
 												<label for="">Password</label>					
-												<input type="password" class="form-control" name="password" id="" value="<?php echo $row['password']?>">
+												<input type="password" class="form-control" name="password" id="" value="">
 												<br>
 												<label for="">First Name</label>											
 												<input type="text" class="form-control" name="first_name" value="<?php echo $row['first_name']?>">

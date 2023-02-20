@@ -105,7 +105,7 @@ $barangay = $_SESSION['barangay'];
           <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '1' ";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
 								$num_of_notifs = mysqli_num_rows($run_number_notif);
 
@@ -123,7 +123,7 @@ $barangay = $_SESSION['barangay'];
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '1' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){
@@ -470,27 +470,24 @@ if (isset($_POST['send'])) {
   $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
   $days = intval($diff);
 
-  switch ($days) {
-    case $days >= '7' && $days <= '13':
-      $duration= "Weekly";
-      break;
-    case $days >= '14' && $days <= '30':
-      $duration= "Bi-Weekly";
-      break;
-    case $days >= "30" && $days < "90":
-      $duration= "Monthly";
-      break;
-    case $days >= "90" && $days < "180":
-      $duration= "Quarterly";
-      break;
-    case $days >= "180" && $days < "365":
-      $duration= "Semestral";
-      break;
-    case $days == "365":
-      $duration= "Annually";
-      break;
-    default:
-      echo "Daily";
+  if ($days == 1 || $days == 0) {
+    echo $duration = "Daily";
+  } elseif ($days >= 2 && $days <= 7) {
+   echo $duration = "Weekly";
+  } elseif ($days >= 8 && $days <= 14) {
+   echo $duration = "Bi-weekly";
+  } elseif ($days >= 15 && $days <= 29) {
+   echo $duration = "Bi-Weekly";
+  }elseif($days >= 30 && $days <= 31){
+    echo $duration = "Monthly";
+  }elseif($days >= 32 && $days <= 89){
+    echo $duration = 'Monthly';
+  }elseif ($days >= 90 && $days <= 179) {
+   echo $duration = "Quarterly";
+  } elseif ($days >= 180 && $days <= 364) {
+   echo $duration = "Semestral";
+  } elseif ($days == 365) {
+   echo $duration = "Annualy";
   }
 
 
@@ -518,7 +515,7 @@ if (isset($_POST['send'])) {
 
         $report_id = "RID" . $get_string;
 
-        //insert a query
+        //insert a query  
 
         for($i=0;$i<count($filename);$i++){
           $f_name = $_FILES['pdf_file']['name'][$i];
@@ -533,7 +530,7 @@ if (isset($_POST['send'])) {
           $insert_report = "INSERT INTO `reports`(`report_id`,`to_user`, `from_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
           VALUES ('$report_id','1','$barangay','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);
-  
+          
   
   
           if ($run_insert_report) {

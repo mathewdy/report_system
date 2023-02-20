@@ -56,11 +56,11 @@ $barangay = $_SESSION['barangay'];
                             <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
                         </a>
 					</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="add-report.php">
                             <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
                         </a>
-					</li>
+					</li> -->
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sent-reports.php">
                             <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
@@ -80,7 +80,7 @@ $barangay = $_SESSION['barangay'];
 					<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' ";
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0'  ";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
 								$num_of_notifs = mysqli_num_rows($run_number_notif);
 
@@ -223,7 +223,7 @@ $barangay = $_SESSION['barangay'];
 													?>
 													</td>
 													<td>
-													<a href="view-inbox-report.php?report_id=<?php echo $row['report_id']?>">View Report</a>
+													<a href="view-inbox-report.php?to_user=<?php echo $row['to_user']?>&report_id=<?php echo $row['report_id']?>">View Report</a>
 													</td>
 												</tr>
 												<?php

@@ -83,16 +83,21 @@ $registration = "registration.php";
                             <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Reports</span>
                         </a>
 					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ranking.php">
+              <i class="align-middle" data-feather="award"></i> <span class="align-middle">Ranking</span>
+            </a>
+					</li>
 					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="ranking.php">
               <i class="align-middle" data-feather="award"></i> <span class="align-middle">Ranking</span>
             </a> -->
 					</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="register.php">
               <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">New Account</span>
             </a>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</nav>
@@ -125,7 +130,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0'  ";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
@@ -241,18 +246,18 @@ $registration = "registration.php";
                                                 <tbody>
                                                     <?php
 
-                                                    $sql = "SELECT * FROM reports WHERE to_user LIKE '1'";
+                                                    $sql = "SELECT * FROM reports WHERE to_user = '1'";
                                                     $run = mysqli_query($conn, $sql);
 
-                                                    if (mysqli_num_rows($run) > 0) {
+                                                    if(mysqli_num_rows($run) > 0){
 														$no = 0;
-                                                    foreach ($run as $row) {
+                                                    	foreach ($run as $row) {
                                                         $report_id = $row['report_id'];
                                                         // Store the cipher method
 														$no++;
 
                                                         ?>
-														<tr class="clickable-row" data-href="view-reports.php?report_id=<?php echo $row['report_id']?>" style="cursor:pointer;">
+														<tr class="clickable-row" data-href="view-reports.php?report_id=<?php echo $row['report_id']?>&from_user=<?php echo $row['from_user']?>" style="cursor:pointer;">
 															<td><?php echo $no; ?></td>
 															<td><?php echo $row['from_user'] ?></td>
 															<td><?php echo $row['subject'] ?></td>

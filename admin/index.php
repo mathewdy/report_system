@@ -111,7 +111,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0' ";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){

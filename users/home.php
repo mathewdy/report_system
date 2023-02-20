@@ -54,11 +54,11 @@ $barangay = $_SESSION['barangay'];
                             <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Inbox</span>
                         </a>
 					</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="add-report.php">
                             <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
                         </a>
-					</li>
+					</li> -->
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sent-reports.php">
                             <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
@@ -79,7 +79,7 @@ $barangay = $_SESSION['barangay'];
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
+								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0'  ";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
 								$num_of_notifs = mysqli_num_rows($run_number_notif);
 
@@ -97,7 +97,7 @@ $barangay = $_SESSION['barangay'];
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' ";
+										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){

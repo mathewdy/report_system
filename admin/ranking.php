@@ -216,13 +216,23 @@ $registration = "registration.php";
 
                                                     // $sql = "SELECT *, barangay.brgy, reports.to_user, COUNT(*) as total_report FROM reports
                                                     // LEFT JOIN barangay on reports.to_user = barangay.brgy ORDER BY total_report ASC";
-                                                    $sql = "SELECT *, COUNT(reports.to_user) as total_report FROM barangay
-                                                    LEFT JOIN reports on barangay.brgy = reports.to_user 
-                                                    WHERE reports.status = '1' OR reports.status = '4'";
+													// SELECT *, COUNT(reports.to_user) as total_report FROM barangay
+                                                    // LEFT JOIN reports on barangay.brgy = reports.to_user 
+                                                    // WHERE reports.status = '1' OR reports.status = '4'
+													// SELECT COUNT(report_or_reply), from_user FROM reports WHERE report_or_reply = '1'
+
+													// SELECT COUNT(report_or_reply) AS number_reports, from_user AS barangay
+													// FROM reports
+													// GROUP BY from_user
+													// HAVING COUNT(report_or_reply)
+                                                    $sql = "SELECT COUNT(report_or_reply) AS number_reports, from_user AS barangay
+													FROM reports
+													GROUP BY from_user
+													HAVING COUNT(report_or_reply)";
                                                     $run = mysqli_query($conn, $sql);
 
                                                     if (mysqli_num_rows($run) > 0) {
-                                                        $count = 0;
+                                                        $count = 1;
                                                         foreach ($run as $row) {
                                                         // $total_report = count($row['to_user']);
 
@@ -230,9 +240,24 @@ $registration = "registration.php";
                                                     ?>
 
                                                             <tr>
-                                                                <td><?php echo $count; ?></td>
-                                                                <td><?php echo $row['brgy'] ?></td>
-                                                                <td><?php echo $row['total_report']?></td>
+                                                                <td><?php if($count == '1'){
+																	echo "";
+																}else{
+																	echo $cont++;
+																} ?></td>
+                                                                <td>
+																	<?php if($row['barangay'] == '1'){
+																	echo "DILG Admin";
+																	}else{
+																		echo $row['barangay'];
+																	} 
+																?>
+																</td>
+                                                                <td><?php  if($row['number_reports'] == '1'){
+																	echo "";
+																}else{
+																	echo $row['number_reports'];
+																} ?></td>
 
                                                             </tr>
 

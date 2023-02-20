@@ -133,7 +133,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0'";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
@@ -419,6 +419,7 @@ require '../vendor/autoload.php';
 
 if (isset($_POST['send'])) {
 
+
    // pusher to
    $options = array(
     'cluster' => 'ap1',
@@ -472,30 +473,48 @@ if (isset($_POST['send'])) {
   // print_r($date_start);
   // print_r($date_end);
 
-  switch ($days) {
-    case $days >= '7' && $days <= '13':
-      $duration= "Weekly";
-      break;
-    case $days >= '14' && $days <= '30':
-      $duration= "Bi-Weekly";
-      break;
-    case $days >= "30" && $days < "90":
-      $duration= "Monthly";
-      break;
-    case $days >= "90" && $days < "180":
-      $duration= "Quarterly";
-      break;
-    case $days >= "180" && $days < "365":
-      $duration= "Semestral";
-      break;
-    case $days == "365":
-      $duration= "Annually";
-      break;
-    default:
-      echo "Daily";
+  // switch ($days) {
+  //   case $days >= '7' && $days <= '13':
+  //     $duration= "Weekly";
+  //     break;
+  //   case $days >= '14' && $days <= '30':
+  //     $duration= "Bi-Weekly";
+  //     break;
+  //   case $days >= "30" && $days < "90":
+  //     $duration= "Monthly";
+  //     break;
+  //   case $days >= "90" && $days < "180":
+  //     $duration= "Quarterly";
+  //     break;
+  //   case $days >= "180" && $days < "365":
+  //     $duration= "Semestral";
+  //     break;
+  //   case $days == "365":
+  //     $duration= "Annually";
+  //     break;
+  //   default:
+  //     echo "Daily";
+  // }
+
+  if ($days == 1 || $days == 0) {
+    echo $duration = "Daily";
+  } elseif ($days >= 2 && $days <= 7) {
+   echo $duration = "Weekly";
+  } elseif ($days >= 8 && $days <= 14) {
+   echo $duration = "Bi-weekly";
+  } elseif ($days >= 15 && $days <= 29) {
+   echo $duration = "Bi-Weekly";
+  }elseif($days >= 30 && $days <= 31){
+    echo $duration = "Monthly";
+  }elseif($days >= 32 && $days <= 89){
+    echo $duration = 'Monthly';
+  }elseif ($days >= 90 && $days <= 179) {
+   echo $duration = "Quarterly";
+  } elseif ($days >= 180 && $days <= 364) {
+   echo $duration = "Semestral";
+  } elseif ($days == 365) {
+   echo $duration = "Annualy";
   }
-
-
 
 
  //file upload 
@@ -541,15 +560,14 @@ if (isset($_FILES['pdf_file']['name'])) {
         while($rows = mysqli_fetch_array($query_get_users)){
           $emails = $rows['email'];
           $brgy = $rows['barangay'];
-          $insert_report = "INSERT INTO `reports`( `report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-          VALUES ('$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+          $insert_report = "INSERT INTO `reports`( `report_id`,`report_id_2`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+          VALUES ('$report_id','$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);
   
   
-  
           if ($run_insert_report) {
-            $sent_report = "INSERT INTO `sent`(`report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-            VALUES ('$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+            $sent_report = "INSERT INTO `sent`(`report_id`, `report_id_2`,`to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+            VALUES ('$report_id','$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
             $run_sent_report = mysqli_query($conn, $sent_report);
             
   
@@ -575,14 +593,14 @@ if (isset($_FILES['pdf_file']['name'])) {
         $query_get_users = mysqli_query($conn, $sql_get_users);
           while($rows_1 = mysqli_fetch_array($query_get_users)){
             $brgy = $rows_1['barangay'];
-            $insert_report = "INSERT INTO `reports`(`report_id`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-            VALUES ('$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+            $insert_report = "INSERT INTO `reports`(`report_id`,`report_id_2`, `to_user`, `from_user`, `subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+            VALUES ('$report_id','$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
             $run_insert_report = mysqli_query($conn, $insert_report);
       
             if ($run_insert_report) {
       
-              $sent_report = "INSERT INTO `sent`(`report_id`, `to_user`, `from_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
-              VALUES ('$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
+              $sent_report = "INSERT INTO `sent`(`report_id`,`report_id_2`, `to_user`, `from_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
+              VALUES ('$report_id','$report_id','$brgy','1','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
               $run_sent_report = mysqli_query($conn, $sent_report);
       
               if ($run_sent_report) {

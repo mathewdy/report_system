@@ -127,24 +127,24 @@ $registration = "registration.php";
             View Reports
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="<?php echo $draft_link ?>" class="nav-link text-white">
             <i class="bi bi-archive me-2"></i>
             Drafts
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="<?php echo $ranking ?>" class="nav-link text-white">
             <i class="bi bi-award me-2"></i>
             Ranking
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="<?php echo $registration ?>" class="nav-link text-white">
             <i class="bi bi-award me-2"></i>
             Register Account
           </a>
-        </li>
+        </li> -->
       </ul>
       <hr>
       <div class="dropdown">
@@ -181,11 +181,12 @@ $registration = "registration.php";
       <?php
 
 
-        if(isset($_GET['report_id'])){
+        if(isset($_GET['report_id']) && isset($_GET['from_user'])){
 
           $report_id = $_GET['report_id'];
+          $from_user = $_GET['from_user'];
 
-          $sql_report = "SELECT * FROM reports WHERE report_id = '$report_id'";
+          $sql_report = "SELECT * FROM reports WHERE report_id = '$report_id' AND from_user = '$from_user'";
           $run_report = mysqli_query($conn,$sql_report);
 
           if(mysqli_num_rows($run_report) > 0){
@@ -204,10 +205,16 @@ $registration = "registration.php";
                       <?php echo $row['message']?> 
                     </textarea>
 
+                    <!----dates mula sa database--->
+                    <input type="hidden" name="date_start" value="<?php echo $row['date_start']?>">
+                    <input type="hidden" name="date_end" value="<?php echo $row['date_end']?>">
+                    <input type="hidden" name="from_user" value="<?php echo $row['from_user']?>">
+                    <input type="hidden" name="report_id" value="<?php echo $row['report_id']?>">
+
                     <?php
 
 
-                      if($row['status'] == '1'){
+                      if($row['notif_status'] == '1'){
                         echo "<span>Acknowledged </span>";
                       }else{
                         ?>
@@ -226,21 +233,25 @@ $registration = "registration.php";
 
                 
             }
-            $sql_file = "SELECT * FROM files WHERE report_id = '$report_id'";
+            ?>
+
+              <small>Files attached:</small>
+
+            <?php
+
+            // mamayaagawan ko nanaman to ng isset
+            $sql_file = "SELECT * FROM files WHERE report_id = '$report_id' AND barangay = '$from_user'";
             $run_file = mysqli_query($conn,$sql_file);
             if(mysqli_num_rows($run_file) > 0){
               foreach($run_file as $row_file){
                 ?>
-                    <small>Files attached:</small>
                     <a href="../users/files/<?php echo $row_file['file_name'];?>" download><?php echo $row_file['file_name'];?></a>
 
                 <?php
               }
 
-          }
+            }
           ?>
-
-          
           <span class="d-flex justify-content-end">
 
           <?php
@@ -248,22 +259,7 @@ $registration = "registration.php";
 
       ?>
 
-
-
-
-
-
-
-
-
-
-        <!-- query of db -->
-        
-                
-
-   
-           
-            
+                      
       </div>
     </div>
   </main>
@@ -303,112 +299,127 @@ $registration = "registration.php";
 <?php
 if (isset($_POST['submit'])) {
 
-  $time = date("h:i:s", time());
-  $date = date('y-m-d');
+  //current date and time
+	date_default_timezone_set('Asia/Manila');
+	$time = date("h:i:s", time());
+	$date = date('y-m-d');
+  $report_id = $_POST['report_id'];
+  $from_user = $_POST['from_user'];
 
 
-  $from = $_POST['from'];
-  $from = mysqli_escape_string($conn, $from);
+ 
+  // // madedetermine kung anong type of report to 
 
-  $to = $_POST['to'];
-  $to = mysqli_escape_string($conn, $to);
+	// if($_POST['date_start'] < $date){
+	// 	$status =  "1";
+	// }elseif($_POST['date_end'] > $date){
+	// 	$status = "4";
+	// }else{
+	// 	$status = "3";
+	// }
 
-  $subject = $_POST['subject'];
-  $subject = mysqli_escape_string($conn, $subject);
+  $update = "UPDATE reports SET date_time_acknowledge = '$date $time' , notif_status = '1' WHERE report_id = '$report_id' AND  from_user = '$from_user'";
+  $run_update = mysqli_query($conn,$update);
 
-  $opr = $_POST['opr'];
-  $opr = mysqli_escape_string($conn, $opr);
-
-  $statement = $_POST['statement'];
-  $statement = mysqli_escape_string($conn, $statement);
-
-
-  // $brgy = $_POST['brgy'];
-  // $brgy = mysqli_escape_string($conn, $brgy);
-
-
-  $time = date("h:i:s", time());
-  $date = date('y-m-d');
-
-  // $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
-  // $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
-  $today = date("Y-m-d H:i:s");
-
-  $date_new_start = new DateTime($date . " ".  $time);
-  $date_new_end = new DateTime($date_end);
-
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
-
-
-  $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
-  $days = intval($diff);
-
-  if ($days == 1) {
-    $duration = "Daily";
-  } elseif ($days == 7) {
-    $duration = "Weekly";
-  } elseif ($days > 2 || $days <= 14) {
-    $duration = "Bi-weekly";
-  } elseif ($days == 30) {
-    $duration = "Monthly";
-  } elseif ($days == 90) {
-    $duration = "Quarterly";
-  } elseif ($days >= 180) {
-    $duration = "Semestral";
-  } elseif ($days == 365) {
-    $duration = "Annualy";
+  if($run_update) {
+    echo "updated // acknowledged";
+  }else{
+    echo "error" . $conn->error;
   }
 
   
-  $check_opr = "SELECT * FROM reports WHERE opr = '$opr' and to_user = '$from'";
-  $query_check_opr = mysqli_query($conn, $check_opr);
-  if(mysqli_num_rows($query_check_opr) > 0){
-    $rows = mysqli_fetch_array($query_check_opr);
-    $date_start = strtotime($rows['date_start']);
 
-    $daydiff = abs($date_submitted - $date_start);
-    $numberdays = $daydiff/86400;
 
-    if($date_submitted > $date_start){
-      // admin
-      $acknowledge_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '1' and opr = '$opr'";
-      $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
-      if($run_acknowledge_report == true){
-        // user
-        $run_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '$from' and opr = '$opr'";
-        $query_run_report = mysqli_query($conn,$run_report);
-        if($query_run_report == true){
-          // echo "<script>alert('Report Updated')</script>";
-          // echo "if updated";
-        }else{
-          echo $conn->error;
-        }
-      }else{
-        echo $conn->error;
-      }
-    }else{
-       // admin
-       $late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '1' and opr = '$opr'";
-       $run_late_report = mysqli_query($conn,$late_report);
-       if($run_late_report == true){
-         // user
-         $user_late_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days',date_time_acknowledge ='$today' WHERE to_user = '$from' and opr = '$opr'";
-         $query_late_report = mysqli_query($conn,$user_late_report);
-         if($query_late_report == true){
-          //  echo "<script>alert('Report Updated')</script>";
-          // echo "else updated";
-         }else{
-           echo $conn->error;
-         }
-       }else{
-         echo $conn->error;
-       }
-    }
-  }else{
-    echo $conn->error;
-  }
+  // $time = date("h:i:s", time());
+  // $date = date('y-m-d');
 
+
+  // $from = $_POST['from'];
+  // $from = mysqli_escape_string($conn, $from);
+
+  // $to = $_POST['to'];
+  // $to = mysqli_escape_string($conn, $to);
+
+  // $subject = $_POST['subject'];
+  // $subject = mysqli_escape_string($conn, $subject);
+
+  // $opr = $_POST['opr'];
+  // $opr = mysqli_escape_string($conn, $opr);
+
+  // $statement = $_POST['statement'];
+  // $statement = mysqli_escape_string($conn, $statement);
+
+
+  // // $brgy = $_POST['brgy'];
+  // // $brgy = mysqli_escape_string($conn, $brgy);
+
+
+  // $time = date("h:i:s", time());
+  // $date = date('y-m-d');
+
+  // // $date_start = date('Y-m-d h:i:s', strtotime($_POST['date_start']));
+  // // $date_end = date('Y-m-d h:i:s', strtotime($_POST['date_end']));
+  // $today = date("Y-m-d H:i:s");
+
+  // $date_new_start = new DateTime($date . " ".  $time);
+  // $date_new_end = new DateTime($date_end);
+
+  // $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+  // $days = intval($diff);
+
+
+  // $diff = $date_new_end->diff($date_new_start)->format("%a");  //find difference
+  // $days = intval($diff);
+  
+  // if ($days == 1 || $days == 0) {
+  //   echo $duration = "Daily";
+  // } elseif ($days >= 2 && $days <= 7) {
+  //  echo $duration = "Weekly";
+  // } elseif ($days >= 8 && $days <= 14) {
+  //  echo $duration = "Bi-weekly";
+  // } elseif ($days >= 15 && $days <= 29) {
+  //  echo $duration = "Bi-Weekly";
+  // }elseif($days >= 30 && $days <= 31){
+  //   echo $duration = "Monthly";
+  // }elseif($days >= 32 && $days <= 89){
+  //   echo $duration = 'Monthly';
+  // }elseif ($days >= 90 && $days <= 179) {
+  //  echo $duration = "Quarterly";
+  // } elseif ($days >= 180 && $days <= 364) {
+  //  echo $duration = "Semestral";
+  // } elseif ($days == 365) {
+  //  echo $duration = "Annualy";
+  // }
+
+  
+  // $check_opr = "SELECT * FROM reports WHERE opr = '$opr' and to_user = '$from'";
+  // $query_check_opr = mysqli_query($conn, $check_opr);
+  // if(mysqli_num_rows($query_check_opr) > 0){
+  //   $rows = mysqli_fetch_array($query_check_opr);
+  //   $date_start = strtotime($rows['date_start']);
+
+  //   $daydiff = abs($date_submitted - $date_start);
+  //   $numberdays = $daydiff/86400;
+
+  //   if($date_submitted > $date_start){
+  //     // admin
+  //     $acknowledge_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '1' and opr = '$opr'";
+  //     $run_acknowledge_report = mysqli_query($conn,$acknowledge_report);
+  //     if($run_acknowledge_report == true){
+  //       // user
+  //       $run_report = "UPDATE reports SET notif_status = '1', status = '1', duration = '$duration', date_end = '$date_end', deadline = '$days', date_time_acknowledge ='$today' WHERE to_user = '$from' and opr = '$opr'";
+  //       $query_run_report = mysqli_query($conn,$run_report);
+  //       if($query_run_report == true){
+  //         // echo "<script>alert('Report Updated')</script>";
+  //         // echo "if updated";
+  //       }else{
+  //         echo $conn->error;
+  //       }
+  //     }else{
+  //       echo $conn->error;
+  //     }
+  //   }
+  // }
 //  $startTimeStamp = strtotime("2011-07-01");
 //  $endTimeStamp = strtotime("2011-07-17");
  
