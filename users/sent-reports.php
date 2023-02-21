@@ -103,7 +103,7 @@ require '../vendor/autoload.php';
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '$barangay'AND notif_status = '0' ";
+										$query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay'AND notif_status = '0' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){
@@ -112,7 +112,7 @@ require '../vendor/autoload.php';
 												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
 												$newTime = date("G:i A", strtotime($row_reports['time_created']));
 												?>
-												<a class="list-group-item">
+												<a class="list-group-item clickable-list" data-href="view-reports.php?report_id=<?php echo $row_reports['report_id']?>&to_user=<?php echo $row_reports['to_user']?>">
 													<div class="row g-0 align-items-center">
 														<div class="col-2">
 															<i class="text-success" data-feather="mail"></i>
@@ -260,6 +260,8 @@ require '../vendor/autoload.php';
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 <script src="../src/js/preload.js"></script>
+<script src="../src/js/notif-click.js"></script>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>

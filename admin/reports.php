@@ -130,7 +130,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0'  ";
+                                        $query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0'  ";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
@@ -138,7 +138,7 @@ $registration = "registration.php";
 												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
 												$newTime = date("G:i A", strtotime($row_reports['time_created']));
 												?>
-												<a class="list-group-item clickable-list" data-href="view-reports.php?report_id=<?php echo $row['report_id']?>&from_user=<?php echo $row['from_user']?>">
+												<a class="list-group-item clickable-list" data-href="view-reports.php?report_id=<?php echo $row_reports['report_id']?>&from_user=<?php echo $row_reports['from_user']?>">
 													<div class="row g-0 align-items-center">
 														<div class="col-2">
 															<i class="text-success" data-feather="mail"></i>
@@ -246,7 +246,7 @@ $registration = "registration.php";
                                                 <tbody>
                                                     <?php
 
-                                                    $sql = "SELECT * FROM reports WHERE to_user = '1'";
+                                                    $sql = "SELECT * FROM reports WHERE to_user = '1' ORDER BY id DESC";
                                                     $run = mysqli_query($conn, $sql);
 
                                                     if(mysqli_num_rows($run) > 0){
@@ -317,6 +317,7 @@ $registration = "registration.php";
 <script src="../src/js/preload.js"></script>
 <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
 <script src="../src/js/table.click.js"></script>
+<script src="../src/js/notif-click.js"> </script>
 
 <!----pusher to ryan--->
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>

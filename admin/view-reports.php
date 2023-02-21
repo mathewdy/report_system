@@ -458,6 +458,7 @@ if (isset($_POST['submit'])) {
               </script>";
   }else{
     echo "error" . $conn->error;
+    // view-reports.php?report_id=$report_id&from_user=$from_user';
   }
 
   
