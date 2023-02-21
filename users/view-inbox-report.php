@@ -17,6 +17,7 @@ $email = $_SESSION['email'];
 	<link href="../src/css/template-2.css" rel="stylesheet">
 	<link href="../src/css/preloader.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../src/sweetalert2/dist/sweetalert2.min.css">
 
 	<title>DILG</title>
 </head>
@@ -53,9 +54,9 @@ $email = $_SESSION['email'];
                         </a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="add-report.php">
-                            <i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Compose</span>
-                        </a>
+						<a class="sidebar-link" href="sent-reports.php">
+              <i class="align-middle" data-feather="send"></i> <span class="align-middle">Sent</span>
+            </a>
 					</li>
 					
 				</ul>
@@ -130,8 +131,8 @@ $email = $_SESSION['email'];
 															<div class="col-lg-12 text-end">
 																<p>
                                                                     <?php 
-                                                                    $date_start =  date('F d, Y h:i:s A', strtotime($row['date_start']));
-																	$date_end = date('F d, Y h:i:s A', strtotime($row['date_end']));
+                                                                    $date_start =  date('F d, Y G:i A', strtotime($row['date_start']));
+																	$date_end = date('F d, Y G:i A', strtotime($row['date_end']));
                                                                     echo "Date sent: " . $date_start . " - " . $date_end;
                                                                     ?>
                                                                 </p>
@@ -144,6 +145,10 @@ $email = $_SESSION['email'];
 																	<div class="col-lg-12 d-flex align-items-center" >
 																		<label for="">From:</label>
 																		<input type="text" class="form-control ms-2" style="border: none; outline: none; background: none;" name="from" value="<?php if($row['from_user'] == '1'){echo "DILG Admin";}?> " readonly>
+																	</div>
+																	<div class="col-lg-12 d-flex align-items-center mb-2">
+																		<label for="">OPR:</label>
+																		<input type="text" name="opr" class="form-control ms-2" style="border: none; outline: none; background: none;" value="<?php echo $row['opr'] ?>"readonly>
 																	</div>
 																</div>
 															</div>
@@ -159,10 +164,7 @@ $email = $_SESSION['email'];
 																	</div>
 																</div>
 															</div>
-															<div class="col-lg-12 d-flex align-items-center mb-2">
-																<label for="">OPR:</label>
-																<input type="text" name="opr" class="form-control ms-2" style="border: none; outline: none; background: none;" value="<?php echo $row['opr'] ?>"readonly>
-															</div>
+															
 															<div class="col-lg-12">
 																<textarea id="tiny" name="statement"> <?php echo $row['message'] ?> </textarea>
 
@@ -211,14 +213,16 @@ $email = $_SESSION['email'];
 										if(mysqli_num_rows($run_reply) > 0){
 											foreach($run_reply as $row_reply){
 												?>
+												<div class="card p-5">
+
 													<form action="" method="POST" enctype="multipart/form-data"> 
-													<label for="">Reply to: <?php  if($row_reply['from_user'] == '1'){
+													<p class="p-0 m-0 text-muted">Reply to <?php  if($row_reply['from_user'] == '1'){
 															echo "DILG Admin";
 														}?>
-													</label>
+													</p>
 
-													<label for="">Subject:<?php echo $row_reply['subject']?></label>
-													<label for="">OPR: <?php echo $row_reply['opr']?></label>
+													<p class="p-0 m-0">Subject: <?php echo $row_reply['subject']?></label>
+													<p class="p-0 m-0">OPR: <?php echo $row_reply['opr']?></label>
 													<textarea id="reply" name="reply_statement"> </textarea>
 													<input type="hidden" name="report_id" value="<?php echo $row_reply['report_id']?>">
 													<!--date end /  deadline chrururut ng date nya--->
@@ -231,9 +235,15 @@ $email = $_SESSION['email'];
 													<input type="hidden" name="date_start" value="<?php echo $row_reply['date_start']?>">
 													<input type="hidden" name="to_user" value="<?php echo $row_reply['to_user']?>">
 													<input type="hidden" name="from_user" value="<?php echo $row_reply['from_user']?>">
-													<input type="submit" name="reply" value="Reply">
 													<input type="file" class="form-control mt-2" name="pdf_file[]" id="" multiple="multiple" >
+													<span class="d-flex justify-content-end">
+														<input type="submit" name="reply" class="btn btn-md btn-primary mt-3" value="Reply">
+
+													</span>
+
 												</form>
+												</div>
+
 												<?php
 										
 											}
@@ -271,6 +281,8 @@ $email = $_SESSION['email'];
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 <script src="../src/js/preload.js"></script>
+<script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
+
 <script>
     tinymce.init({
       selector: 'textarea#tiny',
@@ -365,23 +377,23 @@ if(isset($_POST['reply'])){
 	//duration, kase naka compute to as date interval
 
 	if ($days == 1 || $days == 0) {
-	echo $duration = "Daily";
+		$duration = "Daily";
 	} elseif ($days >= 2 && $days <= 7) {
-	echo $duration = "Weekly";
+		$duration = "Weekly";
 	} elseif ($days >= 8 && $days <= 14) {
-	echo $duration = "Bi-weekly";
+		$duration = "Bi-weekly";
 	} elseif ($days >= 15 && $days <= 29) {
-	echo $duration = "Bi-Weekly";
+		$duration = "Bi-Weekly";
 	}elseif($days >= 30 && $days <= 31){
-	echo $duration = "Monthly";
+		$duration = "Monthly";
 	}elseif($days >= 32 && $days <= 89){
-	echo $duration = 'Monthly';
+		$duration = 'Monthly';
 	}elseif ($days >= 90 && $days <= 179) {
-	echo $duration = "Quarterly";
+		$duration = "Quarterly";
 	} elseif ($days >= 180 && $days <= 364) {
-	echo $duration = "Semestral";
+		$duration = "Semestral";
 	} elseif ($days == 365) {
-	echo $duration = "Annualy";
+		$duration = "Annualy";
 	}
 
 	
@@ -427,7 +439,12 @@ if(isset($_POST['reply'])){
 			$run_reply = mysqli_query($conn,$query_reply_report);
 
 			if($run_reply) {
-				echo "reply sent";
+				echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Reply Sent',
+              })
+              </script>";
 			}else{
 				echo "error" . $conn->error;
 			}
@@ -436,7 +453,12 @@ if(isset($_POST['reply'])){
 			$run_sent = mysqli_query($conn,$query_reply_sent);
 
 			if($run_sent){
-				echo "reply sent";
+				echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Reply Sent',
+              })
+              </script>";
 			}else{
 				echo "error" . $conn->error;
 			}

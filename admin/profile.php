@@ -64,11 +64,11 @@ $barangay = $_SESSION['barangay'];
               <i class="align-middle" data-feather="award"></i> <span class="align-middle">Ranking</span>
             </a>
 					</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="register.php">
               <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">New Account</span>
             </a>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</nav>
