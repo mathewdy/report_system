@@ -17,7 +17,7 @@ if(mysqli_num_rows($run_notes) > 0){
     <input type="hidden" name="hidden" id="hidden" value="<?= $note_id; ?>">
     <div class="mb-3">
     <label for="message-text" class="col-form-label">Contents:</label>
-    <textarea class="form-control" id="tiny" name="tiny"> <?= $row_notes['content']?></textarea>
+    <textarea class="form-control" id="text" name="tiny"> <?= $row_notes['content']?></textarea>
     </div>
     <span class="d-flex justify-content-end align-items-center">
         <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
@@ -28,11 +28,10 @@ if(mysqli_num_rows($run_notes) > 0){
     }
 }
 ?>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
+
 <script>
     tinymce.init({
-      selector: 'textarea#tiny',
+      selector: 'textarea#text',
       // width: 2000,
       height: 300,
       resize: false,
