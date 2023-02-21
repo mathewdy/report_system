@@ -17,13 +17,38 @@ if(mysqli_num_rows($run_notes) > 0){
     <input type="hidden" name="hidden" id="hidden" value="<?= $note_id; ?>">
     <div class="mb-3">
     <label for="message-text" class="col-form-label">Contents:</label>
-    <textarea class="form-control" id="tiny" name="tiny" placeholder="" > <?= $row_notes['content']?></textarea>
+    <textarea class="form-control" id="text" name="tiny" placeholder="" > <?= $row_notes['content']?></textarea>
     </div>
     <span class="d-flex justify-content-end align-items-center">
         <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" name = "update" >Update</button>
     </span>
 </form>
+<script>
+    tinymce.init({
+      selector: 'textarea#text',
+      // width: 2000,
+      height: 300,
+      resize: false,
+      plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+        'table', 'emoticons', 'template', 'codesample'
+      ],
+      toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' +
+        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+        'forecolor backcolor emoticons | removeformat | code table help | save | restoredraft',
+      menu: {
+        favs: {
+          title: 'menu',
+          items: 'code visualaid | searchreplace | emoticons'
+        }
+      },
+      menubar: 'favs file edit view insert format tools table',
+      content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
+
+    });
+</script>
 <?php
 
 error_reporting(E_ERROR | E_PARSE);
