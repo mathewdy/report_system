@@ -138,7 +138,7 @@ $registration = "registration.php";
 												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
 												$newTime = date("G:i A", strtotime($row_reports['time_created']));
 												?>
-												<a class="list-group-item">
+												<a class="list-group-item clickable-list" data-href="view-reports.php?report_id=<?php echo $row['report_id']?>&from_user=<?php echo $row['from_user']?>">
 													<div class="row g-0 align-items-center">
 														<div class="col-2">
 															<i class="text-success" data-feather="mail"></i>
@@ -352,7 +352,7 @@ channel.bind('my-event', function(data) {
     
 });
 </script>
-
+<script src="../src/js/notif-click.js"></script>
 <!----end of pusher--->
 
 </body>
