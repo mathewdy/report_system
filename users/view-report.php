@@ -77,7 +77,8 @@ $barangay = $_SESSION['barangay'];
                 </a>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-					<li class="nav-item dropdown">
+						<!-- template alert -->
+						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 							<?php
 								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0'  ";
@@ -98,7 +99,7 @@ $barangay = $_SESSION['barangay'];
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay'AND notif_status = '0' ";
+										$query_reports = "SELECT from_user, to_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){
@@ -107,7 +108,7 @@ $barangay = $_SESSION['barangay'];
 												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
 												$newTime = date("G:i A", strtotime($row_reports['time_created']));
 												?>
-												<a class="list-group-item clickable-list" data-href="view-reports.php?report_id=<?php echo $row_reports['report_id']?>&to_user=<?php echo $row_reports['to_user']?>">
+												<a class="list-group-item clickable-list" data-href="view-inbox-report.php?report_id=<?php echo $row_reports['report_id']; ?>&to_user=<?php echo $row_reports['to_user']?>">
 													<div class="row g-0 align-items-center">
 														<div class="col-2">
 															<i class="text-success" data-feather="mail"></i>
@@ -154,7 +155,6 @@ $barangay = $_SESSION['barangay'];
 								?>
 								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                                 	<img src="<?php echo "../admin/admins/" . $row_image['image']?>" alt="user" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?= $row_image['first_name'] .' '. $row_image['last_name'] ?></span>
-                                	
 								</a>
 
 								<?php
