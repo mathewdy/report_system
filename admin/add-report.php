@@ -551,8 +551,7 @@ if (isset($_FILES['pdf_file']['name'])) {
         for($i=0;$i<count($filename);$i++){
           $f_name = $_FILES['pdf_file']['name'][$i];
           $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
-          $query_file = mysqli_query($conn, $insert_file);
-          move_uploaded_file($file_tmp[$i], "pdf/" . $filename[$i]);
+          $query_file = mysqli_query($conn, $insert_file) && move_uploaded_file($file_tmp[$i], "pdf/" . $filename[$i]);
         }
 
         $sql_get_users = "SELECT * FROM users where user_type = '2'";
@@ -589,6 +588,11 @@ if (isset($_FILES['pdf_file']['name'])) {
     } else {
 
       $report_id = "RID00001";
+      for($i=0;$i<count($filename);$i++){
+        $f_name = $_FILES['pdf_file']['name'][$i];
+        $insert_file = "INSERT INTO files (`report_id`, `file_name`) VALUES ('$report_id', '$f_name')";
+        $query_file = mysqli_query($conn, $insert_file) && move_uploaded_file($file_tmp[$i], "pdf/" . $filename[$i]);
+      }
         $sql_get_users = "SELECT * FROM users where user_type = '2'";
         $query_get_users = mysqli_query($conn, $sql_get_users);
           while($rows_1 = mysqli_fetch_array($query_get_users)){
