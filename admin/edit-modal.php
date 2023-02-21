@@ -51,7 +51,7 @@ if(mysqli_num_rows($run_notes) > 0){
 </script>
 <?php
 
-error_reporting(E_ERROR | E_PARSE);
+// error_reporting(E_ERROR | E_PARSE);
     }
 }
 ?>

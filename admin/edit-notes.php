@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 include('../connection.php');
-
+// tama to
 if (isset($_POST['update'])) {
 
     if (isset($_POST['hidden'])) {

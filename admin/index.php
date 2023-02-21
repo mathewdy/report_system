@@ -308,6 +308,7 @@ $registration = "registration.php";
 			</footer>
 		</div>
 		<!-- Add Note Modal -->
+		<!-- ayusin mo buhay mo dali tama na to -->
 		<div class="modal fade" id="addNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
