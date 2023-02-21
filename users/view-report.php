@@ -194,7 +194,7 @@ $barangay = $_SESSION['barangay'];
 											<tbody>
 												<?php
 
-												$query_reports = "SELECT * FROM reports WHERE to_user  = '$barangay'";
+												$query_reports = "SELECT * FROM reports WHERE to_user  = '$barangay' ORDER BY id DESC";
 												$run_reports = mysqli_query($conn,$query_reports);
 
 												if (mysqli_num_rows($run_reports) > 0) {

@@ -225,7 +225,8 @@ $registration = "registration.php";
 													// FROM reports
 													// GROUP BY from_user
 													// HAVING COUNT(report_or_reply)
-                                                    $sql = "SELECT COUNT(report_or_reply) AS number_reports, from_user AS barangay
+                                                    $sql = "SELECT COUNT(report_or_reply) AS number_reports, 
+													from_user AS barangay
 													FROM reports
 													GROUP BY from_user
 													HAVING COUNT(report_or_reply)";
@@ -253,11 +254,13 @@ $registration = "registration.php";
 																	} 
 																?>
 																</td>
-                                                                <td><?php  if($row['number_reports'] == '1'){
-																	echo "";
-																}else{
-																	echo $row['number_reports'];
-																} ?></td>
+                                                                <td><?php  
+																echo $row['number_reports'];
+																//if($row['number_reports'] == '1'){
+																// 	echo "";
+																// }else{
+																// 	echo $row['number_reports'];
+																// } ?></td>
 
                                                             </tr>
 
