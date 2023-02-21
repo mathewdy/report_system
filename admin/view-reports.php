@@ -258,7 +258,7 @@ $registration = "registration.php";
                           if(mysqli_num_rows($run_report) > 0){
                             foreach($run_report as $row){
                               ?>
-                              <div class="card shadow py-2" style="border: none; border-radius: 0;">
+                              <div class="card shadow p-5" style="border: none; border-radius: 0;">
 
                                   <form action="" method="POST" enctype="multipart/form-data">
                                     <span class="d-flex justify-content-between">
@@ -286,15 +286,16 @@ $registration = "registration.php";
                                         echo "<span>Acknowledged </span>";
                                       }else{
                                         ?>
-                                          <input type="submit" name="submit" value="Acknowledge">
+                                          <input type="submit" class="btn btn-md btn-primary mt-2" name="submit" value="Acknowledge">
                                         <?php
                                       }
 
                                     ?>
-                                </div>
+                      
 
                                     
                                   </form>
+                                </div>  
                               <?php
 
                             }
@@ -329,7 +330,6 @@ $registration = "registration.php";
                         }
 
                         ?>
-                        
                     </div>
 									</div>
 								</div>
@@ -368,7 +368,7 @@ $registration = "registration.php";
   <script>
     tinymce.init({
     selector: 'textarea#tiny',
-    width: 1100,
+    // width: 1000,
     height: 300,
     readonly: true,
     plugins:[
@@ -450,7 +450,12 @@ if (isset($_POST['submit'])) {
   $run_update = mysqli_query($conn,$update);
 
   if($run_update) {
-    echo "updated // acknowledged";
+    echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Acknowledged!',
+              })
+              </script>";
   }else{
     echo "error" . $conn->error;
   }

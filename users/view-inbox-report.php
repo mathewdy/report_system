@@ -469,7 +469,6 @@ if(isset($_POST['reply'])){
 		
 
 }
-  
 
 
 	
