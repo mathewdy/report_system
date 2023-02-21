@@ -530,11 +530,7 @@ if (isset($_POST['send'])) {
           $insert_report = "INSERT INTO `reports`(`report_id`,`to_user`, `from_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
           VALUES ('$report_id','1','$barangay','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
           $run_insert_report = mysqli_query($conn, $insert_report);
-          
-  
-  
           if ($run_insert_report) {
-          
   
             $sent_report = "INSERT INTO `sent`(`report_id`,`to_user`, `from_user`,`subject`, `opr`, `message`, `duration`, `status`, `notif_status`, `date_start`, `date_end`, `deadline`, `date_created`, `time_created`, `date_updated`, `time_updated`) 
             VALUES ('$report_id','1','$barangay','$subject','$opr','$statement','$duration','3','0','$date_start','$date_end','$days','$date','$time','$date','$time')";
