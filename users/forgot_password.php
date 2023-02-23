@@ -2,7 +2,7 @@
 include('../connection.php');
 date_default_timezone_set('Asia/Manila');
 ob_start();
-
+session_start();
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
@@ -11,51 +11,51 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require '../vendor/autoload.php';
+// require '../vendor/autoload.php';
 
-function sendMail($email,$first_name,$last_name){
-    require("PHPMailer.php");
-    require("SMTP.php");
-    require("Exception.php");
+// function sendMail($email,$first_name,$last_name){
+//     require("PHPMailer.php");
+//     require("SMTP.php");
+//     require("Exception.php");
 
-    $mail = new PHPMailer(true);
+//     $mail = new PHPMailer(true);
 
-    try {
-        //Server settings
+//     try {
+//         //Server settings
        
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'calamba.ccc@gmail.com';                     //SMTP username
-        $mail->Password   = 'buydgqnmohkheass';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+//         $mail->isSMTP();                                            //Send using SMTP
+//         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+//         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+//         $mail->Username   = 'calamba.ccc@gmail.com';                     //SMTP username
+//         $mail->Password   = 'buydgqnmohkheass';                               //SMTP password
+//         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+//         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
-        //Recipients
-        $mail->setFrom('calamba.ccc@gmail.com', 'dilg-ccc');
-        $mail->addAddress($email);     //Add a recipient
-        //Content
-        $mail->isHTML(true);
+//         //Recipients
+//         $mail->setFrom('calamba.ccc@gmail.com', 'dilg-ccc');
+//         $mail->addAddress($email);     //Add a recipient
+//         //Content
+//         $mail->isHTML(true);
         
-        //Set email format to HTML
-        $mail->Subject = 'Email Verification';
-        $mail->Body = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to reset your email Mr. / Mrs. $first_name, $last_name
-        <a href='http://$_SERVER[SERVER_NAME]/report_system/reset_password.php?email=$email'> Click me </a>
-        </span>";
+//         //Set email format to HTML
+//         $mail->Subject = 'Email Verification';
+//         $mail->Body = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to reset your email Mr. / Mrs. $first_name, $last_name
+//         <a href='http://$_SERVER[SERVER_NAME]/report_system/reset_password.php?email=$email'> Click me </a>
+//         </span>";
        
     
-        $mail->send();
-        echo "sent";
-        return true;
-    } catch (Exception $e) {
-        return false;
-    }
+//         $mail->send();
+//         echo "sent";
+//         return true;
+//     } catch (Exception $e) {
+//         return false;
+//     }
     
-}
+// }
 
-echo NULL;
+// echo NULL;
 
-?>
+// ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -159,9 +159,11 @@ if(isset($_POST['submit'])){
         $rows = mysqli_fetch_array($query);
         $first_name = $rows['first_name'];
         $last_name = $rows['last_name'];
-        sendMail($email, $first_name, $last_name);
+        $_SESSION['email'] = $email;
+        echo "<script>window.location.href='reset-password.php' </script>";
+        // sendMail($email, $first_name, $last_name);
     }else{
-        echo "Sorry your email does not exist";
+        echo "<script>alert('User not found') </script>";
         exit();
     }
 }

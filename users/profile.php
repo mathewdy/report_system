@@ -200,9 +200,6 @@ $barangay = $_SESSION['barangay'];
 												<label for="">Email</label>
 												<input type="email" class="form-control" name="email" value="<?php echo $row['email']?>">
 												<br>
-												<label for="">Password</label>					
-												<input type="password" class="form-control" name="password" id="" value="">
-												<br>
 												<label for="">First Name</label>											
 												<input type="text" class="form-control" name="first_name" value="<?php echo $row['first_name']?>">
 												<br>

@@ -171,6 +171,15 @@ if (isset($_POST['login'])) {
                         $_SESSION['barangay'] = $row['barangay'];
                         header("location: home.php");
                         die();
+                    }else {
+                        echo "
+                            <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'User Not Found!',
+                            })
+                            </script>";
                     }
                 }
             }
