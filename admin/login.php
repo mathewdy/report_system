@@ -6,50 +6,50 @@ include('../connection.php');
 
 
 
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\SMTP;
-// use PHPMailer\PHPMailer\Exception;
-// function sendMail($email,$first_name,$last_name,$vkey){
-//     require ("PHPMailer.php");
-//     require("SMTP.php");
-//     require("Exception.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+function sendMail($email,$first_name,$last_name,$vkey){
+    require ("PHPMailer.php");
+    require("SMTP.php");
+    require("Exception.php");
 
-//     $mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
 
-//     try {
-//         //Server settings
+    try {
+        //Server settings
        
-//         $mail->isSMTP();                                            //Send using SMTP
-//         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-//         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-//         $mail->Username   = 'mathewmelendez123123123@gmail.com';                     //SMTP username
-//         $mail->Password   = '62409176059359';                               //SMTP password
-//         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-//         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.hostinger.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'dilg-ccc@dilg-reportsystem.online';                     //SMTP username
+        $mail->Password   = 'mathewPOGI!@#123';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
-//         //Recipients
-//         $mail->setFrom('calamba.ccc@gmail.com', 'dilg-ccc');
-//         $mail->addAddress($email);     //Add a recipient
+        //Recipients
+        $mail->setFrom('dilg-ccc@dilg-reportsystem.online', 'dilg-ccc');
+        $mail->addAddress($email);     //Add a recipient
     
-//         //Content
-//         $mail->isHTML(true);                                  //Set email format to HTML
-//         $mail->Subject = 'Email Verification';
-//         $mail->Body    = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
-//         <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
-//         </span>";
+        //Content
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Email Verification';
+        $mail->Body    = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
+        <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
+        </span>";
 
 
-//         $mail->send();
-//         return true;
-//     } catch (Exception $e) {
-//         return false;
-//     }
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
     
-// }
+}
 
 
-// $error = NULL;
-// ?>
+$error = NULL;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -124,11 +124,11 @@ include('../connection.php');
                     <form class="d-flex align-items-end" method="POST">
                         <span class="d-flex flex-column">
                             <label for="" class="text-white">Email</label>
-                            <input type="text" class="" name="email" maxlength="25" required>
+                            <input type="text" class="" name="email"  required>
                         </span>
                         <span class="d-flex flex-column ms-2">
                             <label class="text-white">Password</label>
-                            <input type="password" class="" name="password" maxlength="50" required>
+                            <input type="password" class="" name="password"  required>
                         </span>
                         <span class="ms-2">
                             <input type="submit" class="btn btn-sm w-100 btn-primary" style="border-radius: 0;" name="login" value="Log In">
@@ -265,69 +265,112 @@ include('../connection.php');
 <?php
 if (isset($_POST['login'])) {
 
-    $email = mysqli_escape_string($conn,$_POST['email']);
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-
-
-    $query = "SELECT email,password,user_type ,barangay, email_status FROM users WHERE email = '$email'";
-    $result = mysqli_query($conn, $query);
-
-        if (mysqli_num_rows($result) > 0) {
-            foreach ($result as $row) {
-
-                // if($row['email_status'] == '0'){
-                //     echo "
-                //         <script>
-                //         Swal.fire({
-                //             icon: 'error',
-                //             title: 'Oops...',
-                //             text: 'Please Verify your email address to login ',
-                //         })
-                //         </script>
-                //         ";
-                //         exit();
-                // }
-
+    // $query = "SELECT * FROM users WHERE email = '$email' ";
+    // $result = mysqli_query($conn, $query);
     
-                if ($row['user_type'] == '2') {
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'User Not Available',
-                        })
-                        </script>";
-                        exit();
-                } else {
-    
-                    if (password_verify($password, $row['password'])) {
-                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['email'] = $email;
-                        $_SESSION['barangay'] = $row['barangay'];
-                        header("location: index.php");
-                        die();
-                    }
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $run = mysqli_query($conn,$sql);
+
+    if(mysqli_num_rows($run) > 0){
+        foreach($run as $row_email){
+            
+            if($row_email['email_status'] == '0'){
+                echo "
+                    <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please Verify your email address to login ',
+                    })
+                    </script>
+                    ";
+                    exit();
+            }
+            if ($row_email['user_type'] == '2') {
+                echo "
+                    <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'User Not Available',
+                    })
+                    </script>";
+                    exit();
+            } else {
+
+                if (password_verify($password, $row_email['password'])) {
+                    //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                    $_SESSION['email'] = $email;
+                    $_SESSION['barangay'] = $row_email['barangay'];
+                    header("location: index.php");
+                    die();
                 }
             }
-        } else {
-            echo "
-                <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'User Not Found!',
-                })
-                </script>";
         }
+        }
+    }else{
+        echo $conn->error;
+    }
+
+
+        // if (mysqli_num_rows($result) > 0) {
+        //     foreach ($result as $row) {
+
+        //         if($row['email_status'] == '0'){
+        //             echo "
+        //                 <script>
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Oops...',
+        //                     text: 'Please Verify your email address to login ',
+        //                 })
+        //                 </script>
+        //                 ";
+        //                 exit();
+        //         }
+
+    
+        //         if ($row['user_type'] == '2') {
+        //             echo "
+        //                 <script>
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Oops...',
+        //                     text: 'User Not Available',
+        //                 })
+        //                 </script>";
+        //                 exit();
+        //         } else {
+    
+        //             if (password_verify($password, $row['password'])) {
+        //                 fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+        //                 $_SESSION['email'] = $email;
+        //                 $_SESSION['barangay'] = $row['barangay'];
+        //                 header("location: index.php");
+        //                 die();
+        //             }
+        //         }
+            
+        // } else {
+        //     echo "
+        //         <script>
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Oops...',
+        //             text: 'User Not Found!',
+        //         })
+        //         </script>";
+        // }
 
 
 
 
 
    
-}
+
 if(isset($_GET['opt-out'])){
     echo "<script>
     Swal.fire({
@@ -420,7 +463,7 @@ if (isset($_POST['register'])) {
 
             $query_registration = "INSERT INTO users (user_type,email,password,first_name,middle_name,last_name,date_of_birth,barangay,v_token,image,date_time_created,date_time_updated) 
             VALUES ('$user_type','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$barangay', '$vkey', '$image', '$date $time' , '$date $time')";
-            $run_registration = mysqli_query($conn, $query_registration) ;
+            $run_registration = mysqli_query($conn, $query_registration) && sendMail($email,$first_name,$last_name,$vkey) ;
             move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
 
                 if ($run_registration) {

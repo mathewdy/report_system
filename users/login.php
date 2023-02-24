@@ -83,7 +83,7 @@ if($current_year == $next_year){
                     <form class="d-flex align-items-end" method="POST">
                         <span class="d-flex flex-column">
                             <label for="" class="text-white">Email</label>
-                            <input type="text" class="" name="email" maxlength="25" required>
+                            <input type="text" class="" name="email" maxlength="50" required>
                         </span>
                         <span class="d-flex flex-column ms-2">
                             <label class="text-white">Password</label>
@@ -128,78 +128,59 @@ if($current_year == $next_year){
 <?php
 if (isset($_POST['login'])) {
 
-    $email = mysqli_escape_string($conn,$_POST['email']);
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-
-
-    $query = "SELECT email,password,user_type ,barangay, email_status FROM users WHERE email = '$email'";
-    $result = mysqli_query($conn, $query);
-
-        if (mysqli_num_rows($result) > 0) {
-            foreach ($result as $row) {
-
-                // if($row['email_status'] == '0'){
-                //     echo "
-                //         <script>
-                //         Swal.fire({
-                //             icon: 'error',
-                //             title: 'Oops...',
-                //             text: 'Please Verify your email address to login ',
-                //         })
-                //         </script>
-                //         ";
-                //         exit();
-                // }
-
+    // $query = "SELECT * FROM users WHERE email = '$email' ";
+    // $result = mysqli_query($conn, $query);
     
-                if ($row['user_type'] == '1') {
-                    echo "
-                        <script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'User Not Available',
-                        })
-                        </script>";
-                        exit();
-                } else {
-    
-                    if (password_verify($password, $row['password'])) {
-                        //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
-                        $_SESSION['email'] = $email;
-                        $_SESSION['barangay'] = $row['barangay'];
-                        header("location: home.php");
-                        die();
-                    }else {
-                        echo "
-                            <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'User Not Found!',
-                            })
-                            </script>";
-                    }
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $run = mysqli_query($conn,$sql);
+
+    if(mysqli_num_rows($run) > 0){
+        foreach($run as $row_email){
+            
+            if($row_email['email_status'] == '0'){
+                echo "
+                    <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please Verify your email address to login ',
+                    })
+                    </script>
+                    ";
+                    exit();
+            }
+            if ($row_email['user_type'] == '1') {
+                echo "
+                    <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'User Not Available',
+                    })
+                    </script>";
+                    exit();
+            } else {
+
+                if (password_verify($password, $row_email['password'])) {
+                    //fetch mo muna yung user id, para ma sessidon papunta sa kabila 
+                    $_SESSION['email'] = $email;
+                    $_SESSION['barangay'] = $row_email['barangay'];
+                    header("location: home.php");
+                    die();
                 }
             }
-        } else {
-            echo "
-                <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'User Not Found!',
-                })
-                </script>";
         }
-
-
-
+        }
+    }else{
+        echo $conn->error;
+    }
 
 
    
-}
+
 if(isset($_GET['opt-out'])){
     echo "<script>
     Swal.fire({
