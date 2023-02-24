@@ -122,6 +122,7 @@ use PHPMailer\PHPMailer\Exception;
                         <input type="email" class="w-100" name="email">
 
                         <span class="d-flex justify-content-end mt-3">
+                            <a href="login.php" class="btn btn-sm btn-danger me-2">Cancel</a>
                             <button type="submit" class="btn btn-sm btn-primary" name="submit">Submit</button>
                         </span>
                         
