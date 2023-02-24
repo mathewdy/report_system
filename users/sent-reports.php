@@ -200,7 +200,7 @@ require '../vendor/autoload.php';
 
 												<?php
 
-												$query_sent_reports = "SELECT * FROM sent WHERE to_user ='1'";
+												$query_sent_reports = "SELECT * FROM sent WHERE to_user ='1' AND from_user = '$barangay'";
 												$run_reports = mysqli_query($conn, $query_sent_reports);
 												if (mysqli_num_rows($run_reports) > 0) {
 													foreach ($run_reports as $row) {
@@ -215,7 +215,7 @@ require '../vendor/autoload.php';
 																	}
 																?>
 															</td>
-															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>"><?php echo $row['subject'] ?></a></td>
+															<td style="width: 50%;"><a href="view-single-report.php?report_id=<?php echo $row['report_id'] ?>&from_user=<?php echo $row['from_user']?>"><?php echo $row['subject'] ?></a></td>
 															<td>
 																<?php
 																$date = date_create($row['date_created']);
