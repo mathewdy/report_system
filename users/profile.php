@@ -305,23 +305,23 @@ if(isset($_POST['update'])){
     $date = date('y-m-d');
 
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    //$password = $_POST['password'];
     $first_name = ucfirst($_POST['first_name']);
     $middle_name = ucfirst($_POST['middle_name']);
     $last_name = ucfirst($_POST['last_name']);
     $date_of_birth = ucfirst($_POST['date_of_birth']);
-    $address = $_POST['address'];
+    //$address = $_POST['address'];
     $barangay = $_POST['barangay'];
-    $barangay_id = $_POST['barangay_id'];
+    //$barangay_id = $_POST['barangay_id'];
 
     $email = mysqli_escape_string($conn,$email);
-    $password = mysqli_escape_string($conn,$password);
+    //$password = mysqli_escape_string($conn,$password);
     $first_name = mysqli_escape_string($conn,$first_name);
     $middle_name = mysqli_escape_string($conn,$middle_name);
     $last_name = mysqli_escape_string($conn,$last_name);
-    $address = mysqli_escape_string($conn,$address);
+    //$address = mysqli_escape_string($conn,$address);
     $barangay = mysqli_escape_string($conn,$barangay);
-    $barangay_id = mysqli_escape_string($conn,$barangay_id);
+    //$barangay_id = mysqli_escape_string($conn,$barangay_id);
 
 
     //images
@@ -336,7 +336,7 @@ if(isset($_POST['update'])){
     }
 
     if(empty($new_image)){
-        $query_update_1 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id' WHERE user_id = '$user_id'";
+        $query_update_1 = "UPDATE users SET email = '$email', first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', barangay = '$barangay'  WHERE email = '$email'";
         $run_update_1 = mysqli_query($conn,$query_update_1);
 
         if($run_update_1){
@@ -360,19 +360,12 @@ if(isset($_POST['update'])){
 			</script>";
             echo "<script>window.location.href='profile.php' </script>";
         }else{
-            $query_update_2 = "UPDATE users SET first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name', address = '$address', barangay = '$barangay' , barangay_id = '$barangay_id', image =  '$update_filename' WHERE user_id = '$user_id'";
+            $query_update_2 = "UPDATE users SET email = '$email',first_name = '$first_name' , middle_name ='$middle_name', last_name = '$last_name',  barangay = '$barangay' , image = '$update_filename' WHERE email = '$email'";
             $run_update_2 = mysqli_query($conn,$query_update_2);
     
             if($run_update_2){
-                move_uploaded_file($_FILES["image"]["tmp_name"], "Images/".$_FILES["image"]["name"]);
-                echo "<script>
-					Swal.fire({
-						icon: 'success',
-						title: 'Updated Successfully',
-						text: 'Your record has been updated'
-					})
-					</script>";
-				echo "<script>window.location.href='profile.php'</script>";
+                move_uploaded_file($_FILES["image"]["tmp_name"], "../admin/admins/".$_FILES["image"]["name"]);
+                echo "<script>window.location.href='profile.php'</script>";
 
     
             }else{

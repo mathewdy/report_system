@@ -111,7 +111,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0' ";
+                                        $query_reports = "SELECT id, from_user, report_id, subject, date_created, time_created FROM reports  WHERE to_user = '1' ORDER BY id DESC";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
@@ -380,6 +380,7 @@ $registration = "registration.php";
       <script>
         $(document).ready(function() {
         var calendar = $('#calendar').fullCalendar({
+            displayEventTime: false,
           editable:true,
           header:{
           left:'prev,next today',

@@ -78,26 +78,47 @@ $barangay = $_SESSION['barangay'];
 						<!-- template alert -->
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0'  ";
+								<?php
+							
+							//SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' 
+							//SELECT COUNT(DISTINCT Country) FROM Customers;
+								$query_number_notif = "SELECT COUNT(DISTINCT report_id) AS number_of_notif FROM reports WHERE to_user = '$barangay' AND notif_status = '0'";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
-								$num_of_notifs = mysqli_num_rows($run_number_notif);
+								
+								if(mysqli_num_rows($run_number_notif) > 0){
+								    foreach($run_number_notif as $row_notif){
+								        ?>
+								        
+								        <div class="position-relative">
+									        <i class="align-middle" data-feather="bell"></i>
+									            <span class="indicator"><?php  echo $row_notif['number_of_notif']; ?></span>
+								        </div>
+								        
+								        <?php
+								        
+								    }
+								}
+								
 
 							?>
-								<div class="position-relative">
-									<i class="align-middle" data-feather="bell"></i>
-									<span class="indicator"><?php echo $num_of_notifs?></span>
-								</div>
+								
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
-									<?= $num_of_notifs?> New Notifications
+									<?php 
+									
+									    echo $row_notif['number_of_notif'];
+									?> New Notifications
+								
 								</div>
 								<div class="list-group">
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, to_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
+										//SELECT DISTINCT reports.subject,reports.report_id, reports.report_id_2, reports.to_user , reports.from_user, reports.opr, reports.message,reports.duration,reports.report_or_reply,reports.status,reports.notif_status,reports.date_start,reports.date_end,reports.deadline,reports.date_time_acknowledge,reports.date_created,reports.time_created,reports.date_updated,reports.date_updated,reports.time_updated FROM reports WHERE to_user  = '$barangay' ORDER BY id DESC
+										
+										// sa notif eto before SELECT id from_user, to_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ORDER BY id DESC
+										$query_reports = "SELECT DISTINCT  reports.from_user, reports.to_user,  reports.report_id, reports.subject, reports.date_created, reports.time_created FROM reports WHERE reports.to_user = '$barangay' AND reports.notif_status = '0' ORDER BY id DESC ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){

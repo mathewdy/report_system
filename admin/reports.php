@@ -44,6 +44,7 @@ $registration = "registration.php";
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 	<title>DILG</title>
 </head>
 <style>
@@ -130,7 +131,7 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '1' AND notif_status = '0'  ";
+                                        $query_reports = "SELECT id, from_user, report_id, subject, date_created, time_created FROM reports  WHERE to_user = '1' ORDER BY id DESC ";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
@@ -231,7 +232,7 @@ $registration = "registration.php";
                                             </ul>
                                             </div>
                                             <div class="col-lg-12">
-                                            <div class="card shadow py-0 mx-4" style="border: none; border-radius: 0;">
+                                            <div class="card shadow py-0 mx-4 p-4" style="border: none; border-radius: 0;">
                                                 <table class="table table-bordered table-hover" id="data">
                                                 <thead>
                                                     <tr>
@@ -318,6 +319,7 @@ $registration = "registration.php";
 <script src="../src/sweetalert2/dist/sweetalert2.all.js"></script>
 <script src="../src/js/table.click.js"></script>
 <script src="../src/js/notif-click.js"> </script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
 
 <!----pusher to ryan--->
 <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
@@ -352,6 +354,12 @@ channel.bind('my-event', function(data) {
     }});
     
 });
+</script>
+
+<script>
+    $(document).ready( function () {
+    $('#data').DataTable();
+} );
 </script>
 <script src="../src/js/notif-click.js"></script>
 <!----end of pusher--->

@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root" , "", "report_system_dilg");
+$conn = new mysqli("localhost", "u514457298_dilg_system" , "mathewPOGI!@#123", "u514457298_dilg_report");
 if($conn == false) {
     echo "error" . $conn->error;
 }

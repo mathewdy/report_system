@@ -73,26 +73,44 @@ $barangay = $_SESSION['barangay'];
 						<!-- template alert -->
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
-							<?php
-								$query_number_notif = "SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0'  ";
+								<?php
+							
+							//SELECT * FROM reports WHERE to_user = '$barangay' AND notif_status = '0' 
+							//SELECT COUNT(DISTINCT Country) FROM Customers;
+								$query_number_notif = "SELECT COUNT(DISTINCT report_id) AS number_of_notif FROM reports WHERE to_user = '$barangay' AND notif_status = '0'";
 								$run_number_notif = mysqli_query($conn,$query_number_notif);
-								$num_of_notifs = mysqli_num_rows($run_number_notif);
+								
+								if(mysqli_num_rows($run_number_notif) > 0){
+								    foreach($run_number_notif as $row_notif){
+								        ?>
+								        
+								        <div class="position-relative">
+									        <i class="align-middle" data-feather="bell"></i>
+									            <span class="indicator"><?php  echo $row_notif['number_of_notif']; ?></span>
+								        </div>
+								        
+								        <?php
+								        
+								    }
+								}
+								
 
 							?>
-								<div class="position-relative">
-									<i class="align-middle" data-feather="bell"></i>
-									<span class="indicator"><?php echo $num_of_notifs?></span>
-								</div>
+								
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
-									<?= $num_of_notifs?> New Notifications
+									<?php 
+									
+									    echo $row_notif['number_of_notif'];
+									?> New Notifications
+								
 								</div>
 								<div class="list-group">
 									<?php
 										// query ko naman lahat ngsinend sakin na info
 										// from_user, subject,date, time
-										$query_reports = "SELECT from_user, to_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
+										$query_reports = "SELECT DISTINCT to_user, from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '$barangay' AND notif_status = '0' ";
 										$run_reports = mysqli_query($conn,$query_reports);
 
 										if(mysqli_num_rows($run_reports) > 0){
@@ -179,7 +197,7 @@ $barangay = $_SESSION['barangay'];
 											$report_id = $_GET['report_id'];
 											// $barangay = $_GET['barangay'];
 											$to_user = $_GET['to_user'];
-											$query_report = "SELECT * FROM reports WHERE to_user = '$to_user' AND report_id = '$report_id' ";
+											$query_report = "SELECT DISTINCT * FROM reports WHERE to_user = '$to_user' AND report_id = '$report_id' LIMIT 1";
 											$run_report_id = mysqli_query($conn, $query_report);
 
 											$update_notif = "UPDATE reports SET notif_status = '1' WHERE to_user = '$to_user'";
@@ -241,6 +259,7 @@ $barangay = $_SESSION['barangay'];
 																if(mysqli_num_rows($query_files) > 0){
 																	while($rows = mysqli_fetch_array($query_files)){
 																		?>
+																		<br>
 																	<a href="../admin/pdf/<?php echo $rows['file_name'];?>" download><?php echo $rows['file_name'];?></a>
 																		<?php
 																	}
@@ -272,7 +291,7 @@ $barangay = $_SESSION['barangay'];
 									<?php
 
 									if(isset($_GET['to_user']) && $_GET['report_id']){
-										$sql_reply = "SELECT * FROM reports WHERE report_id = '$report_id' AND to_user = '$to_user' ";
+										$sql_reply = "SELECT  * FROM reports WHERE report_id = '$report_id' AND to_user = '$to_user' LIMIT 1 ";
 										$run_reply = mysqli_query($conn,$sql_reply);
 										if(mysqli_num_rows($run_reply) > 0){
 											foreach($run_reply as $row_reply){
@@ -446,9 +465,9 @@ if(isset($_POST['reply'])){
 		$duration = "Weekly";
 	} elseif ($days >= 8 && $days <= 14) {
 		$duration = "Bi-weekly";
-	} elseif ($days >= 15 && $days <= 29) {
+	} elseif ($days >= 15 && $days <= 27) {
 		$duration = "Bi-Weekly";
-	}elseif($days >= 30 && $days <= 31){
+	}elseif($days >= 28 && $days <= 31){
 		$duration = "Monthly";
 	}elseif($days >= 32 && $days <= 89){
 		$duration = 'Monthly';

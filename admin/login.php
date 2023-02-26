@@ -35,7 +35,7 @@ function sendMail($email,$first_name,$last_name,$vkey){
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Email Verification';
         $mail->Body    = "<span style=font-size:18px;letter-spacing:0.5px;color:black;>Good day <b></b>!</span><br><span style=font-size:15px;letter-spacing:0.5px;color:black;>Click here to verify your email Mr. / Mrs. $first_name, $last_name
-        <a href='http://$_SERVER[SERVER_NAME]/report_system/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
+        <a href='http://$_SERVER[SERVER_NAME]/admin/verify.php?v_token=$vkey&email=$email'> Click me </a>
         </span>";
 
 
@@ -439,7 +439,6 @@ if (isset($_POST['register'])) {
     $user_type = $_POST['user_type'];
 
     
-
     //image
     $image = $_FILES['image']['name'];
     $allowed_extension = array('gif', 'png', 'jpeg', 'jpg', 'PNG', 'JPEG', 'JPG', 'GIF');
@@ -460,21 +459,25 @@ if (isset($_POST['register'])) {
         //validation
         //generate user_id 
 
+           
+                $query_registration = "INSERT INTO users (user_type,email,password,first_name,middle_name,last_name,date_of_birth,barangay,v_token,image,date_time_created,date_time_updated) 
+                VALUES ('$user_type','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$barangay', '$vkey', '$image', '$date $time' , '$date $time')";
+                $run_registration = mysqli_query($conn, $query_registration) && sendMail($email,$first_name,$last_name,$vkey) ;
+                move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
+    
+                    if ($run_registration) {
+                        // sendMail($email,$first_name,$last_name,$vkey);
+                        echo  "<script>alert('Account Created')</script>";
+                        echo "<script>window.location.href='login.php; </script>";
+                            // echo "<script></script>";
+                        //redirection sa login page
+                    } else {
+                        echo "error insert_admin" . $conn->error;
+                    }
+            
 
-            $query_registration = "INSERT INTO users (user_type,email,password,first_name,middle_name,last_name,date_of_birth,barangay,v_token,image,date_time_created,date_time_updated) 
-            VALUES ('$user_type','$email', '$hashed_password', '$first_name', '$middle_name', '$last_name', '$date_of_birth', '$barangay', '$vkey', '$image', '$date $time' , '$date $time')";
-            $run_registration = mysqli_query($conn, $query_registration) && sendMail($email,$first_name,$last_name,$vkey) ;
-            move_uploaded_file($_FILES["image"]["tmp_name"], "admins/" . $_FILES["image"]["name"]);
 
-                if ($run_registration) {
-                    // sendMail($email,$first_name,$last_name,$vkey);
-                    echo  "<script>alert('Account Created')</script>";
-                    echo "<script>window.location.href='login.php; </script>";
-                        // echo "<script></script>";
-                    //redirection sa login page
-                } else {
-                    echo "error insert_admin" . $conn->error;
-                }
+            
                 
 
         // $query_user_id = "SELECT * FROM users WHERE user_type = '1' ORDER BY user_id DESC LIMIT 1";

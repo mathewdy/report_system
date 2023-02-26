@@ -125,11 +125,11 @@ $registration = "registration.php";
 								</div>
 								<div class="list-group">
 									<?php
-                                        $query_reports = "SELECT from_user, report_id, subject, date_created, time_created FROM reports WHERE to_user = '1' ";
+                                        $query_reports = "SELECT id, from_user, report_id, subject, date_created, time_created FROM reports  WHERE to_user = '1' ORDER BY id DESC";
                                         $run_reports = mysqli_query($conn,$query_reports);
 										if(mysqli_num_rows($run_reports) > 0){
 											foreach($run_reports as $row_reports){
-												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_created']));
+												// $new_date = date('F d, Y G:i A', strtotime($row_reports['date_created'], $row_reports['time_creatted']));
 												$newDate = date("F d, Y", strtotime($row_reports['date_created']));
 												$newTime = date("G:i A", strtotime($row_reports['time_created']));
 												?>
