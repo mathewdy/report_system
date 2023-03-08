@@ -2,12 +2,15 @@
 include('../connection.php');
 session_start();
 ob_start();
+date_default_timezone_set('Asia/Manila');
+
 $email = $_SESSION['email'];
 // $sql_info = "SELECT * FROM users WHERE email = '$email'";
 // $query_info = mysqli_query($conn, $sql_info);
 // $rows = mysqli_fetch_array($query_info);
 // $barangay = $rows['barangay'];
 $barangay = $_SESSION['barangay'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -213,7 +216,9 @@ $barangay = $_SESSION['barangay'];
 
 												$query_reports = "SELECT DISTINCT reports.subject,reports.report_id, reports.report_id_2, reports.to_user , reports.from_user, reports.opr, reports.message,reports.duration,reports.report_or_reply,reports.status,reports.notif_status,reports.date_start,reports.date_end,reports.deadline,reports.date_time_acknowledge,reports.date_created,reports.time_created,reports.date_updated,reports.date_updated,reports.time_updated FROM reports WHERE to_user  = '$barangay' ORDER BY id DESC";
 												$run_reports = mysqli_query($conn,$query_reports);
-
+												
+												$cur_date = date('y-m-d h:i:s');
+												// echo $cur_date;
 												if (mysqli_num_rows($run_reports) > 0) {
 													$no = 0;
 													foreach ($run_reports as $row) {
@@ -226,17 +231,32 @@ $barangay = $_SESSION['barangay'];
 													}?></td>
 													<td style="width: 50%;"><?php echo $row['subject'] ?></td>
 													<td>
-													<?php if ($row['status'] == 1) {
+													<?php 
+													if($row['date_end'] < $cur_date){
+														echo "<span class='text-danger'> No Submssion </span>";
+														// echo $row['date_end'];
+													}else{
+														if ($row['status'] == 1) {
 														echo "<span class='text-success'> Complete </span>";
-													} elseif ($row['status'] == 2) {
-														echo "<span class='text-danger'> No Submssion </span>";
-													} elseif ($row['status'] == 3) {
-														echo "<span class='text-warning'> Incomplete </span>";
-													} elseif ($row['status'] == 4) {
-														echo "<span class='text-primary'> Late </span>";
-													} else {
-														echo "<span class='text-danger'> No Submssion </span>";
-													}  
+														} elseif ($row['status'] == 2) {
+															echo "<span class='text-danger'> No Submssion </span>";
+														} elseif ($row['status'] == 3) {
+															echo "<span class='text-warning'> Incomplete </span>";
+														} elseif ($row['status'] == 4) {
+															echo "<span class='text-primary'> Late </span>";
+														}
+													}
+													// if ($row['status'] == 1) {
+													// 	echo "<span class='text-success'> Complete </span>";
+													// } elseif ($row['status'] == 2) {
+													// 	echo "<span class='text-danger'> No Submssion </span>";
+													// } elseif ($row['status'] == 3) {
+													// 	echo "<span class='text-warning'> Incomplete </span>";
+													// } elseif ($row['status'] == 4) {
+													// 	echo "<span class='text-primary'> Late </span>";
+													// } else {
+													// 	echo "<span class='text-danger'> No Submssion </span>";
+													// }  
 													?>
 													</td>
 													<td>

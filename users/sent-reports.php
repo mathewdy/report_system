@@ -218,7 +218,7 @@ require '../vendor/autoload.php';
 
 												<?php
 
-												$query_sent_reports = "SELECT * FROM sent WHERE to_user ='1' AND from_user = '$barangay'";
+												$query_sent_reports = "SELECT * FROM sent WHERE to_user ='1' AND from_user = '$barangay' ORDER BY date_start";
 												$run_reports = mysqli_query($conn, $query_sent_reports);
 												if (mysqli_num_rows($run_reports) > 0) {
 													foreach ($run_reports as $row) {
