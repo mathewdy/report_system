@@ -16,7 +16,7 @@ if(isset($_GET['v_token']) && isset($_GET['email'])){
 
             if($run_query)
             {
-                echo "working";
+                echo "<script>alert('Your Email has been verify') </script>";
                 echo "<script>window.location.href='login.php' </script>" ;
                 
             }else{
@@ -28,5 +28,3 @@ if(isset($_GET['v_token']) && isset($_GET['email'])){
     }
 
 }
-
-?>
